@@ -71,6 +71,7 @@ import * as pluginManifest from "../../../opensearch_dashboards.json";
 import { DataSourceAttributes } from "../../../../../src/plugins/data_source/common/data_sources";
 import { BehaviorSubject } from "rxjs";
 import { i18n } from "@osd/i18n";
+import { getUISettings } from "../../services/Services";
 
 enum Navigation {
   IndexManagement = "Index Management",
@@ -189,6 +190,7 @@ const dataSourceEnabledPaths: string[] = [
   ROUTES.REPOSITORIES,
   ROUTES.CREATE_REPOSITORY,
   ROUTES.EDIT_REPOSITORY,
+  ROUTES.NOTIFICATIONS,
 ];
 
 const LocalCluster: DataSourceOption = {
@@ -404,7 +406,9 @@ export default class Main extends Component<MainProps, MainState> {
 
     const { landingPage } = this.props;
 
-    const ROUTE_STYLE = { padding: "25px 25px" };
+    const uiSettings = getUISettings();
+    const showActionsInHeader = uiSettings.get("home:useNewHomePage");
+    const ROUTE_STYLE = showActionsInHeader ? { padding: "0px 0px" } : { padding: "25px 25px" };
 
     const DataSourceMenu = this.props.dataSourceManagement?.ui?.getDataSourceMenu<DataSourceSelectableConfig>();
     const DataSourceViewer = this.props.dataSourceManagement?.ui?.getDataSourceMenu<DataSourceViewConfig>();
@@ -521,6 +525,7 @@ export default class Main extends Component<MainProps, MainState> {
                                 ROUTES.REPOSITORIES,
                                 ROUTES.CREATE_REPOSITORY,
                                 ROUTES.EDIT_REPOSITORY,
+                                ROUTES.NOTIFICATIONS,
                               ]}
                               render={() => (
                                 <DataSourceMenu
