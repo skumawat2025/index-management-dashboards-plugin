@@ -7,16 +7,16 @@ import {
   EuiAccordion,
   EuiCallOut,
   EuiCodeEditor,
-  EuiComboBox,
+  EuiCompressedComboBox,
   EuiComboBoxOptionOption,
-  EuiFieldText,
+  EuiCompressedFieldText,
   EuiFlyout,
   EuiFlyoutBody,
   EuiFlyoutFooter,
   EuiFlyoutHeader,
-  EuiFormRow,
+  EuiCompressedFormRow,
   EuiLink,
-  EuiSelect,
+  EuiCompressedSelect,
   EuiSpacer,
   EuiText,
   EuiTitle,
@@ -191,18 +191,25 @@ export class CreateRepositoryFlyout extends MDSEnabledComponent<CreateRepository
       configuration = (
         <>
           <CustomLabel title="Location" />
-          <EuiFormRow isInvalid={!!locationError} error={locationError}>
-            <EuiFieldText
+          <EuiCompressedFormRow isInvalid={!!locationError} error={locationError}>
+            <EuiCompressedFieldText
               disabled={!!editRepo}
               placeholder="e.g., /mnt/snapshots"
               value={location}
               onChange={(e) => this.setState({ location: e.target.value })}
             />
-          </EuiFormRow>
+          </EuiCompressedFormRow>
 
           <EuiSpacer size="l" />
 
-          <EuiAccordion id="repo_advanced_settings" buttonContent="Advanced settings">
+          <EuiAccordion
+            id="repo_advanced_settings"
+            buttonContent={
+              <EuiText size="s">
+                <h3>Advanced settings</h3>
+              </EuiText>
+            }
+          >
             <EuiSpacer size="s" />
 
             <EuiText color="subdued" size="xs" style={{ padding: "5px 0px" }}>
@@ -231,13 +238,15 @@ export class CreateRepositoryFlyout extends MDSEnabledComponent<CreateRepository
       configuration = (
         <>
           <EuiCallOut title="Install and configure custom repository types">
-            <p>
-              To use a custom repository, such as Amazon S3, Azure Blob Storage or similar, install and configure the respective repository
-              plugin on OpenSearch and then define the repository configuration below.{" "}
-              <EuiLink href={REPOSITORY_DOCUMENTATION_URL} target="_blank" rel="noopener noreferrer">
-                Learn more
-              </EuiLink>
-            </p>
+            <EuiText size="s">
+              <p>
+                To use a custom repository, such as Amazon S3, Azure Blob Storage or similar, install and configure the respective repository
+                plugin on OpenSearch and then define the repository configuration below.{" "}
+                <EuiLink href={REPOSITORY_DOCUMENTATION_URL} target="_blank" rel="noopener noreferrer">
+                  Learn more
+                </EuiLink>
+              </p>
+            </EuiText>
           </EuiCallOut>
 
           <EuiSpacer size="s" />
@@ -272,32 +281,34 @@ export class CreateRepositoryFlyout extends MDSEnabledComponent<CreateRepository
     return (
       <EuiFlyout ownFocus={false} onClose={onCloseFlyout} maxWidth={600} size="m" hideCloseButton>
         <EuiFlyoutHeader hasBorder>
-          <EuiTitle size="m">
-            <h2 id="flyoutTitle">{!!editRepo ? "Edit" : "Create"} repository</h2>
-          </EuiTitle>
+          <EuiText size="s">
+            <EuiTitle size="m">
+              <h2 id="flyoutTitle">{!!editRepo ? "Edit" : "Create"} repository</h2>
+            </EuiTitle>
+          </EuiText>
         </EuiFlyoutHeader>
 
         <EuiFlyoutBody>
           <CustomLabel title="Repository name" />
-          <EuiFormRow isInvalid={!!repoNameError} error={repoNameError}>
-            <EuiFieldText
+          <EuiCompressedFormRow isInvalid={!!repoNameError} error={repoNameError}>
+            <EuiCompressedFieldText
               disabled={!!editRepo}
               value={repoName}
               data-test-subj="repoNameInput"
               onChange={(e) => this.setState({ repoName: e.target.value })}
             />
-          </EuiFormRow>
+          </EuiCompressedFormRow>
 
           <EuiSpacer size="m" />
 
           <CustomLabel title="Repository type" helpText={repoTypeHelpText} />
-          <EuiFormRow isInvalid={!!repoTypeError} error={repoTypeError}>
-            <EuiSelect
+          <EuiCompressedFormRow isInvalid={!!repoTypeError} error={repoTypeError}>
+            <EuiCompressedSelect
               options={REPO_SELECT_OPTIONS}
               value={selectedRepoTypeOption}
               onChange={(e) => this.setState({ selectedRepoTypeOption: e.target.value })}
             />
-          </EuiFormRow>
+          </EuiCompressedFormRow>
 
           <EuiSpacer size="m" />
 

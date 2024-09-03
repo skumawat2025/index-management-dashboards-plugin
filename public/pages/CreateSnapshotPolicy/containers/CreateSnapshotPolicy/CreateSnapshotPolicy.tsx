@@ -6,25 +6,25 @@
 import _ from "lodash";
 import queryString from "query-string";
 import {
-  EuiFormRow,
+  EuiCompressedFormRow,
   EuiTextArea,
-  EuiSelect,
-  EuiFieldText,
+  EuiCompressedSelect,
+  EuiCompressedFieldText,
   EuiFlexGroup,
   EuiFlexItem,
   EuiSpacer,
   EuiTitle,
-  EuiButtonEmpty,
-  EuiButton,
+  EuiSmallButtonEmpty,
+  EuiSmallButton,
   EuiComboBoxOptionOption,
-  EuiFieldNumber,
+  EuiCompressedFieldNumber,
   EuiAccordion,
-  EuiRadioGroup,
+  EuiCompressedRadioGroup,
   EuiText,
-  EuiCheckbox,
+  EuiCompressedCheckbox,
   EuiPanel,
   EuiHorizontalRule,
-  EuiButtonIcon,
+  EuiSmallButtonIcon,
   EuiLink,
 } from "@elastic/eui";
 import React, { ChangeEvent, Component, useContext } from "react";
@@ -57,6 +57,7 @@ import MDSEnabledComponent from "../../../../components/MDSEnabledComponent";
 import { useUpdateUrlWithDataSourceProperties } from "../../../../components/MDSEnabledComponent";
 import { getApplication, getNavigationUI, getUISettings } from "../../../../services/Services";
 import { ExternalLink } from "../../../utils/display-utils";
+import { TopNavControlDescriptionData, TopNavControlLinkData } from "src/plugins/navigation/public";
 
 interface CreateSMPolicyProps extends RouteComponentProps, DataSourceMenuProperties {
   snapshotManagementService: SnapshotManagementService;
@@ -559,13 +560,17 @@ export class CreateSnapshotPolicy extends MDSEnabledComponent<CreateSMPolicyProp
 
     const descriptionData = [
       {
-        renderComponent: (
-          <EuiText size="s" color="subdued">
-            Snapshot policies allow you to define an automated snapshot schedule and retention period.{" "}
-            <ExternalLink href={SNAPSHOT_MANAGEMENT_DOCUMENTATION_URL} />
-          </EuiText>
-        ),
-      },
+        description: "Snapshot policies allow you to define an automated snapshot schedule and retention period.",
+        links: {
+          label: "Learn more",
+          href: SNAPSHOT_MANAGEMENT_DOCUMENTATION_URL,
+          iconType: "popout",
+          iconSide: "right",
+          controlType: "link",
+          target: "_blank",
+          flush: "both",
+        } as TopNavControlLinkData,
+      } as TopNavControlDescriptionData,
     ];
     const padding_style = this.state.useNewUX ? { padding: "0px 0px" } : { padding: "5px 50px" };
     return (
@@ -574,24 +579,35 @@ export class CreateSnapshotPolicy extends MDSEnabledComponent<CreateSMPolicyProp
           <HeaderControl setMountPoint={setAppDescriptionControls} controls={descriptionData} />
         ) : (
           <>
-            <EuiTitle size="l">
+            <EuiText size="s">
               <h1>{isEdit ? "Edit" : "Create"} policy</h1>
-            </EuiTitle>
+            </EuiText>
             {subTitleText}
             <EuiSpacer />
           </>
         )}
 
-        <ContentPanel title="Policy settings" titleSize="m">
+        <EuiPanel>
+          <EuiFlexGroup gutterSize="xs" alignItems="center">
+            <EuiText size="s">
+              <h2>Policy settings</h2>
+            </EuiText>
+          </EuiFlexGroup>
+          <EuiHorizontalRule margin={"xs"} />
           <CustomLabel title="Policy name" />
-          <EuiFormRow isInvalid={!!policyIdError} error={policyIdError}>
-            <EuiFieldText placeholder="e.g. daily-snapshot" value={policyId} onChange={this.onChangePolicyName} disabled={isEdit} />
-          </EuiFormRow>
+          <EuiCompressedFormRow isInvalid={!!policyIdError} error={policyIdError}>
+            <EuiCompressedFieldText
+              placeholder="e.g. daily-snapshot"
+              value={policyId}
+              onChange={this.onChangePolicyName}
+              disabled={isEdit}
+            />
+          </EuiCompressedFormRow>
 
           <EuiSpacer />
 
           <CustomLabel title="Description" isOptional={true} />
-          <EuiFormRow>
+          <EuiCompressedFormRow>
             <EuiTextArea
               compressed={true}
               value={_.get(policy, "description", "")}
@@ -599,12 +615,18 @@ export class CreateSnapshotPolicy extends MDSEnabledComponent<CreateSMPolicyProp
               placeholder="Snapshot management daily policy."
               data-test-subj="description"
             />
-          </EuiFormRow>
-        </ContentPanel>
+          </EuiCompressedFormRow>
+        </EuiPanel>
 
         <EuiSpacer />
 
-        <ContentPanel title="Source and destination" titleSize="m">
+        <EuiPanel>
+          <EuiFlexGroup gutterSize="xs" alignItems="center">
+            <EuiText size="s">
+              <h2>Source and destination</h2>
+            </EuiText>
+          </EuiFlexGroup>
+          <EuiHorizontalRule margin={"xs"} />
           <SnapshotIndicesRepoInput
             indexOptions={indexOptions}
             selectedIndexOptions={selectedIndexOptions}
@@ -625,11 +647,17 @@ export class CreateSnapshotPolicy extends MDSEnabledComponent<CreateSMPolicyProp
             snapshotManagementService={this.props.snapshotManagementService}
             repoError={repoError}
           />
-        </ContentPanel>
+        </EuiPanel>
 
         <EuiSpacer />
 
-        <ContentPanel title="Snapshot schedule" titleSize="m">
+        <EuiPanel>
+          <EuiFlexGroup gutterSize="xs" alignItems="center">
+            <EuiText size="s">
+              <h2>Snapshot schedule</h2>
+            </EuiText>
+          </EuiFlexGroup>
+          <EuiHorizontalRule margin={"xs"} />
           <CronSchedule
             frequencyTitle="Snapshot frequency"
             frequencyType={creationScheduleFrequencyType}
@@ -652,12 +680,18 @@ export class CreateSnapshotPolicy extends MDSEnabledComponent<CreateSMPolicyProp
               this.setState({ policy: this.setPolicyHelper("creation.schedule.cron.expression", expression) });
             }}
           />
-        </ContentPanel>
+        </EuiPanel>
 
         <EuiSpacer />
 
-        <ContentPanel title="Retention period" titleSize="m">
-          <EuiRadioGroup
+        <EuiPanel>
+          <EuiFlexGroup gutterSize="xs" alignItems="center">
+            <EuiText size="s">
+              <h2>Retention period</h2>
+            </EuiText>
+          </EuiFlexGroup>
+          <EuiHorizontalRule margin={"xs"} />
+          <EuiCompressedRadioGroup
             options={rententionEnableRadios}
             idSelected={deleteConditionEnabled ? "retention_enabled" : "retention_disabled"}
             onChange={(id) => {
@@ -671,7 +705,7 @@ export class CreateSnapshotPolicy extends MDSEnabledComponent<CreateSMPolicyProp
               <CustomLabel title="Maximum age of snapshots retained" />
               <EuiFlexGroup>
                 <EuiFlexItem grow={false}>
-                  <EuiFieldNumber
+                  <EuiCompressedFieldNumber
                     value={maxAgeNum}
                     min={1}
                     onChange={(e) => {
@@ -680,7 +714,7 @@ export class CreateSnapshotPolicy extends MDSEnabledComponent<CreateSMPolicyProp
                   />
                 </EuiFlexItem>
                 <EuiFlexItem style={{ maxWidth: 100 }}>
-                  <EuiSelect
+                  <EuiCompressedSelect
                     options={MAX_AGE_UNIT_OPTIONS}
                     value={maxAgeUnit}
                     onChange={(e) => {
@@ -693,37 +727,41 @@ export class CreateSnapshotPolicy extends MDSEnabledComponent<CreateSMPolicyProp
               <EuiAccordion id="additional_delete_conditions" buttonContent="Additional settings">
                 <EuiSpacer size="m" />
 
-                <EuiText>Number of snapshots retained</EuiText>
+                <EuiText size="s">Number of snapshots retained</EuiText>
                 <EuiSpacer size="s" />
 
                 <EuiFlexGroup alignItems="flexStart">
                   <EuiFlexItem grow={false}>
                     <CustomLabel title="Minimum" />
-                    <EuiFormRow isInvalid={!!minCountError} error={minCountError}>
-                      <EuiFieldNumber
+                    <EuiCompressedFormRow isInvalid={!!minCountError} error={minCountError}>
+                      <EuiCompressedFieldNumber
                         min={1}
                         value={_.get(policy, "deletion.condition.min_count") ?? "1"}
                         onChange={this.onChangeMinCount}
                       />
-                    </EuiFormRow>
+                    </EuiCompressedFormRow>
                   </EuiFlexItem>
                   <EuiFlexItem grow={false}>
                     <CustomLabel title="Maximum" isOptional={true} />
-                    <EuiFormRow>
-                      <EuiFieldNumber min={1} value={_.get(policy, "deletion.condition.max_count", "")} onChange={this.onChangeMaxCount} />
-                    </EuiFormRow>
+                    <EuiCompressedFormRow>
+                      <EuiCompressedFieldNumber
+                        min={1}
+                        value={_.get(policy, "deletion.condition.max_count", "")}
+                        onChange={this.onChangeMaxCount}
+                      />
+                    </EuiCompressedFormRow>
                   </EuiFlexItem>
                 </EuiFlexGroup>
 
                 <EuiSpacer size="m" />
 
-                <EuiText>Deletion frequency</EuiText>
+                <EuiText size="s">Deletion frequency</EuiText>
                 <span style={{ color: "grey", fontWeight: 200, fontSize: "12px" }}>
                   Configure when to check retention conditions and delete snapshots.
                 </span>
                 <EuiSpacer size="s" />
 
-                <EuiCheckbox
+                <EuiCompressedCheckbox
                   id="delete_schedule_checkbox"
                   label="Same as snapshot frequency"
                   checked={!deletionScheduleEnabled}
@@ -750,64 +788,73 @@ export class CreateSnapshotPolicy extends MDSEnabledComponent<CreateSMPolicyProp
               </EuiAccordion>
             </>
           ) : null}
-        </ContentPanel>
+        </EuiPanel>
 
         <EuiSpacer />
 
-        <ContentPanel title="Notifications" titleSize="m">
-          <div style={{ padding: "10px 10px" }}>
-            <EuiText>Notify on snapshot activities</EuiText>
+        <EuiPanel>
+          <EuiFlexGroup gutterSize="xs" alignItems="center">
+            <EuiText size="s">
+              <h2>Notifications</h2>
+            </EuiText>
+          </EuiFlexGroup>
+          <EuiHorizontalRule margin={"xs"} />
+          <EuiText size="s">
+            <h3>Notify on snapshot activities</h3>
+          </EuiText>
 
-            <EuiSpacer size="s" />
-            <EuiCheckbox
-              id="notification-creation"
-              label="When a snapshot has been created."
-              checked={getNotifyCreation(policy)}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                this.setState({ policy: this.setPolicyHelper("notification.conditions.creation", e.target.checked) });
-              }}
-            />
+          <EuiSpacer size="s" />
+          <EuiCompressedCheckbox
+            id="notification-creation"
+            label="When a snapshot has been created."
+            checked={getNotifyCreation(policy)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              this.setState({ policy: this.setPolicyHelper("notification.conditions.creation", e.target.checked) });
+            }}
+          />
 
-            <EuiSpacer size="s" />
+          <EuiSpacer size="s" />
 
-            <EuiCheckbox
-              id="notification-deletion"
-              label="When a snapshots has been deleted."
-              checked={getNotifyDeletion(policy)}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                this.setState({ policy: this.setPolicyHelper("notification.conditions.deletion", e.target.checked) });
-              }}
-            />
+          <EuiCompressedCheckbox
+            id="notification-deletion"
+            label="When a snapshots has been deleted."
+            checked={getNotifyDeletion(policy)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              this.setState({ policy: this.setPolicyHelper("notification.conditions.deletion", e.target.checked) });
+            }}
+          />
 
-            <EuiSpacer size="s" />
+          <EuiSpacer size="s" />
 
-            <EuiCheckbox
-              id="notification-failure"
-              label="When a snapshot has failed."
-              checked={getNotifyFailure(policy)}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                this.setState({ policy: this.setPolicyHelper("notification.conditions.failure", e.target.checked) });
-              }}
-            />
-          </div>
+          <EuiCompressedCheckbox
+            id="notification-failure"
+            label="When a snapshot has failed."
+            checked={getNotifyFailure(policy)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              this.setState({ policy: this.setPolicyHelper("notification.conditions.failure", e.target.checked) });
+            }}
+          />
           {showNotificationChannel ? (
-            <Notification
-              channelId={_.get(policy, "notification.channel.id") || ""}
-              channels={channels}
-              loadingChannels={loadingChannels}
-              onChangeChannelId={this.onChangeChannelId}
-              getChannels={this.getChannels}
-            />
+            <>
+              <EuiSpacer size="s" />
+              <Notification
+                channelId={_.get(policy, "notification.channel.id") || ""}
+                channels={channels}
+                loadingChannels={loadingChannels}
+                onChangeChannelId={this.onChangeChannelId}
+                getChannels={this.getChannels}
+              />
+            </>
           ) : null}
-        </ContentPanel>
+        </EuiPanel>
 
         <EuiSpacer />
 
         {/* Advanced settings */}
-        <EuiPanel style={{ paddingLeft: "0px", paddingRight: "0px" }}>
-          <EuiFlexGroup style={{ padding: "0px 10px" }} justifyContent="flexStart" alignItems="center" gutterSize="none">
+        <EuiPanel>
+          <EuiFlexGroup justifyContent="flexStart" alignItems="center" gutterSize="none">
             <EuiFlexItem grow={false}>
-              <EuiButtonIcon
+              <EuiSmallButtonIcon
                 iconType={advancedSettingsOpen ? "arrowDown" : "arrowRight"}
                 color="text"
                 onClick={() => {
@@ -817,11 +864,11 @@ export class CreateSnapshotPolicy extends MDSEnabledComponent<CreateSMPolicyProp
               />
             </EuiFlexItem>
             <EuiFlexItem grow={false}>
-              <EuiTitle size="m">
-                <h3>
+              <EuiText size="s">
+                <h2>
                   Advanced settings <i>– optional</i>
-                </h3>
-              </EuiTitle>
+                </h2>
+              </EuiText>
             </EuiFlexItem>
           </EuiFlexGroup>
 
@@ -848,7 +895,7 @@ export class CreateSnapshotPolicy extends MDSEnabledComponent<CreateSMPolicyProp
                 <EuiSpacer size="s" />
 
                 <CustomLabel title="Timestamp format" />
-                <EuiFieldText
+                <EuiCompressedFieldText
                   value={dateFormat}
                   onChange={(e) => {
                     let dateFormat = e.target.value;
@@ -881,15 +928,15 @@ export class CreateSnapshotPolicy extends MDSEnabledComponent<CreateSMPolicyProp
 
         <EuiSpacer />
 
-        <EuiFlexGroup justifyContent="flexEnd">
+        <EuiFlexGroup justifyContent="flexEnd" gutterSize="s">
           <EuiFlexItem grow={false}>
-            <EuiButtonEmpty onClick={this.onClickCancel}>Cancel</EuiButtonEmpty>
+            <EuiSmallButtonEmpty onClick={this.onClickCancel}>Cancel</EuiSmallButtonEmpty>
           </EuiFlexItem>
 
           <EuiFlexItem grow={false}>
-            <EuiButton fill onClick={this.onClickSubmit} isLoading={isSubmitting}>
+            <EuiSmallButton fill onClick={this.onClickSubmit} isLoading={isSubmitting}>
               {isEdit ? "Update" : "Create"}
-            </EuiButton>
+            </EuiSmallButton>
           </EuiFlexItem>
         </EuiFlexGroup>
       </div>

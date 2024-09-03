@@ -5,8 +5,8 @@
 
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
-  EuiButton,
-  EuiButtonEmpty,
+  EuiSmallButton,
+  EuiSmallButtonEmpty,
   EuiCallOut,
   EuiModal,
   EuiModalBody,
@@ -14,6 +14,7 @@ import {
   EuiModalHeader,
   EuiModalHeaderTitle,
   EuiSpacer,
+  EuiText,
 } from "@elastic/eui";
 import { CoreStart } from "opensearch-dashboards/public";
 import { ServicesContext } from "../../services";
@@ -167,26 +168,36 @@ export default function RefreshActionModal<T>(props: RefreshActionModalProps) {
   return (
     <EuiModal onClose={onClose}>
       <EuiModalHeader>
-        <EuiModalHeaderTitle>Refresh {type}</EuiModalHeaderTitle>
+        <EuiModalHeaderTitle>
+          <EuiText size="s">
+            <h2>Refresh {type}</h2>
+          </EuiText>
+        </EuiModalHeaderTitle>
       </EuiModalHeader>
 
       <EuiModalBody>
         <div style={{ lineHeight: 1.5 }}>
           {selectedItems.length === 0 && blockedItems.length === 0 && (
             <>
-              <p>All open indexes will be refreshed.</p>
+              <EuiText size="s">
+                <p>All open indexes will be refreshed.</p>
+              </EuiText>
             </>
           )}
           {!!unBlockedItems.length && (
             <>
-              <p>{unblockedWording} will be refreshed.</p>
-              <ul style={{ listStyleType: "disc", listStylePosition: "inside" }}>
-                {unBlockedItems.map((item) => (
-                  <li key={item} data-test-subj={`UnblockedItem-${item}`}>
-                    {item}
-                  </li>
-                ))}
-              </ul>
+              <EuiText size="s">
+                <p>{unblockedWording} will be refreshed.</p>
+              </EuiText>
+              <EuiText size="s">
+                <ul style={{ listStyleType: "disc", listStylePosition: "inside" }}>
+                  {unBlockedItems.map((item) => (
+                    <li key={item} data-test-subj={`UnblockedItem-${item}`}>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </EuiText>
             </>
           )}
           <EuiSpacer />
@@ -208,10 +219,10 @@ export default function RefreshActionModal<T>(props: RefreshActionModalProps) {
       </EuiModalBody>
 
       <EuiModalFooter>
-        <EuiButtonEmpty onClick={onClose}>Cancel</EuiButtonEmpty>
-        <EuiButton data-test-subj="refreshConfirmButton" onClick={onConfirm} fill>
+        <EuiSmallButtonEmpty onClick={onClose}>Cancel</EuiSmallButtonEmpty>
+        <EuiSmallButton data-test-subj="refreshConfirmButton" onClick={onConfirm} fill>
           Refresh
-        </EuiButton>
+        </EuiSmallButton>
       </EuiModalFooter>
     </EuiModal>
   );

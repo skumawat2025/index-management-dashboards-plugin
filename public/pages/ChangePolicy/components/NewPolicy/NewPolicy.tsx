@@ -5,7 +5,18 @@
 
 import React from "react";
 import _ from "lodash";
-import { EuiSpacer, EuiText, EuiRadioGroup, EuiFormRow, EuiSelect, EuiComboBox, EuiLink, EuiIcon } from "@elastic/eui";
+import {
+  EuiSpacer,
+  EuiText,
+  EuiCompressedRadioGroup,
+  EuiCompressedFormRow,
+  EuiCompressedSelect,
+  EuiCompressedComboBox,
+  EuiLink,
+  EuiIcon,
+  EuiPanel,
+  EuiHorizontalRule,
+} from "@elastic/eui";
 import { ContentPanel } from "../../../../components/ContentPanel";
 import { IndexService } from "../../../../services";
 import { Radio } from "../../containers/ChangePolicy/ChangePolicy";
@@ -70,7 +81,7 @@ export default class NewPolicy extends React.Component<NewPolicyProps, NewPolicy
   };
 
   render() {
-    const { selectedPolicies, stateRadioIdSelected, stateSelected, selectedPoliciesError } = this.props;
+    const { selectedPolicies, stateRadioIdSelected, stateSelected, selectedPoliciesError, useUpdatedUX } = this.props;
     const { policies, policiesIsLoading } = this.state;
 
     const hasSelectedPolicy = !!selectedPolicies.length;
@@ -80,16 +91,31 @@ export default class NewPolicy extends React.Component<NewPolicyProps, NewPolicy
       )
     );
 
-    const currentRadio = { id: Radio.Current, label: "Keep indices in their current state after the policy takes effect" };
+    const currentRadio = {
+      id: Radio.Current,
+      label: (
+        <EuiText size="xs">
+          <p>Keep indices in their current state after the policy takes effect</p>
+        </EuiText>
+      ),
+    };
     const stateRadio = {
       id: Radio.State,
-      label: "Switch indices to the following state after the policy takes effect",
+      label: (
+        <EuiText size="xs">
+          <p>Switch indices to the following state after the policy takes effect</p>
+        </EuiText>
+      ),
       disabled: !hasSelectedPolicy || !stateOptions.length,
     };
     const radioOptions = [currentRadio, stateRadio];
     return (
-      <ContentPanel bodyStyles={{ padding: "initial" }} title="Choose new policy" titleSize="s">
-        <div style={{ paddingLeft: "10px" }}>
+      <EuiPanel>
+        <EuiText size="s">
+          <h2>Choose new policy</h2>
+        </EuiText>
+        <EuiHorizontalRule margin="xs" />
+        <div>
           <EuiText size="xs">
             <p>
               When the new policy will take effect depends on the current state of indices and the states of the new policy.{" "}
@@ -101,8 +127,16 @@ export default class NewPolicy extends React.Component<NewPolicyProps, NewPolicy
 
           <EuiSpacer size="s" />
 
-          <EuiFormRow label="New policy" isInvalid={!!selectedPoliciesError} error={selectedPoliciesError}>
-            <EuiComboBox
+          <EuiCompressedFormRow
+            label={
+              <EuiText size="s">
+                <h3>New policy</h3>
+              </EuiText>
+            }
+            isInvalid={!!selectedPoliciesError}
+            error={selectedPoliciesError}
+          >
+            <EuiCompressedComboBox
               placeholder=""
               async
               options={policies}
@@ -114,25 +148,25 @@ export default class NewPolicy extends React.Component<NewPolicyProps, NewPolicy
               onChange={this.props.onChangePolicy}
               onSearchChange={this.onPolicySearchChange}
             />
-          </EuiFormRow>
+          </EuiCompressedFormRow>
 
           <EuiSpacer size="m" />
 
-          <EuiRadioGroup options={radioOptions} idSelected={stateRadioIdSelected} onChange={this.props.onChangeStateRadio} />
+          <EuiCompressedRadioGroup options={radioOptions} idSelected={stateRadioIdSelected} onChange={this.props.onChangeStateRadio} />
 
           <EuiSpacer size="s" />
 
-          <EuiFormRow>
-            <EuiSelect
+          <EuiCompressedFormRow>
+            <EuiCompressedSelect
               disabled={stateRadioIdSelected !== Radio.State}
               options={stateOptions}
               value={stateSelected}
               onChange={this.props.onStateSelectChange}
               aria-label="Start state for new policy"
             />
-          </EuiFormRow>
+          </EuiCompressedFormRow>
         </div>
-      </ContentPanel>
+      </EuiPanel>
     );
   }
 }

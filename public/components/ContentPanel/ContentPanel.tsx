@@ -64,19 +64,19 @@ const ContentPanel: React.SFC<ContentPanelProps> = ({
   const isGhost = color === "ghost";
   const titleContent = (
     <EuiFlexGroup
-      style={{ ...(noExtraPadding ? { marginTop: 0, marginBottom: 0 } : {}), padding: isGhost || accordion ? undefined : "0px 10px" }}
+      style={{ ...(noExtraPadding ? { marginTop: 0, marginBottom: 0 } : {}), padding: isGhost || accordion ? undefined : "0px 16px" }}
       justifyContent="spaceBetween"
       alignItems="flexStart"
     >
       {title ? (
         <EuiFlexItem>
           {typeof title === "string" ? (
-            <EuiTitle size={titleSize}>
-              <h3>
+            <EuiText size="s">
+              <h1>
                 {title}
                 <span className="panel-header-count"> {itemCount > 0 ? `(${itemCount})` : null} </span>
-              </h3>
-            </EuiTitle>
+              </h1>
+            </EuiText>
           ) : (
             title
           )}
@@ -111,7 +111,7 @@ const ContentPanel: React.SFC<ContentPanelProps> = ({
       {children ? (
         <div
           style={{
-            padding: isGhost ? undefined : "0px 10px",
+            padding: isGhost ? undefined : "0px 16px",
             ...bodyStyles,
             display: accordion && isAccordionOpen === "closed" ? "none" : undefined,
           }}

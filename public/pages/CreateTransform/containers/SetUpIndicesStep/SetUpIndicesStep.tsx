@@ -4,7 +4,7 @@
  */
 
 import React, { ChangeEvent, Component } from "react";
-import { EuiSpacer, EuiTitle, EuiFlexGroup, EuiFlexItem, EuiComboBoxOptionOption } from "@elastic/eui";
+import { EuiSpacer, EuiTitle, EuiFlexGroup, EuiFlexItem, EuiComboBoxOptionOption, EuiText } from "@elastic/eui";
 import { RouteComponentProps } from "react-router-dom";
 import { TransformService } from "../../../../services";
 import ConfigureTransform from "../../components/ConfigureTransform";
@@ -39,6 +39,7 @@ interface SetUpIndicesStepProps extends RouteComponentProps, DataSourceMenuPrope
   fields: FieldItem[];
   fieldSelectedOption: string;
   beenWarned: boolean;
+  useUpdatedUX: boolean;
 }
 
 export default class SetUpIndicesStep extends Component<SetUpIndicesStepProps> {
@@ -47,17 +48,27 @@ export default class SetUpIndicesStep extends Component<SetUpIndicesStepProps> {
       return null;
     }
 
+    const Title = !this.props.useUpdatedUX
+      ? () => {
+          return (
+            <>
+              <EuiText size="s">
+                <h1>Set up indices</h1>
+              </EuiText>
+              <EuiSpacer />
+            </>
+          );
+        }
+      : () => {};
+
     return (
-      <div style={{ padding: "5px 50px" }}>
+      <div style={this.props.useUpdatedUX ? { padding: "0px" } : { padding: "5px 50px" }}>
         <EuiFlexGroup>
           <EuiFlexItem style={{ maxWidth: 300 }} grow={false}>
             <CreateTransformSteps step={1} />
           </EuiFlexItem>
           <EuiFlexItem>
-            <EuiTitle size="l">
-              <h1>Set up indices</h1>
-            </EuiTitle>
-            <EuiSpacer />
+            {Title()}
             <ConfigureTransform isEdit={false} {...this.props} />
             <EuiSpacer />
             <TransformIndices key={this.props.dataSourceId} {...this.props} />

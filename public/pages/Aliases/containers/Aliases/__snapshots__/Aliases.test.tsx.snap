@@ -7,18 +7,20 @@ exports[`<Aliases /> spec renders the component 1`] = `
 >
   <div
     class="euiFlexGroup euiFlexGroup--gutterLarge euiFlexGroup--alignItemsFlexStart euiFlexGroup--justifyContentSpaceBetween euiFlexGroup--directionRow euiFlexGroup--responsive"
-    style="padding: 0px 10px;"
+    style="padding: 0px 16px;"
   >
     <div
       class="euiFlexItem"
     >
-      <span
-        class="euiTitle euiTitle--medium"
-      >
-        Aliases
-      </span>
       <div
-        class="euiFormRow euiFormRow--fullWidth"
+        class="euiText euiText--small"
+      >
+        <h1>
+          Aliases
+        </h1>
+      </div>
+      <div
+        class="euiFormRow euiFormRow--fullWidth euiFormRow--compressed"
         id="some_html_id-row"
       >
         <div
@@ -75,7 +77,7 @@ exports[`<Aliases /> spec renders the component 1`] = `
                   class="euiPopover__anchor"
                 >
                   <button
-                    class="euiButton euiButton--primary"
+                    class="euiButton euiButton--primary euiButton--small"
                     type="button"
                   >
                     <span
@@ -96,13 +98,14 @@ exports[`<Aliases /> spec renders the component 1`] = `
               class="euiFlexItem euiFlexItem--flexGrowZero"
             >
               <button
-                class="euiButton euiButton--primary euiButton--fill"
+                class="euiButton euiButton--primary euiButton--small euiButton--fill"
                 data-test-subj="Create aliasButton"
                 type="button"
               >
                 <span
                   class="euiButtonContent euiButton__content"
                 >
+                  EuiIconMock
                   <span
                     class="euiButton__text"
                   >
@@ -130,13 +133,13 @@ exports[`<Aliases /> spec renders the component 1`] = `
         class="euiFlexItem"
       >
         <div
-          class="euiFormControlLayout euiFormControlLayout--fullWidth"
+          class="euiFormControlLayout euiFormControlLayout--fullWidth euiFormControlLayout--compressed"
         >
           <div
             class="euiFormControlLayout__childrenWrapper"
           >
             <input
-              class="euiFieldSearch euiFieldSearch--fullWidth"
+              class="euiFieldSearch euiFieldSearch--fullWidth euiFieldSearch--compressed"
               placeholder="Search..."
               type="search"
               value=""
@@ -159,18 +162,18 @@ exports[`<Aliases /> spec renders the component 1`] = `
         <div
           aria-expanded="false"
           aria-haspopup="listbox"
-          class="euiComboBox"
+          class="euiComboBox euiComboBox--compressed"
           role="combobox"
           style="width: 300px;"
         >
           <div
-            class="euiFormControlLayout"
+            class="euiFormControlLayout euiFormControlLayout--compressed"
           >
             <div
               class="euiFormControlLayout__childrenWrapper"
             >
               <div
-                class="euiComboBox__inputWrap euiComboBox__inputWrap-isClearable"
+                class="euiComboBox__inputWrap euiComboBox__inputWrap--compressed euiComboBox__inputWrap-isClearable"
                 data-test-subj="comboBoxInput"
                 tabindex="-1"
               >
@@ -403,7 +406,7 @@ exports[`<Aliases /> spec renders the component 1`] = `
                           class="euiText euiText--medium"
                         >
                           <div
-                            class="euiText euiText--medium"
+                            class="euiText euiText--small"
                           >
                             <p>
                               You have no aliases.
@@ -421,12 +424,13 @@ exports[`<Aliases /> spec renders the component 1`] = `
                           class="euiFlexItem euiFlexItem--flexGrowZero"
                         >
                           <button
-                            class="euiButton euiButton--primary euiButton--fill"
+                            class="euiButton euiButton--primary euiButton--small euiButton--fill"
                             type="button"
                           >
                             <span
                               class="euiButtonContent euiButton__content"
                             >
+                              EuiIconMock
                               <span
                                 class="euiButton__text"
                               >

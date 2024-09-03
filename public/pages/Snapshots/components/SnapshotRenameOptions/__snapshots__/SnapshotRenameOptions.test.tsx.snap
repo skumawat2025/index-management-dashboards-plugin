@@ -3,14 +3,26 @@
 exports[`SnapshotRenameOptions component renders without error 1`] = `
 <div>
   <div>
-    <h5>
-      Rename restored indices
-    </h5>
     <div
-      class="euiSpacer euiSpacer--m"
+      class="euiFlexGroup euiFlexGroup--gutterExtraSmall euiFlexGroup--alignItemsCenter euiFlexGroup--directionRow euiFlexGroup--responsive"
+    >
+      <div
+        class="euiFlexItem euiFlexItem--flexGrowZero"
+      >
+        <div
+          class="euiText euiText--small"
+        >
+          <h3>
+            Rename restored indices
+          </h3>
+        </div>
+      </div>
+    </div>
+    <div
+      class="euiSpacer euiSpacer--s"
     />
     <div
-      class="euiRadio"
+      class="euiRadio euiRadio--compressed"
     >
       <input
         checked=""
@@ -34,7 +46,7 @@ exports[`SnapshotRenameOptions component renders without error 1`] = `
       class="euiSpacer euiSpacer--s"
     />
     <div
-      class="euiRadio"
+      class="euiRadio euiRadio--compressed"
     >
       <input
         class="euiRadio__input"
@@ -57,7 +69,7 @@ exports[`SnapshotRenameOptions component renders without error 1`] = `
       class="euiSpacer euiSpacer--s"
     />
     <div
-      class="euiRadio"
+      class="euiRadio euiRadio--compressed"
     >
       <input
         class="euiRadio__input"

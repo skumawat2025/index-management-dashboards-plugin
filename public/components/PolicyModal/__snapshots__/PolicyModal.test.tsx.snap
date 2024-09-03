@@ -35,7 +35,13 @@ exports[`<PolicyModal /> spec renders the component 1`] = `
           <div
             class="euiModalHeader__title"
           >
-            some-id
+            <div
+              class="euiText euiText--small"
+            >
+              <h2>
+                some-id
+              </h2>
+            </div>
           </div>
         </div>
         <div
@@ -45,7 +51,7 @@ exports[`<PolicyModal /> spec renders the component 1`] = `
             class="euiModalBody__overflow"
           >
             <div
-              class="euiCodeBlock euiCodeBlock--fontMedium euiCodeBlock--paddingLarge prismjs language-json"
+              class="euiCodeBlock euiCodeBlock--fontSmall euiCodeBlock--paddingLarge prismjs language-json"
             >
               <pre
                 class="euiCodeBlock__pre euiCodeBlock__pre--whiteSpacePreWrap"
@@ -153,7 +159,7 @@ exports[`<PolicyModal /> spec renders the component 1`] = `
                 class="euiToolTipAnchor"
               >
                 <button
-                  class="euiButtonEmpty euiButtonEmpty--primary"
+                  class="euiButtonEmpty euiButtonEmpty--primary euiButtonEmpty--small"
                   data-test-subj="policyModalCopyButton"
                   type="button"
                 >
@@ -174,7 +180,7 @@ exports[`<PolicyModal /> spec renders the component 1`] = `
               class="euiFlexItem euiFlexItem--flexGrowZero"
             >
               <button
-                class="euiButtonEmpty euiButtonEmpty--primary"
+                class="euiButtonEmpty euiButtonEmpty--primary euiButtonEmpty--small"
                 data-test-subj="policyModalCloseButton"
                 type="button"
               >
@@ -193,7 +199,7 @@ exports[`<PolicyModal /> spec renders the component 1`] = `
               class="euiFlexItem euiFlexItem--flexGrowZero"
             >
               <button
-                class="euiButton euiButton--primary euiButton--fill"
+                class="euiButton euiButton--primary euiButton--small euiButton--fill"
                 data-test-subj="policyModalEditJsonButton"
                 type="button"
               >
@@ -212,7 +218,7 @@ exports[`<PolicyModal /> spec renders the component 1`] = `
               class="euiFlexItem euiFlexItem--flexGrowZero"
             >
               <button
-                class="euiButton euiButton--primary euiButton--fill"
+                class="euiButton euiButton--primary euiButton--small euiButton--fill"
                 data-test-subj="policyModalEditButton"
                 type="button"
               >

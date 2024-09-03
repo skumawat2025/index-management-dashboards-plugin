@@ -6,7 +6,7 @@
 import React, { Component, Fragment } from "react";
 import {
   EuiSpacer,
-  EuiFormRow,
+  EuiCompressedFormRow,
   EuiCallOut,
   EuiPopover,
   EuiFlexGroup,
@@ -17,10 +17,10 @@ import {
   EuiComboBoxOptionOption,
   EuiBadge,
   EuiLink,
+  EuiPanel,
 } from "@elastic/eui";
 import _ from "lodash";
-import EuiComboBox from "../../../../components/ComboBoxWithoutWarning";
-import { ContentPanel } from "../../../../components/ContentPanel";
+import EuiCompressedComboBox from "../../../../components/ComboBoxWithoutWarning";
 import IndexFilterPopover from "../IndexFilterPopover";
 import { FieldItem, IndexItem } from "../../../../../models/interfaces";
 import IndexService from "../../../../services/IndexService";
@@ -163,7 +163,11 @@ export default class TransformIndices extends Component<TransformIndicesProps, T
 
     return (
       <div>
-        <ContentPanel panelStyles={{ padding: "20px 20px" }} bodyStyles={{ padding: "10px" }} title="Indices" titleSize="m">
+        <EuiPanel>
+          <EuiText size="s">
+            <h2>Indices</h2>
+          </EuiText>
+          <EuiHorizontalRule margin="xs" />
           <div>
             {hasAggregation && (
               <Fragment>
@@ -172,13 +176,17 @@ export default class TransformIndices extends Component<TransformIndicesProps, T
                 </EuiCallOut>
               </Fragment>
             )}
-            <EuiFormRow
-              label="Source index"
+            <EuiCompressedFormRow
+              label={
+                <EuiText size="s">
+                  <h3>Source index</h3>
+                </EuiText>
+              }
               error={sourceIndexError}
               isInvalid={sourceIndexError != ""}
               helpText="The index where this transform job is performed on. Type in * as wildcard for index pattern. Indices cannot be changed once the job is created. Please ensure that you select the right source index."
             >
-              <EuiComboBox
+              <EuiCompressedComboBox
                 placeholder="Select source index"
                 options={indexOptions}
                 selectedOptions={sourceIndex}
@@ -189,17 +197,19 @@ export default class TransformIndices extends Component<TransformIndicesProps, T
                 isInvalid={sourceIndexError != ""}
                 data-test-subj="sourceIndexCombobox"
               />
-            </EuiFormRow>
+            </EuiCompressedFormRow>
             <EuiSpacer size="s" />
             <EuiFlexGroup gutterSize="xs">
               <EuiFlexItem grow={false}>
-                <EuiText size="xs">
-                  <h4>Source index filter</h4>
+                <EuiText size="s">
+                  <h3>Source index filter</h3>
                 </EuiText>
               </EuiFlexItem>
               <EuiFlexItem>
-                <EuiText size="xs" color="subdued">
-                  <i> – optional</i>
+                <EuiText size="s" color="subdued">
+                  <h3>
+                    <i> – optional</i>
+                  </h3>
                 </EuiText>
               </EuiFlexItem>
             </EuiFlexGroup>
@@ -252,13 +262,17 @@ export default class TransformIndices extends Component<TransformIndicesProps, T
             </EuiText>
             <EuiSpacer size="s" />
             <EuiHorizontalRule margin="xs" />
-            <EuiFormRow
-              label="Target index"
+            <EuiCompressedFormRow
+              label={
+                <EuiText size="s">
+                  <h3>Target index</h3>
+                </EuiText>
+              }
               error={targetIndexError}
               isInvalid={targetIndexError != ""}
               helpText="The index stores transform results. You can look up an existing index to reuse or type to create a new index."
             >
-              <EuiComboBox
+              <EuiCompressedComboBox
                 placeholder="Select or create target index"
                 options={targetIndexOptions}
                 selectedOptions={targetIndex}
@@ -270,13 +284,15 @@ export default class TransformIndices extends Component<TransformIndicesProps, T
                 isInvalid={targetIndexError != ""}
                 data-test-subj="targetIndexCombobox"
               />
-            </EuiFormRow>
+            </EuiCompressedFormRow>
           </div>
-        </ContentPanel>
+        </EuiPanel>
         <Fragment>
           <EuiSpacer />
           <EuiCallOut color="warning">
-            <p>You can't change indices after creating a job. Double-check the source and target index names before proceeding.</p>
+            <EuiText size="s">
+              <p>You can't change indices after creating a job. Double-check the source and target index names before proceeding.</p>
+            </EuiText>
           </EuiCallOut>
         </Fragment>
       </div>

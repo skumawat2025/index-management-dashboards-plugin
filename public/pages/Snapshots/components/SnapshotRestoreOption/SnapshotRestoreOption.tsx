@@ -4,9 +4,10 @@
  */
 
 import React, { ChangeEvent } from "react";
-import { EuiRadio, EuiSpacer } from "@elastic/eui";
+import { EuiCompressedRadio, EuiSpacer } from "@elastic/eui";
 import CustomLabel from "../../../../components/CustomLabel";
 import { RESTORE_OPTIONS } from "../../../../models/interfaces";
+import { EuiText } from "@opensearch-project/oui";
 
 interface SnapshotRestoreOptionProps {
   restoreAllIndices: boolean;
@@ -26,12 +27,9 @@ const SnapshotRestoreOption = ({
   const { restore_all_indices, restore_specific_indices } = RESTORE_OPTIONS;
 
   return (
-    <div style={{ width: width }}>
-      <h5>Specify restore option</h5>
-
-      <EuiSpacer size="m" />
-
-      <EuiRadio
+    <div>
+      <CustomLabel title={"Specify restore option"} />
+      <EuiCompressedRadio
         id={restore_all_indices}
         name="restore_option"
         label="Restore all indices in snapshot"
@@ -41,7 +39,7 @@ const SnapshotRestoreOption = ({
 
       <EuiSpacer size="s" />
 
-      <EuiRadio
+      <EuiCompressedRadio
         id={restore_specific_indices}
         name="restore_option"
         label="Restore specific indices"

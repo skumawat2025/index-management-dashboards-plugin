@@ -4,144 +4,131 @@ exports[`<EditRollup /> spec renders the component 1`] = `
 <div
   style="padding: 25px 50px;"
 >
-  <h1
-    class="euiTitle euiTitle--large"
+  <div
+    class="euiText euiText--small"
   >
-    Edit rollup job
-  </h1>
+    <h1>
+      Edit rollup job
+    </h1>
+  </div>
   <div
     class="euiSpacer euiSpacer--l"
   />
   <div
     class="euiPanel euiPanel--paddingMedium euiPanel--borderRadiusMedium euiPanel--plain euiPanel--hasShadow"
-    style="padding-left: 0px; padding-right: 0px;"
   >
     <div
-      class="euiFlexGroup euiFlexGroup--gutterLarge euiFlexGroup--alignItemsFlexStart euiFlexGroup--justifyContentSpaceBetween euiFlexGroup--directionRow euiFlexGroup--responsive"
-      style="padding: 0px 10px;"
+      class="euiFlexGroup euiFlexGroup--gutterExtraSmall euiFlexGroup--alignItemsCenter euiFlexGroup--directionRow euiFlexGroup--responsive"
     >
       <div
-        class="euiFlexItem"
+        class="euiText euiText--small"
       >
-        <h3
-          class="euiTitle euiTitle--medium"
-        >
+        <h2>
           Job name and description
-          <span
-            class="panel-header-count"
-          >
-             
-             
-          </span>
-        </h3>
+        </h2>
       </div>
     </div>
     <hr
       class="euiHorizontalRule euiHorizontalRule--full euiHorizontalRule--marginXSmall"
     />
     <div
-      style="padding: initial;"
+      class="euiFormRow euiFormRow--compressed"
+      id="some_html_id-row"
     >
       <div
-        style="padding-left: 10px;"
+        class="euiFormRow__labelWrapper"
+      >
+        <label
+          aria-invalid="false"
+          class="euiFormLabel euiFormRow__label"
+          for="some_html_id"
+        >
+          <div
+            class="euiText euiText--small"
+          >
+            <h3>
+              Name
+            </h3>
+          </div>
+        </label>
+      </div>
+      <div
+        class="euiFormRow__fieldWrapper"
       >
         <div
-          class="euiSpacer euiSpacer--s"
-        />
-        <div
-          class="euiFormRow"
-          id="some_html_id-row"
+          class="euiFormControlLayout euiFormControlLayout--compressed"
         >
           <div
-            class="euiFormRow__labelWrapper"
+            class="euiFormControlLayout__childrenWrapper"
           >
-            <label
-              aria-invalid="false"
-              class="euiFormLabel euiFormRow__label"
-              for="some_html_id"
-            >
-              Name
-            </label>
-          </div>
-          <div
-            class="euiFormRow__fieldWrapper"
-          >
-            <div
-              class="euiFormControlLayout"
-            >
-              <div
-                class="euiFormControlLayout__childrenWrapper"
-              >
-                <input
-                  aria-describedby="some_html_id-help-0"
-                  class="euiFieldText"
-                  disabled=""
-                  id="some_html_id"
-                  placeholder="my-rollupjob1"
-                  type="text"
-                  value=""
-                />
-              </div>
-            </div>
-            <div
-              class="euiFormHelpText euiFormRow__text"
-              id="some_html_id-help-0"
-            >
-              Specify a unique, descriptive name.
-            </div>
-          </div>
-        </div>
-        <div
-          class="euiSpacer euiSpacer--l"
-        />
-        <div
-          class="euiFlexGroup euiFlexGroup--gutterExtraSmall euiFlexGroup--directionRow euiFlexGroup--responsive"
-        >
-          <div
-            class="euiFlexItem euiFlexItem--flexGrowZero"
-          >
-            <div
-              class="euiText euiText--extraSmall"
-            >
-              <h4>
-                Description
-              </h4>
-            </div>
-          </div>
-          <div
-            class="euiFlexItem"
-          >
-            <div
-              class="euiText euiText--extraSmall"
-            >
-              <div
-                class="euiTextColor euiTextColor--subdued"
-              >
-                <i>
-                   – optional
-                </i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="euiSpacer euiSpacer--xs"
-        />
-        <div
-          class="euiFormRow"
-          id="some_html_id-row"
-        >
-          <div
-            class="euiFormRow__fieldWrapper"
-          >
-            <textarea
-              class="euiTextArea euiTextArea--resizeVertical euiTextArea--compressed"
-              data-test-subj="description"
+            <input
+              aria-describedby="some_html_id-help-0"
+              class="euiFieldText euiFieldText--compressed"
+              disabled=""
               id="some_html_id"
-              rows="3"
+              placeholder="my-rollupjob1"
+              type="text"
+              value=""
             />
           </div>
         </div>
+        <div
+          class="euiFormHelpText euiFormRow__text"
+          id="some_html_id-help-0"
+        >
+          Specify a unique, descriptive name.
+        </div>
+      </div>
+    </div>
+    <div
+      class="euiSpacer euiSpacer--l"
+    />
+    <div
+      class="euiFlexGroup euiFlexGroup--gutterExtraSmall euiFlexGroup--alignItemsCenter euiFlexGroup--directionRow euiFlexGroup--responsive"
+    >
+      <div
+        class="euiFlexItem euiFlexItem--flexGrowZero"
+      >
+        <div
+          class="euiText euiText--small"
+        >
+          <h3>
+            Description
+          </h3>
+        </div>
+      </div>
+      <div
+        class="euiFlexItem"
+      >
+        <div
+          class="euiText euiText--medium"
+        >
+          <div
+            class="euiTextColor euiTextColor--subdued"
+          >
+            <i>
+               – optional
+            </i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="euiSpacer euiSpacer--xs"
+    />
+    <div
+      class="euiFormRow euiFormRow--compressed"
+      id="some_html_id-row"
+    >
+      <div
+        class="euiFormRow__fieldWrapper"
+      >
+        <textarea
+          class="euiTextArea euiTextArea--resizeVertical euiTextArea--compressed"
+          data-test-subj="description"
+          id="some_html_id"
+          rows="3"
+        />
       </div>
     </div>
   </div>
@@ -150,76 +137,154 @@ exports[`<EditRollup /> spec renders the component 1`] = `
   />
   <div
     class="euiPanel euiPanel--paddingMedium euiPanel--borderRadiusMedium euiPanel--plain euiPanel--hasShadow"
-    style="padding-left: 0px; padding-right: 0px;"
   >
     <div
-      class="euiFlexGroup euiFlexGroup--gutterLarge euiFlexGroup--alignItemsFlexStart euiFlexGroup--justifyContentSpaceBetween euiFlexGroup--directionRow euiFlexGroup--responsive"
-      style="padding: 0px 10px;"
+      class="euiFlexGroup euiFlexGroup--gutterExtraSmall euiFlexGroup--alignItemsCenter euiFlexGroup--directionRow euiFlexGroup--responsive"
     >
       <div
-        class="euiFlexItem"
+        class="euiText euiText--small"
       >
-        <h3
-          class="euiTitle euiTitle--small"
-        >
+        <h2>
           Schedule
-          <span
-            class="panel-header-count"
-          >
-             
-             
-          </span>
-        </h3>
+        </h2>
       </div>
     </div>
     <hr
       class="euiHorizontalRule euiHorizontalRule--full euiHorizontalRule--marginXSmall"
     />
     <div
-      style="padding: initial;"
+      class="euiFormRow euiFormRow--compressed"
+      id="some_html_id-row"
     >
       <div
-        style="padding-left: 10px;"
+        class="euiFormRow__labelWrapper"
       >
-        <div
-          class="euiSpacer euiSpacer--m"
-        />
-        <div
-          class="euiFormRow"
-          id="some_html_id-row"
+        <label
+          class="euiFormLabel euiFormRow__label"
+          for="some_html_id"
         >
           <div
-            class="euiFormRow__labelWrapper"
+            class="euiText euiText--small"
           >
-            <label
-              class="euiFormLabel euiFormRow__label"
-              for="some_html_id"
-            >
+            <h3>
               Rollup execution frequency
-            </label>
+            </h3>
           </div>
+        </label>
+      </div>
+      <div
+        class="euiFormRow__fieldWrapper"
+      >
+        <div
+          class="euiFormControlLayout euiFormControlLayout--compressed"
+        >
+          <div
+            class="euiFormControlLayout__childrenWrapper"
+          >
+            <select
+              class="euiSelect euiSelect--compressed"
+              id="some_html_id"
+            >
+              <option
+                value="fixed"
+              >
+                Define by fixed interval
+              </option>
+              <option
+                value="cron"
+              >
+                Define by cron expression
+              </option>
+            </select>
+            <div
+              class="euiFormControlLayoutIcons euiFormControlLayoutIcons--right"
+            >
+              <span
+                class="euiFormControlLayoutCustomIcon"
+              >
+                EuiIconMock
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="euiSpacer euiSpacer--m"
+    />
+    <div
+      class="euiText euiText--small"
+    >
+      <h3>
+        Rollup interval
+      </h3>
+    </div>
+    <div
+      class="euiFlexGroup euiFlexGroup--gutterLarge euiFlexGroup--directionRow euiFlexGroup--responsive"
+      style="max-width: 400px;"
+    >
+      <div
+        class="euiFlexItem euiFlexItem--flexGrowZero"
+        style="width: 200px;"
+      >
+        <div
+          class="euiFormRow euiFormRow--compressed"
+          id="some_html_id-row"
+        >
           <div
             class="euiFormRow__fieldWrapper"
           >
             <div
-              class="euiFormControlLayout"
+              class="euiFormControlLayout euiFormControlLayout--compressed"
+            >
+              <div
+                class="euiFormControlLayout__childrenWrapper"
+              >
+                <input
+                  class="euiFieldNumber euiFieldNumber--compressed"
+                  id="some_html_id"
+                  type="number"
+                  value="2"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="euiFlexItem"
+      >
+        <div
+          class="euiFormRow euiFormRow--compressed"
+          id="some_html_id-row"
+        >
+          <div
+            class="euiFormRow__fieldWrapper"
+          >
+            <div
+              class="euiFormControlLayout euiFormControlLayout--compressed"
             >
               <div
                 class="euiFormControlLayout__childrenWrapper"
               >
                 <select
-                  class="euiSelect"
+                  class="euiSelect euiSelect--compressed"
                   id="some_html_id"
                 >
                   <option
-                    value="fixed"
+                    value="MINUTES"
                   >
-                    Define by fixed interval
+                    Minute(s)
                   </option>
                   <option
-                    value="cron"
+                    value="HOURS"
                   >
-                    Define by cron expression
+                    Hour(s)
+                  </option>
+                  <option
+                    value="DAYS"
+                  >
+                    Day(s)
                   </option>
                 </select>
                 <div
@@ -235,289 +300,178 @@ exports[`<EditRollup /> spec renders the component 1`] = `
             </div>
           </div>
         </div>
-        <div
-          class="euiSpacer euiSpacer--m"
-        />
-        <div
-          class="euiFlexGroup euiFlexGroup--gutterLarge euiFlexGroup--directionRow euiFlexGroup--responsive"
-          style="max-width: 400px;"
+      </div>
+    </div>
+    <div
+      class="euiSpacer euiSpacer--m"
+    />
+    <div
+      class="euiFormRow euiFormRow--compressed"
+      id="some_html_id-row"
+    >
+      <div
+        class="euiFormRow__labelWrapper"
+      >
+        <label
+          class="euiFormLabel euiFormRow__label"
+          for="some_html_id"
         >
           <div
-            class="euiFlexItem euiFlexItem--flexGrowZero"
-            style="width: 200px;"
+            class="euiText euiText--small"
           >
-            <div
-              class="euiFormRow"
-              id="some_html_id-row"
-            >
-              <div
-                class="euiFormRow__labelWrapper"
-              >
-                <label
-                  aria-invalid="false"
-                  class="euiFormLabel euiFormRow__label"
-                  for="some_html_id"
-                >
-                  Rollup interval
-                </label>
-              </div>
-              <div
-                class="euiFormRow__fieldWrapper"
-              >
-                <div
-                  class="euiFormControlLayout"
-                >
-                  <div
-                    class="euiFormControlLayout__childrenWrapper"
-                  >
-                    <input
-                      class="euiFieldNumber"
-                      id="some_html_id"
-                      type="number"
-                      value="2"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <h3>
+              Page per execution
+            </h3>
           </div>
+        </label>
+      </div>
+      <div
+        class="euiFormRow__fieldWrapper"
+      >
+        <div
+          class="euiFormControlLayout euiFormControlLayout--compressed"
+        >
           <div
-            class="euiFlexItem"
+            class="euiFormControlLayout__childrenWrapper"
           >
-            <div
-              class="euiFormRow euiFormRow--hasEmptyLabelSpace"
-              id="some_html_id-row"
-            >
-              <div
-                class="euiFormRow__fieldWrapper"
-              >
-                <div
-                  class="euiFormControlLayout"
-                >
-                  <div
-                    class="euiFormControlLayout__childrenWrapper"
-                  >
-                    <select
-                      class="euiSelect"
-                      id="some_html_id"
-                    >
-                      <option
-                        value="MINUTES"
-                      >
-                        Minute(s)
-                      </option>
-                      <option
-                        value="HOURS"
-                      >
-                        Hour(s)
-                      </option>
-                      <option
-                        value="DAYS"
-                      >
-                        Day(s)
-                      </option>
-                    </select>
-                    <div
-                      class="euiFormControlLayoutIcons euiFormControlLayoutIcons--right"
-                    >
-                      <span
-                        class="euiFormControlLayoutCustomIcon"
-                      >
-                        EuiIconMock
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <input
+              aria-describedby="some_html_id-help-0"
+              class="euiFieldNumber euiFieldNumber--compressed"
+              id="some_html_id"
+              min="1"
+              placeholder="1000"
+              type="number"
+              value="1000"
+            />
           </div>
         </div>
         <div
-          class="euiSpacer euiSpacer--m"
-        />
+          class="euiFormHelpText euiFormRow__text"
+          id="some_html_id-help-0"
+        >
+          The number of pages every execution processes. A larger number means faster execution and higher costs on memory.
+        </div>
+      </div>
+    </div>
+    <div
+      class="euiSpacer euiSpacer--m"
+    />
+    <div
+      class="euiText euiText--small"
+    >
+      <h3>
+        Execution delay
+        <i>
+           – optional
+        </i>
+      </h3>
+    </div>
+    <div
+      class="euiFlexGroup euiFlexGroup--gutterLarge euiFlexGroup--directionRow euiFlexGroup--responsive"
+      style="max-width: 400px;"
+    >
+      <div
+        class="euiFlexItem euiFlexItem--flexGrowZero"
+        style="width: 200px;"
+      >
         <div
-          class="euiFormRow"
+          class="euiFormRow euiFormRow--compressed"
           id="some_html_id-row"
         >
-          <div
-            class="euiFormRow__labelWrapper"
-          >
-            <label
-              class="euiFormLabel euiFormRow__label"
-              for="some_html_id"
-            >
-              Page per execution
-            </label>
-          </div>
           <div
             class="euiFormRow__fieldWrapper"
           >
             <div
-              class="euiFormControlLayout"
+              class="euiFormControlLayout euiFormControlLayout--compressed"
             >
               <div
                 class="euiFormControlLayout__childrenWrapper"
               >
                 <input
-                  aria-describedby="some_html_id-help-0"
-                  class="euiFieldNumber"
+                  class="euiFieldNumber euiFieldNumber--compressed"
                   id="some_html_id"
-                  min="1"
-                  placeholder="1000"
                   type="number"
-                  value="1000"
+                  value=""
                 />
               </div>
             </div>
-            <div
-              class="euiFormHelpText euiFormRow__text"
-              id="some_html_id-help-0"
-            >
-              The number of pages every execution processes. A larger number means faster execution and higher costs on memory.
-            </div>
           </div>
-        </div>
-        <div
-          class="euiSpacer euiSpacer--m"
-        />
-        <div
-          class="euiFlexGroup euiFlexGroup--gutterLarge euiFlexGroup--directionRow euiFlexGroup--responsive"
-          style="max-width: 400px;"
-        >
-          <div
-            class="euiFlexItem euiFlexItem--flexGrowZero"
-            style="width: 200px;"
-          >
-            <div
-              class="euiFlexGroup euiFlexGroup--gutterExtraSmall euiFlexGroup--directionRow euiFlexGroup--responsive"
-            >
-              <div
-                class="euiFlexItem euiFlexItem--flexGrowZero"
-              >
-                <div
-                  class="euiText euiText--extraSmall"
-                >
-                  <h4>
-                    Execution delay
-                  </h4>
-                </div>
-              </div>
-              <div
-                class="euiFlexItem"
-              >
-                <div
-                  class="euiText euiText--extraSmall"
-                >
-                  <div
-                    class="euiTextColor euiTextColor--subdued"
-                  >
-                    <i>
-                       – optional
-                    </i>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="euiFormRow"
-              id="some_html_id-row"
-            >
-              <div
-                class="euiFormRow__fieldWrapper"
-              >
-                <div
-                  class="euiFormControlLayout"
-                >
-                  <div
-                    class="euiFormControlLayout__childrenWrapper"
-                  >
-                    <input
-                      class="euiFieldNumber"
-                      id="some_html_id"
-                      type="number"
-                      value=""
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="euiFlexItem"
-          >
-            <div
-              class="euiFormRow euiFormRow--hasEmptyLabelSpace"
-              id="some_html_id-row"
-            >
-              <div
-                class="euiFormRow__fieldWrapper"
-              >
-                <div
-                  class="euiFormControlLayout"
-                >
-                  <div
-                    class="euiFormControlLayout__childrenWrapper"
-                  >
-                    <select
-                      class="euiSelect"
-                      id="some_html_id"
-                    >
-                      <option
-                        value="SECONDS"
-                      >
-                        Second(s)
-                      </option>
-                      <option
-                        value="MINUTES"
-                      >
-                        Minute(s)
-                      </option>
-                      <option
-                        value="HOURS"
-                      >
-                        Hour(s)
-                      </option>
-                      <option
-                        value="DAYS"
-                      >
-                        Day(s)
-                      </option>
-                    </select>
-                    <div
-                      class="euiFormControlLayoutIcons euiFormControlLayoutIcons--right"
-                    >
-                      <span
-                        class="euiFormControlLayoutCustomIcon"
-                      >
-                        EuiIconMock
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="euiFormHelpText"
-          style="max-width: 400px;"
-        >
-          The amount of time the job waits for data ingestion to accommodate any necessary processing time.
         </div>
       </div>
+      <div
+        class="euiFlexItem"
+      >
+        <div
+          class="euiFormRow euiFormRow--compressed"
+          id="some_html_id-row"
+        >
+          <div
+            class="euiFormRow__fieldWrapper"
+          >
+            <div
+              class="euiFormControlLayout euiFormControlLayout--compressed"
+            >
+              <div
+                class="euiFormControlLayout__childrenWrapper"
+              >
+                <select
+                  class="euiSelect euiSelect--compressed"
+                  id="some_html_id"
+                >
+                  <option
+                    value="SECONDS"
+                  >
+                    Second(s)
+                  </option>
+                  <option
+                    value="MINUTES"
+                  >
+                    Minute(s)
+                  </option>
+                  <option
+                    value="HOURS"
+                  >
+                    Hour(s)
+                  </option>
+                  <option
+                    value="DAYS"
+                  >
+                    Day(s)
+                  </option>
+                </select>
+                <div
+                  class="euiFormControlLayoutIcons euiFormControlLayoutIcons--right"
+                >
+                  <span
+                    class="euiFormControlLayoutCustomIcon"
+                  >
+                    EuiIconMock
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="euiFormHelpText"
+      style="max-width: 400px;"
+    >
+      The amount of time the job waits for data ingestion to accommodate any necessary processing time.
     </div>
   </div>
   <div
     class="euiSpacer euiSpacer--l"
   />
   <div
-    class="euiFlexGroup euiFlexGroup--gutterLarge euiFlexGroup--alignItemsCenter euiFlexGroup--justifyContentFlexEnd euiFlexGroup--directionRow euiFlexGroup--responsive"
+    class="euiFlexGroup euiFlexGroup--gutterSmall euiFlexGroup--alignItemsCenter euiFlexGroup--justifyContentFlexEnd euiFlexGroup--directionRow euiFlexGroup--responsive"
   >
     <div
       class="euiFlexItem euiFlexItem--flexGrowZero"
     >
       <button
-        class="euiButtonEmpty euiButtonEmpty--primary"
+        class="euiButtonEmpty euiButtonEmpty--primary euiButtonEmpty--small"
         data-test-subj="editRollupCancelButton"
         type="button"
       >
@@ -536,7 +490,7 @@ exports[`<EditRollup /> spec renders the component 1`] = `
       class="euiFlexItem euiFlexItem--flexGrowZero"
     >
       <button
-        class="euiButton euiButton--primary euiButton--fill"
+        class="euiButton euiButton--primary euiButton--small euiButton--fill"
         data-test-subj="editRollupSaveChangesButton"
         type="button"
       >

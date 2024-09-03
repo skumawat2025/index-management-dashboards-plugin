@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 import React, { useCallback, useContext, useMemo, useState } from "react";
-import { EuiButton, EuiContextMenu } from "@elastic/eui";
+import { EuiSmallButton, EuiContextMenu } from "@elastic/eui";
 
 import { ManagedCatIndex } from "../../../../../server/models/interfaces";
 import ApplyPolicyModal from "../../components/ApplyPolicyModal";
@@ -23,6 +23,7 @@ import { ROUTES, INDEX_OP_TARGET_TYPE } from "../../../../utils/constants";
 import { RouteComponentProps } from "react-router-dom";
 import { openIndices } from "../../utils/helpers";
 import RefreshActionModal from "../../../../containers/RefreshAction";
+import { getUISettings } from "../../../../services/Services";
 
 export interface IndicesActionsProps extends Pick<RouteComponentProps, "history"> {
   selectedItems: ManagedCatIndex[];
@@ -125,6 +126,10 @@ export default function IndicesActions(props: IndicesActionsProps) {
   };
 
   const renderKey = useMemo(() => Date.now(), [selectedItems]);
+  const uiSettings = getUISettings();
+  const useUpdatedUX = uiSettings.get("home:useNewHomePage");
+
+  const size = useUpdatedUX ? "s" : undefined;
 
   return (
     <>
@@ -134,15 +139,16 @@ export default function IndicesActions(props: IndicesActionsProps) {
             data-test-subj="moreAction"
             panelPaddingSize="none"
             button={
-              <EuiButton iconType="arrowDown" iconSide="right">
+              <EuiSmallButton iconType="arrowDown" iconSide="right">
                 Actions
-              </EuiButton>
+              </EuiSmallButton>
             }
           >
             <EuiContextMenu
               initialPanelId={0}
               // The EuiContextMenu has bug when testing in jest
               // the props change won't make it rerender
+              size="s"
               key={renderKey}
               panels={[
                 {

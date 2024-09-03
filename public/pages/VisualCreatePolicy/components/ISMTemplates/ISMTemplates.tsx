@@ -4,7 +4,17 @@
  */
 
 import React from "react";
-import { EuiButton, EuiSpacer, EuiFlexGroup, EuiEmptyPrompt, EuiFlexItem, EuiText, EuiLink, EuiIcon } from "@elastic/eui";
+import {
+  EuiSmallButton,
+  EuiSpacer,
+  EuiFlexGroup,
+  EuiEmptyPrompt,
+  EuiFlexItem,
+  EuiText,
+  EuiLink,
+  EuiPanel,
+  EuiHorizontalRule,
+} from "@elastic/eui";
 import { ContentPanel } from "../../../../components/ContentPanel";
 import "brace/theme/github";
 import "brace/mode/json";
@@ -23,44 +33,40 @@ interface ISMTemplatesProps {
 const ISMTemplates = ({ policy, onChangePolicy }: ISMTemplatesProps) => {
   const templates = convertTemplatesToArray(policy.ism_template);
   const addTemplateButton = (
-    <EuiButton
+    <EuiSmallButton
       onClick={() => {
         onChangePolicy({ ...policy, ism_template: [...templates, { index_patterns: [], priority: 1 }] });
       }}
       data-test-subj="ism-templates-add-template-button"
     >
       Add template
-    </EuiButton>
+    </EuiSmallButton>
   );
+
   return (
-    <ContentPanel
-      bodyStyles={{ padding: "initial" }}
-      title={
-        <EuiFlexGroup gutterSize="xs" alignItems="center">
-          <EuiFlexItem grow={false}>
-            <EuiText>
-              <h3>ISM templates</h3>
-            </EuiText>
-          </EuiFlexItem>
-          <EuiFlexItem>
-            <EuiText color="subdued">
-              <i> – optional</i>
-            </EuiText>
-          </EuiFlexItem>
-        </EuiFlexGroup>
-      }
-      titleSize="s"
-      subTitleText={
-        <EuiText color="subdued" size="s" style={{ padding: "5px 0px" }}>
-          <p style={{ fontWeight: 200 }}>
-            Specify ISM template patterns that match the index to apply the policy.{" "}
-            <EuiLink href={DOCUMENTATION_URL} target="_blank" rel="noopener noreferrer">
-              Learn more
-            </EuiLink>
-          </p>
-        </EuiText>
-      }
-    >
+    <EuiPanel>
+      <EuiFlexGroup gutterSize="xs" alignItems="center">
+        <EuiFlexItem grow={false}>
+          <EuiText size="s">
+            <h2>ISM templates</h2>
+          </EuiText>
+        </EuiFlexItem>
+        <EuiFlexItem>
+          <EuiText color="subdued">
+            <i> – optional</i>
+          </EuiText>
+        </EuiFlexItem>
+      </EuiFlexGroup>
+
+      <EuiText color="subdued" size="xs">
+        <p style={{ fontWeight: 350 }}>
+          Specify ISM template patterns that match the index to apply the policy.{" "}
+          <EuiLink href={DOCUMENTATION_URL} target="_blank" rel="noopener noreferrer">
+            Learn more
+          </EuiLink>
+        </p>
+      </EuiText>
+      <EuiHorizontalRule margin={"xs"} />
       <div style={{ padding: "10px 0px 0px 10px" }}>
         {!!templates.length && (
           <EuiFlexGroup gutterSize="l" alignItems="center">
@@ -102,7 +108,11 @@ const ISMTemplates = ({ policy, onChangePolicy }: ISMTemplatesProps) => {
 
         {!templates.length ? (
           <EuiEmptyPrompt
-            title={<h2>No ISM templates</h2>}
+            title={
+              <EuiText size="s">
+                <h3>No ISM templates</h3>
+              </EuiText>
+            }
             style={{ maxWidth: "37em" }}
             titleSize="s"
             body={
@@ -120,7 +130,7 @@ const ISMTemplates = ({ policy, onChangePolicy }: ISMTemplatesProps) => {
           </>
         )}
       </div>
-    </ContentPanel>
+    </EuiPanel>
   );
 };
 

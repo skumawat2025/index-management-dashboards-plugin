@@ -4,7 +4,7 @@
  */
 
 import React, { ChangeEvent, Component } from "react";
-import { EuiSpacer, EuiTitle, EuiFlexGroup, EuiFlexItem } from "@elastic/eui";
+import { EuiSpacer, EuiTitle, EuiFlexGroup, EuiFlexItem, EuiText } from "@elastic/eui";
 import { RouteComponentProps } from "react-router-dom";
 import { TransformService } from "../../../../services";
 import { BREADCRUMBS, ROUTES } from "../../../../utils/constants";
@@ -29,6 +29,7 @@ interface SpecifyScheduleStepProps extends RouteComponentProps {
   onChangeIntervalTime: (e: ChangeEvent<HTMLInputElement>) => void;
   onChangePage: (e: ChangeEvent<HTMLInputElement>) => void;
   onChangeIntervalTimeunit: (e: ChangeEvent<HTMLSelectElement>) => void;
+  useUpdatedUX: boolean;
 }
 
 interface SpecifyScheduleStepState {
@@ -120,19 +121,31 @@ export default class SpecifyScheduleStep extends Component<SpecifyScheduleStepPr
       onChangeIntervalTime,
       onChangePage,
       onChangeIntervalTimeunit,
+      useUpdatedUX,
     } = this.props;
     const { transformId, transformIdError } = this.state;
+
+    const Title = !useUpdatedUX
+      ? () => {
+          return (
+            <>
+              <EuiText size="s">
+                <h1>Specify Schedule</h1>
+              </EuiText>
+              <EuiSpacer />
+            </>
+          );
+        }
+      : () => {};
+
     return (
-      <div style={{ padding: "5px 50px" }}>
+      <div style={this.props.useUpdatedUX ? { padding: "0px" } : { padding: "5px 50px" }}>
         <EuiFlexGroup>
           <EuiFlexItem style={{ maxWidth: 300 }} grow={false}>
             <CreateTransformSteps step={3} />
           </EuiFlexItem>
           <EuiFlexItem>
-            <EuiTitle size="l">
-              <h1>Specify Schedule</h1>
-            </EuiTitle>
-            <EuiSpacer />
+            {Title()}
             <Schedule
               {...this.props}
               isEdit={false}

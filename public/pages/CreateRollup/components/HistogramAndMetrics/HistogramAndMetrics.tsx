@@ -18,6 +18,8 @@ import {
   Pagination,
   EuiIcon,
   EuiTableSortingType,
+  EuiPanel,
+  EuiHorizontalRule,
 } from "@elastic/eui";
 import { ContentPanel, ContentPanelActions } from "../../../../components/ContentPanel";
 import { ModalConsumer } from "../../../../components/Modal";
@@ -182,30 +184,34 @@ export default class HistogramAndMetrics extends Component<HistogramAndMetricsPr
     };
 
     return (
-      <ContentPanel
-        actions={
-          <ModalConsumer>
-            {() => (
-              <ContentPanelActions
-                actions={[
-                  {
-                    text: "Edit",
-                    buttonProps: {
-                      onClick: () => onChangeStep(2),
+      <EuiPanel>
+        <EuiFlexGroup gutterSize="xs">
+          <EuiFlexItem>
+            <EuiText size="s">
+              <h2>{AGGREGATION_AND_METRIC_SETTINGS}</h2>
+            </EuiText>
+          </EuiFlexItem>
+          <EuiFlexItem grow={false}>
+            <ModalConsumer>
+              {() => (
+                <ContentPanelActions
+                  actions={[
+                    {
+                      text: "Edit",
+                      buttonProps: {
+                        onClick: () => onChangeStep(2),
+                      },
                     },
-                  },
-                ]}
-              />
-            )}
-          </ModalConsumer>
-        }
-        bodyStyles={{ padding: "initial" }}
-        title={AGGREGATION_AND_METRIC_SETTINGS}
-        titleSize="m"
-      >
-        <div style={{ padding: "15px" }}>
+                  ]}
+                />
+              )}
+            </ModalConsumer>
+          </EuiFlexItem>
+        </EuiFlexGroup>
+        <EuiHorizontalRule margin={"xs"} />
+        <div>
           <EuiSpacer size="xs" />
-          <EuiText>
+          <EuiText size="s">
             <h3>Time aggregation</h3>
           </EuiText>
           <EuiSpacer size="s" />
@@ -232,13 +238,8 @@ export default class HistogramAndMetrics extends Component<HistogramAndMetricsPr
           <EuiSpacer size="m" />
           <EuiFlexGroup gutterSize="xs">
             <EuiFlexItem grow={false}>
-              <EuiText>
-                <h3>Additional aggregations</h3>
-              </EuiText>
-            </EuiFlexItem>
-            <EuiFlexItem grow={false}>
-              <EuiText color="subdued" textAlign="left">
-                <h3>{`(${selectedDimensionField.length})`}</h3>
+              <EuiText size="s">
+                <h3>Additional aggregations {`(${selectedDimensionField.length})`}</h3>
               </EuiText>
             </EuiFlexItem>
           </EuiFlexGroup>
@@ -252,16 +253,15 @@ export default class HistogramAndMetrics extends Component<HistogramAndMetricsPr
             this.onDimensionTableChange
           )}
 
-          <EuiSpacer size="m" />
+          <EuiSpacer size="s" />
 
-          <EuiSpacer />
           {additionalMetricsComponent(selectedMetrics)}
 
           {sourceFieldComponents(selectedMetrics, this.parseMetric(metricsShown), metricsColumns, pagination, sorting, this.onTableChange)}
 
           <EuiSpacer size="s" />
         </div>
-      </ContentPanel>
+      </EuiPanel>
     );
   }
 }

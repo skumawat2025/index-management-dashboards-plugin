@@ -9,7 +9,7 @@ import {
   EuiTitle,
   EuiFlexGroup,
   EuiFlexItem,
-  EuiButton,
+  EuiSmallButton,
   EuiLoadingSpinner,
   EuiBasicTable,
   EuiTableFieldDataColumnType,
@@ -17,6 +17,9 @@ import {
   Criteria,
   // @ts-ignore
   Pagination,
+  EuiPanel,
+  EuiText,
+  EuiHorizontalRule,
 } from "@elastic/eui";
 import { RouteComponentProps } from "react-router-dom";
 import queryString from "query-string";
@@ -276,11 +279,13 @@ export class PolicyDetails extends Component<PolicyDetailsProps, PolicyDetailsSt
           </>
         ) : (
           <>
-            <EuiFlexGroup style={{ padding: "0px 10px" }} justifyContent="spaceBetween" alignItems="center">
+            <EuiFlexGroup justifyContent="spaceBetween" alignItems="center">
               <EuiFlexItem grow={false}>
-                <EuiTitle size="m">
-                  <h2>{policyId}</h2>
-                </EuiTitle>
+                <EuiText size="s">
+                  <EuiTitle size="l">
+                    <h1>{policyId}</h1>
+                  </EuiTitle>
+                </EuiText>
               </EuiFlexItem>
 
               <EuiFlexItem grow={false}>
@@ -288,24 +293,24 @@ export class PolicyDetails extends Component<PolicyDetailsProps, PolicyDetailsSt
                   <EuiFlexItem grow={false}>
                     <ModalConsumer>
                       {({ onShow }) => (
-                        <EuiButton
+                        <EuiSmallButton
                           onClick={() => onShow(CreatePolicyModal, { isEdit: true, onClickContinue: this.onEdit })}
                           data-test-subj="policy-details-edit-button"
                         >
                           Edit
-                        </EuiButton>
+                        </EuiSmallButton>
                       )}
                     </ModalConsumer>
                   </EuiFlexItem>
                   <EuiFlexItem grow={false}>
-                    <EuiButton onClick={this.showDeleteModal} color="danger" data-test-subj="deleteButton">
+                    <EuiSmallButton onClick={this.showDeleteModal} color="danger" data-test-subj="deleteButton">
                       Delete
-                    </EuiButton>
+                    </EuiSmallButton>
                   </EuiFlexItem>
                   <EuiFlexItem>
-                    <EuiButton onClick={this.showJSONModal} data-test-subj="viewButton">
+                    <EuiSmallButton onClick={this.showJSONModal} data-test-subj="viewButton">
                       View JSON
-                    </EuiButton>
+                    </EuiSmallButton>
                   </EuiFlexItem>
                 </EuiFlexGroup>
               </EuiFlexItem>
@@ -324,9 +329,15 @@ export class PolicyDetails extends Component<PolicyDetailsProps, PolicyDetailsSt
           ismTemplates={policy.policy.ism_template || []}
         />
         <EuiSpacer />
-        <ContentPanel bodyStyles={{ padding: "10px" }} title={`ISM Templates (${convertedISMTemplates.length})`} titleSize="s">
+        <EuiPanel>
+          <EuiFlexGroup gutterSize="xs" alignItems="center">
+            <EuiText size="s">
+              <h2>{`ISM Templates (${convertedISMTemplates.length})`}</h2>
+            </EuiText>
+          </EuiFlexGroup>
+          <EuiHorizontalRule margin={"xs"} />
           <EuiBasicTable items={convertedISMTemplates} columns={columns} pagination={pagination} onChange={this.onTableChange} />
-        </ContentPanel>
+        </EuiPanel>
         <EuiSpacer />
         <States
           onOpenFlyout={() => {}}

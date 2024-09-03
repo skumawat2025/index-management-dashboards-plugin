@@ -4,8 +4,17 @@
  */
 
 import React, { ChangeEvent } from "react";
-import { EuiSpacer, EuiFormRow, EuiFieldText, EuiTextArea, EuiText, EuiFlexGroup, EuiFlexItem } from "@elastic/eui";
-import { ContentPanel } from "../../../../components/ContentPanel";
+import {
+  EuiSpacer,
+  EuiCompressedFormRow,
+  EuiCompressedFieldText,
+  EuiTextArea,
+  EuiText,
+  EuiFlexGroup,
+  EuiFlexItem,
+  EuiPanel,
+  EuiHorizontalRule,
+} from "@elastic/eui";
 
 interface ConfigureTransformProps {
   inEdit: boolean;
@@ -14,34 +23,65 @@ interface ConfigureTransformProps {
   onChangeName: (value: ChangeEvent<HTMLInputElement>) => void;
   onChangeDescription: (value: ChangeEvent<HTMLTextAreaElement>) => void;
   description: string;
+  size: "s" | "m";
 }
 
-const ConfigureTransform = ({ inEdit, transformId, error, onChangeName, onChangeDescription, description }: ConfigureTransformProps) => (
-  <ContentPanel bodyStyles={{ padding: "initial" }} title="Job name and description" titleSize="m">
-    <div style={{ paddingLeft: "10px" }}>
+const ConfigureTransform = ({
+  inEdit,
+  transformId,
+  error,
+  onChangeName,
+  onChangeDescription,
+  description,
+  size,
+}: ConfigureTransformProps) => (
+  <EuiPanel>
+    <EuiText size="s">
+      {" "}
+      <h2>Job name and description</h2>{" "}
+    </EuiText>
+    <EuiHorizontalRule margin="xs" />
+    <div>
       <EuiSpacer size="s" />
-      <EuiFormRow label="Name" helpText="Specify a unique, descriptive name." isInvalid={!!error} error={error}>
-        <EuiFieldText isInvalid={!!error} placeholder="transform-id" value={transformId} onChange={onChangeName} disabled={inEdit} />
-      </EuiFormRow>
+      <EuiCompressedFormRow
+        label={
+          <EuiText size="s">
+            <h3>Name</h3>
+          </EuiText>
+        }
+        helpText="Specify a unique, descriptive name."
+        isInvalid={!!error}
+        error={error}
+      >
+        <EuiCompressedFieldText
+          isInvalid={!!error}
+          placeholder="transform-id"
+          value={transformId}
+          onChange={onChangeName}
+          disabled={inEdit}
+        />
+      </EuiCompressedFormRow>
       <EuiSpacer />
       <EuiFlexGroup gutterSize="xs">
         <EuiFlexItem grow={false}>
-          <EuiText size="xs">
-            <h4>Description</h4>
+          <EuiText size="s">
+            <h3>Description</h3>
           </EuiText>
         </EuiFlexItem>
         <EuiFlexItem>
-          <EuiText size="xs" color="subdued">
-            <i> – optional</i>
+          <EuiText size="s" color="subdued">
+            <h3>
+              <i> – optional</i>
+            </h3>
           </EuiText>
         </EuiFlexItem>
       </EuiFlexGroup>
       <EuiSpacer size="xs" />
-      <EuiFormRow>
+      <EuiCompressedFormRow>
         <EuiTextArea compressed={true} value={description} onChange={onChangeDescription} data-test-subj="description" />
-      </EuiFormRow>
+      </EuiCompressedFormRow>
     </div>
-  </ContentPanel>
+  </EuiPanel>
 );
 
 export default ConfigureTransform;

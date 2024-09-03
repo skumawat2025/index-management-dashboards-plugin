@@ -4,7 +4,7 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { EuiFieldSearch, EuiFlexGroup, EuiFlexItem } from "@elastic/eui";
+import { EuiCompressedFieldSearch, EuiFlexGroup, EuiFlexItem } from "@elastic/eui";
 import FilterGroup from "../../../../components/FilterGroup";
 import { IndicesUpdateMode } from "../../../../utils/constants";
 
@@ -14,6 +14,7 @@ export interface SearchControlsProps {
     selectedTypes: string[];
   };
   onSearchChange: (args: SearchControlsProps["value"]) => void;
+  useNewUx?: boolean;
 }
 
 export default function SearchControls(props: SearchControlsProps) {
@@ -29,10 +30,17 @@ export default function SearchControls(props: SearchControlsProps) {
   useEffect(() => {
     setState(props.value);
   }, [props.value]);
+  const paddingStyle = props.useNewUx ? { padding: "0px 0px" } : { padding: "0px 5px" };
   return (
-    <EuiFlexGroup style={{ padding: "0px 5px" }} alignItems="center">
+    <EuiFlexGroup gutterSize="s" alignItems="center" style={paddingStyle}>
       <EuiFlexItem>
-        <EuiFieldSearch fullWidth placeholder="Search..." value={state.search} onChange={(e) => onChange("search", e.target.value)} />
+        <EuiCompressedFieldSearch
+          autoFocus
+          fullWidth
+          placeholder="Search..."
+          value={state.search}
+          onChange={(e) => onChange("search", e.target.value)}
+        />
       </EuiFlexItem>
       <EuiFlexItem style={{ flexBasis: "100px" }} grow={false}>
         <FilterGroup

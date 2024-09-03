@@ -40,41 +40,48 @@ exports[`<CreateAction /> spec renders the component 1`] = `
       <div
         class="euiSpacer euiSpacer--l"
       />
-      <div
-        class="euiText euiText--medium"
-        style="margin-bottom: 5px;"
-      >
-        <h5
-          class="euiFormLabel "
-          style="margin-bottom: 2px;"
+      <div>
+        <div
+          class="euiText euiText--small"
+          style="margin-bottom: 5px;"
         >
-          Action type
-        </h5>
-        <p>
-           
-          <span
-            style="font-weight: 200; font-size: 12px;"
+          <h3
+            class="euiFormLabel "
+            style="margin-bottom: 2px;"
           >
-            Select the action you want to add to this state.
+            Action type
+          </h3>
+        </div>
+        <div
+          class="euiText euiText--extraSmall"
+          style="margin-bottom: 5px;"
+        >
+          <p>
              
-          </span>
-        </p>
+            <span
+              style="font-weight: 300; font-size: 14px;"
+            >
+              Select the action you want to add to this state.
+               
+            </span>
+          </p>
+        </div>
       </div>
       <div
-        class="euiFormRow euiFormRow--fullWidth"
+        class="euiFormRow euiFormRow--fullWidth euiFormRow--compressed"
         id="some_html_id-row"
       >
         <div
           class="euiFormRow__fieldWrapper"
         >
           <div
-            class="euiFormControlLayout euiFormControlLayout--fullWidth"
+            class="euiFormControlLayout euiFormControlLayout--fullWidth euiFormControlLayout--compressed"
           >
             <div
               class="euiFormControlLayout__childrenWrapper"
             >
               <select
-                class="euiSelect euiSelect--fullWidth"
+                class="euiSelect euiSelect--fullWidth euiSelect--compressed"
                 data-test-subj="create-state-action-type"
                 id="some_html_id"
                 placeholder="Select action type"
@@ -180,41 +187,48 @@ exports[`<CreateAction /> spec renders the component 1`] = `
       <div
         class="euiSpacer euiSpacer--l"
       />
-      <div
-        class="euiText euiText--medium"
-        style="margin-bottom: 5px;"
-      >
-        <h5
-          class="euiFormLabel "
-          style="margin-bottom: 2px;"
+      <div>
+        <div
+          class="euiText euiText--small"
+          style="margin-bottom: 5px;"
         >
-          Minimum index age
-        </h5>
-        <p>
-           
-          <span
-            style="font-weight: 200; font-size: 12px;"
+          <h3
+            class="euiFormLabel "
+            style="margin-bottom: 2px;"
           >
-            The minimum age required to roll over the index. Accepts time units, e.g. "5h" or "1d".
+            Minimum index age
+          </h3>
+        </div>
+        <div
+          class="euiText euiText--extraSmall"
+          style="margin-bottom: 5px;"
+        >
+          <p>
              
-          </span>
-        </p>
+            <span
+              style="font-weight: 300; font-size: 14px;"
+            >
+              The minimum age required to roll over the index. Accepts time units, e.g. "5h" or "1d".
+               
+            </span>
+          </p>
+        </div>
       </div>
       <div
-        class="euiFormRow euiFormRow--fullWidth"
+        class="euiFormRow euiFormRow--fullWidth euiFormRow--compressed"
         id="some_html_id-row"
       >
         <div
           class="euiFormRow__fieldWrapper"
         >
           <div
-            class="euiFormControlLayout euiFormControlLayout--fullWidth"
+            class="euiFormControlLayout euiFormControlLayout--fullWidth euiFormControlLayout--compressed"
           >
             <div
               class="euiFormControlLayout__childrenWrapper"
             >
               <input
-                class="euiFieldText euiFieldText--fullWidth"
+                class="euiFieldText euiFieldText--fullWidth euiFieldText--compressed"
                 data-test-subj="action-render-rollover-min-index-age"
                 id="some_html_id"
                 type="text"
@@ -227,41 +241,48 @@ exports[`<CreateAction /> spec renders the component 1`] = `
       <div
         class="euiSpacer euiSpacer--s"
       />
-      <div
-        class="euiText euiText--medium"
-        style="margin-bottom: 5px;"
-      >
-        <h5
-          class="euiFormLabel "
-          style="margin-bottom: 2px;"
+      <div>
+        <div
+          class="euiText euiText--small"
+          style="margin-bottom: 5px;"
         >
-          Minimum doc count
-        </h5>
-        <p>
-           
-          <span
-            style="font-weight: 200; font-size: 12px;"
+          <h3
+            class="euiFormLabel "
+            style="margin-bottom: 2px;"
           >
-            The minimum number of documents required to roll over the index.
+            Minimum doc count
+          </h3>
+        </div>
+        <div
+          class="euiText euiText--extraSmall"
+          style="margin-bottom: 5px;"
+        >
+          <p>
              
-          </span>
-        </p>
+            <span
+              style="font-weight: 300; font-size: 14px;"
+            >
+              The minimum number of documents required to roll over the index.
+               
+            </span>
+          </p>
+        </div>
       </div>
       <div
-        class="euiFormRow euiFormRow--fullWidth"
+        class="euiFormRow euiFormRow--fullWidth euiFormRow--compressed"
         id="some_html_id-row"
       >
         <div
           class="euiFormRow__fieldWrapper"
         >
           <div
-            class="euiFormControlLayout euiFormControlLayout--fullWidth"
+            class="euiFormControlLayout euiFormControlLayout--fullWidth euiFormControlLayout--compressed"
           >
             <div
               class="euiFormControlLayout__childrenWrapper"
             >
               <input
-                class="euiFieldNumber euiFieldNumber--fullWidth"
+                class="euiFieldNumber euiFieldNumber--fullWidth euiFieldNumber--compressed"
                 data-test-subj="action-render-rollover-min-doc-count"
                 id="some_html_id"
                 type="number"
@@ -274,41 +295,48 @@ exports[`<CreateAction /> spec renders the component 1`] = `
       <div
         class="euiSpacer euiSpacer--s"
       />
-      <div
-        class="euiText euiText--medium"
-        style="margin-bottom: 5px;"
-      >
-        <h5
-          class="euiFormLabel "
-          style="margin-bottom: 2px;"
+      <div>
+        <div
+          class="euiText euiText--small"
+          style="margin-bottom: 5px;"
         >
-          Minimum index size
-        </h5>
-        <p>
-           
-          <span
-            style="font-weight: 200; font-size: 12px;"
+          <h3
+            class="euiFormLabel "
+            style="margin-bottom: 2px;"
           >
-            The minimum size of the total primary shard storage required to roll over the index. Accepts byte units, e.g. "500mb" or "50gb".
+            Minimum index size
+          </h3>
+        </div>
+        <div
+          class="euiText euiText--extraSmall"
+          style="margin-bottom: 5px;"
+        >
+          <p>
              
-          </span>
-        </p>
+            <span
+              style="font-weight: 300; font-size: 14px;"
+            >
+              The minimum size of the total primary shard storage required to roll over the index. Accepts byte units, e.g. "500mb" or "50gb".
+               
+            </span>
+          </p>
+        </div>
       </div>
       <div
-        class="euiFormRow euiFormRow--fullWidth"
+        class="euiFormRow euiFormRow--fullWidth euiFormRow--compressed"
         id="some_html_id-row"
       >
         <div
           class="euiFormRow__fieldWrapper"
         >
           <div
-            class="euiFormControlLayout euiFormControlLayout--fullWidth"
+            class="euiFormControlLayout euiFormControlLayout--fullWidth euiFormControlLayout--compressed"
           >
             <div
               class="euiFormControlLayout__childrenWrapper"
             >
               <input
-                class="euiFieldText euiFieldText--fullWidth"
+                class="euiFieldText euiFieldText--fullWidth euiFieldText--compressed"
                 data-test-subj="action-render-rollover-min-size"
                 id="some_html_id"
                 type="text"
@@ -321,41 +349,48 @@ exports[`<CreateAction /> spec renders the component 1`] = `
       <div
         class="euiSpacer euiSpacer--s"
       />
-      <div
-        class="euiText euiText--medium"
-        style="margin-bottom: 5px;"
-      >
-        <h5
-          class="euiFormLabel "
-          style="margin-bottom: 2px;"
+      <div>
+        <div
+          class="euiText euiText--small"
+          style="margin-bottom: 5px;"
         >
-          Minimum primary shard size
-        </h5>
-        <p>
-           
-          <span
-            style="font-weight: 200; font-size: 12px;"
+          <h3
+            class="euiFormLabel "
+            style="margin-bottom: 2px;"
           >
-            The minimum size of a single primary shard required to roll over the index. Accepts byte units, e.g. "500mb" or "50gb".
+            Minimum primary shard size
+          </h3>
+        </div>
+        <div
+          class="euiText euiText--extraSmall"
+          style="margin-bottom: 5px;"
+        >
+          <p>
              
-          </span>
-        </p>
+            <span
+              style="font-weight: 300; font-size: 14px;"
+            >
+              The minimum size of a single primary shard required to roll over the index. Accepts byte units, e.g. "500mb" or "50gb".
+               
+            </span>
+          </p>
+        </div>
       </div>
       <div
-        class="euiFormRow euiFormRow--fullWidth"
+        class="euiFormRow euiFormRow--fullWidth euiFormRow--compressed"
         id="some_html_id-row"
       >
         <div
           class="euiFormRow__fieldWrapper"
         >
           <div
-            class="euiFormControlLayout euiFormControlLayout--fullWidth"
+            class="euiFormControlLayout euiFormControlLayout--fullWidth euiFormControlLayout--compressed"
           >
             <div
               class="euiFormControlLayout__childrenWrapper"
             >
               <input
-                class="euiFieldText euiFieldText--fullWidth"
+                class="euiFieldText euiFieldText--fullWidth euiFieldText--compressed"
                 data-test-subj="action-render-rollover-min-primary-shard-size"
                 id="some_html_id"
                 type="text"
@@ -426,28 +461,35 @@ exports[`<CreateAction /> spec renders the component 1`] = `
                 <div
                   class="euiFlexItem"
                 >
-                  <div
-                    class="euiText euiText--medium"
-                    style="margin-bottom: 5px;"
-                  >
-                    <h5
-                      class="euiFormLabel "
-                      style="margin-bottom: 2px;"
+                  <div>
+                    <div
+                      class="euiText euiText--small"
+                      style="margin-bottom: 5px;"
                     >
-                      Timeout
-                    </h5>
-                    <p>
-                       
-                      <span
-                        style="font-weight: 200; font-size: 12px;"
+                      <h3
+                        class="euiFormLabel "
+                        style="margin-bottom: 2px;"
                       >
-                        The timeout period for the action. Accepts time units, e.g. "5h" or "1d".
+                        Timeout
+                      </h3>
+                    </div>
+                    <div
+                      class="euiText euiText--extraSmall"
+                      style="margin-bottom: 5px;"
+                    >
+                      <p>
                          
-                      </span>
-                    </p>
+                        <span
+                          style="font-weight: 300; font-size: 14px;"
+                        >
+                          The timeout period for the action. Accepts time units, e.g. "5h" or "1d".
+                           
+                        </span>
+                      </p>
+                    </div>
                   </div>
                   <div
-                    class="euiFormRow euiFormRow--fullWidth"
+                    class="euiFormRow euiFormRow--fullWidth euiFormRow--compressed"
                     id="some_html_id-row"
                   >
                     <div
@@ -461,13 +503,13 @@ exports[`<CreateAction /> spec renders the component 1`] = `
                           class="euiFlexItem"
                         >
                           <div
-                            class="euiFormControlLayout euiFormControlLayout--fullWidth"
+                            class="euiFormControlLayout euiFormControlLayout--fullWidth euiFormControlLayout--compressed"
                           >
                             <div
                               class="euiFormControlLayout__childrenWrapper"
                             >
                               <input
-                                class="euiFieldText euiFieldText--fullWidth"
+                                class="euiFieldText euiFieldText--fullWidth euiFieldText--compressed"
                                 type="text"
                                 value=""
                               />
@@ -481,28 +523,35 @@ exports[`<CreateAction /> spec renders the component 1`] = `
                 <div
                   class="euiFlexItem"
                 >
-                  <div
-                    class="euiText euiText--medium"
-                    style="margin-bottom: 5px;"
-                  >
-                    <h5
-                      class="euiFormLabel "
-                      style="margin-bottom: 2px;"
+                  <div>
+                    <div
+                      class="euiText euiText--small"
+                      style="margin-bottom: 5px;"
                     >
-                      Retry count
-                    </h5>
-                    <p>
-                       
-                      <span
-                        style="font-weight: 200; font-size: 12px;"
+                      <h3
+                        class="euiFormLabel "
+                        style="margin-bottom: 2px;"
                       >
-                        The number of times the action should be retried if it fails. Must be greater than 0.
+                        Retry count
+                      </h3>
+                    </div>
+                    <div
+                      class="euiText euiText--extraSmall"
+                      style="margin-bottom: 5px;"
+                    >
+                      <p>
                          
-                      </span>
-                    </p>
+                        <span
+                          style="font-weight: 300; font-size: 14px;"
+                        >
+                          The number of times the action should be retried if it fails. Must be greater than 0.
+                           
+                        </span>
+                      </p>
+                    </div>
                   </div>
                   <div
-                    class="euiFormRow euiFormRow--fullWidth"
+                    class="euiFormRow euiFormRow--fullWidth euiFormRow--compressed"
                     id="some_html_id-row"
                   >
                     <div
@@ -516,13 +565,13 @@ exports[`<CreateAction /> spec renders the component 1`] = `
                           class="euiFlexItem"
                         >
                           <div
-                            class="euiFormControlLayout euiFormControlLayout--fullWidth"
+                            class="euiFormControlLayout euiFormControlLayout--fullWidth euiFormControlLayout--compressed"
                           >
                             <div
                               class="euiFormControlLayout__childrenWrapper"
                             >
                               <input
-                                class="euiFieldNumber euiFieldNumber--fullWidth"
+                                class="euiFieldNumber euiFieldNumber--fullWidth euiFieldNumber--compressed"
                                 min="0"
                                 type="number"
                                 value=""
@@ -537,41 +586,48 @@ exports[`<CreateAction /> spec renders the component 1`] = `
                 <div
                   class="euiFlexItem"
                 >
-                  <div
-                    class="euiText euiText--medium"
-                    style="margin-bottom: 5px;"
-                  >
-                    <h5
-                      class="euiFormLabel "
-                      style="margin-bottom: 2px;"
+                  <div>
+                    <div
+                      class="euiText euiText--small"
+                      style="margin-bottom: 5px;"
                     >
-                      Retry backoff
-                    </h5>
-                    <p>
-                       
-                      <span
-                        style="font-weight: 200; font-size: 12px;"
+                      <h3
+                        class="euiFormLabel "
+                        style="margin-bottom: 2px;"
                       >
-                        The backoff policy type to use when retrying.
+                        Retry backoff
+                      </h3>
+                    </div>
+                    <div
+                      class="euiText euiText--extraSmall"
+                      style="margin-bottom: 5px;"
+                    >
+                      <p>
                          
-                      </span>
-                    </p>
+                        <span
+                          style="font-weight: 300; font-size: 14px;"
+                        >
+                          The backoff policy type to use when retrying.
+                           
+                        </span>
+                      </p>
+                    </div>
                   </div>
                   <div
-                    class="euiFormRow euiFormRow--fullWidth"
+                    class="euiFormRow euiFormRow--fullWidth euiFormRow--compressed"
                     id="some_html_id-row"
                   >
                     <div
                       class="euiFormRow__fieldWrapper"
                     >
                       <div
-                        class="euiFormControlLayout euiFormControlLayout--fullWidth"
+                        class="euiFormControlLayout euiFormControlLayout--fullWidth euiFormControlLayout--compressed"
                       >
                         <div
                           class="euiFormControlLayout__childrenWrapper"
                         >
                           <select
-                            class="euiSelect euiSelect--fullWidth"
+                            class="euiSelect euiSelect--fullWidth euiSelect--compressed"
                             id="some_html_id"
                           >
                             <option
@@ -607,28 +663,35 @@ exports[`<CreateAction /> spec renders the component 1`] = `
                 <div
                   class="euiFlexItem"
                 >
-                  <div
-                    class="euiText euiText--medium"
-                    style="margin-bottom: 5px;"
-                  >
-                    <h5
-                      class="euiFormLabel "
-                      style="margin-bottom: 2px;"
+                  <div>
+                    <div
+                      class="euiText euiText--small"
+                      style="margin-bottom: 5px;"
                     >
-                      Retry delay
-                    </h5>
-                    <p>
-                       
-                      <span
-                        style="font-weight: 200; font-size: 12px;"
+                      <h3
+                        class="euiFormLabel "
+                        style="margin-bottom: 2px;"
                       >
-                        The time to wait between retries. Accepts time units, e.g. "2h" or "1d"
+                        Retry delay
+                      </h3>
+                    </div>
+                    <div
+                      class="euiText euiText--extraSmall"
+                      style="margin-bottom: 5px;"
+                    >
+                      <p>
                          
-                      </span>
-                    </p>
+                        <span
+                          style="font-weight: 300; font-size: 14px;"
+                        >
+                          The time to wait between retries. Accepts time units, e.g. "2h" or "1d"
+                           
+                        </span>
+                      </p>
+                    </div>
                   </div>
                   <div
-                    class="euiFormRow euiFormRow--fullWidth"
+                    class="euiFormRow euiFormRow--fullWidth euiFormRow--compressed"
                     id="some_html_id-row"
                   >
                     <div
@@ -642,13 +705,13 @@ exports[`<CreateAction /> spec renders the component 1`] = `
                           class="euiFlexItem"
                         >
                           <div
-                            class="euiFormControlLayout euiFormControlLayout--fullWidth"
+                            class="euiFormControlLayout euiFormControlLayout--fullWidth euiFormControlLayout--compressed"
                           >
                             <div
                               class="euiFormControlLayout__childrenWrapper"
                             >
                               <input
-                                class="euiFieldText euiFieldText--fullWidth"
+                                class="euiFieldText euiFieldText--fullWidth euiFieldText--compressed"
                                 type="text"
                                 value=""
                               />

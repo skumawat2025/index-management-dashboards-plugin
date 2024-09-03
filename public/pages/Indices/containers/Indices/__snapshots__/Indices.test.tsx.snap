@@ -7,22 +7,24 @@ exports[`<Indices /> spec renders the component 1`] = `
 >
   <div
     class="euiFlexGroup euiFlexGroup--gutterLarge euiFlexGroup--alignItemsFlexStart euiFlexGroup--justifyContentSpaceBetween euiFlexGroup--directionRow euiFlexGroup--responsive"
-    style="padding: 0px 10px;"
+    style="padding: 0px 16px;"
   >
     <div
       class="euiFlexItem"
     >
-      <h3
-        class="euiTitle euiTitle--large"
+      <div
+        class="euiText euiText--small"
       >
-        Indexes
-        <span
-          class="panel-header-count"
-        >
-           
-           
-        </span>
-      </h3>
+        <h1>
+          Indexes
+          <span
+            class="panel-header-count"
+          >
+             
+             
+          </span>
+        </h1>
+      </div>
     </div>
     <div
       class="euiFlexItem euiFlexItem--flexGrowZero"
@@ -40,7 +42,7 @@ exports[`<Indices /> spec renders the component 1`] = `
               class="euiFlexItem euiFlexItem--flexGrowZero"
             >
               <button
-                class="euiButton euiButton--primary"
+                class="euiButton euiButton--primary euiButton--small"
                 data-test-subj="RefreshButton"
                 type="button"
               >
@@ -67,7 +69,7 @@ exports[`<Indices /> spec renders the component 1`] = `
                   class="euiPopover__anchor"
                 >
                   <button
-                    class="euiButton euiButton--primary"
+                    class="euiButton euiButton--primary euiButton--small"
                     type="button"
                   >
                     <span
@@ -88,13 +90,14 @@ exports[`<Indices /> spec renders the component 1`] = `
               class="euiFlexItem euiFlexItem--flexGrowZero"
             >
               <button
-                class="euiButton euiButton--primary euiButton--fill"
+                class="euiButton euiButton--primary euiButton--small euiButton--fill"
                 data-test-subj="Create IndexButton"
                 type="button"
               >
                 <span
                   class="euiButtonContent euiButton__content"
                 >
+                  EuiIconMock
                   <span
                     class="euiButton__text"
                   >
@@ -128,14 +131,14 @@ exports[`<Indices /> spec renders the component 1`] = `
             class="euiFlexItem euiSearchBar__searchHolder"
           >
             <div
-              class="euiFormControlLayout euiFormControlLayout--fullWidth"
+              class="euiFormControlLayout euiFormControlLayout--fullWidth euiFormControlLayout--compressed"
             >
               <div
                 class="euiFormControlLayout__childrenWrapper"
               >
                 <input
                   aria-label="This is a search bar. As you type, the results lower in the page will automatically filter."
-                  class="euiFieldSearch euiFieldSearch--fullWidth"
+                  class="euiFieldSearch euiFieldSearch--fullWidth euiFieldSearch--compressed"
                   placeholder="Search"
                   type="search"
                   value=""
@@ -158,7 +161,7 @@ exports[`<Indices /> spec renders the component 1`] = `
         class="euiFlexItem euiFlexItem--flexGrowZero"
       >
         <div
-          class="euiSwitch euiSwitch--primary"
+          class="euiSwitch euiSwitch--primary euiSwitch--compressed"
         >
           <button
             aria-checked="false"
@@ -177,10 +180,7 @@ exports[`<Indices /> spec renders the component 1`] = `
               />
               <span
                 class="euiSwitch__track"
-              >
-                EuiIconMock
-                EuiIconMock
-              </span>
+              />
             </span>
           </button>
           <span
@@ -575,7 +575,7 @@ exports[`<Indices /> spec renders the component 1`] = `
                           class="euiText euiText--medium"
                         >
                           <div
-                            class="euiText euiText--medium"
+                            class="euiText euiText--small"
                           >
                             <p>
                               Loading indices...

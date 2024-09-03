@@ -8,13 +8,15 @@ exports[`<Notifications /> spec View without permission 1`] = `
     <div
       class="euiFlexItem"
     >
-      <h1
-        class="euiTitle euiTitle--large"
-      >
-        Notification settings
-      </h1>
       <div
-        class="euiFormRow euiFormRow--fullWidth"
+        class="euiText euiText--small"
+      >
+        <h1>
+          Notification settings
+        </h1>
+      </div>
+      <div
+        class="euiFormRow euiFormRow--fullWidth euiFormRow--compressed"
         id="some_html_id-row"
       >
         <div
@@ -33,7 +35,7 @@ exports[`<Notifications /> spec View without permission 1`] = `
       class="euiFlexItem euiFlexItem--flexGrowZero"
     >
       <a
-        class="euiButton euiButton--primary"
+        class="euiButton euiButton--primary euiButton--small"
         href="notifications-dashboards#/channels"
         rel="noopener noreferrer"
         target="_blank"
@@ -96,13 +98,15 @@ exports[`<Notifications /> spec renders 1`] = `
     <div
       class="euiFlexItem"
     >
-      <h1
-        class="euiTitle euiTitle--large"
-      >
-        Notification settings
-      </h1>
       <div
-        class="euiFormRow euiFormRow--fullWidth"
+        class="euiText euiText--small"
+      >
+        <h1>
+          Notification settings
+        </h1>
+      </div>
+      <div
+        class="euiFormRow euiFormRow--fullWidth euiFormRow--compressed"
         id="some_html_id-row"
       >
         <div
@@ -121,7 +125,7 @@ exports[`<Notifications /> spec renders 1`] = `
       class="euiFlexItem euiFlexItem--flexGrowZero"
     >
       <a
-        class="euiButton euiButton--primary"
+        class="euiButton euiButton--primary euiButton--small"
         href="notifications-dashboards#/channels"
         rel="noopener noreferrer"
         target="_blank"
@@ -146,7 +150,7 @@ exports[`<Notifications /> spec renders 1`] = `
     class="euiPanel euiPanel--paddingMedium euiPanel--borderRadiusMedium euiPanel--plain euiPanel--hasShadow"
   >
     <div
-      class="euiText euiText--medium"
+      class="euiText euiText--small"
     >
       <h2>
         Defaults for index operations
@@ -170,9 +174,13 @@ exports[`<Notifications /> spec renders 1`] = `
             class="euiTitle euiTitle--xsmall euiDescribedFormGroup__title"
           >
             <div
-              class="ISM-notifications-first-letter-uppercase"
+              class="euiText euiText--small"
             >
-              reindex
+              <h3
+                class="ISM-notifications-first-letter-uppercase"
+              >
+                reindex
+              </h3>
             </div>
           </div>
           <div
@@ -189,14 +197,14 @@ exports[`<Notifications /> spec renders 1`] = `
           class="euiFlexItem euiDescribedFormGroup__fields euiDescribedFormGroup__fieldPadding--xsmall"
         >
           <div
-            class="euiFormRow"
+            class="euiFormRow euiFormRow--compressed"
             id="some_html_id-row"
           >
             <div
               class="euiFormRow__fieldWrapper"
             >
               <div
-                class="euiFormRow"
+                class="euiFormRow euiFormRow--compressed"
                 id="some_html_id-row"
               >
                 <div
@@ -222,7 +230,7 @@ exports[`<Notifications /> spec renders 1`] = `
                         class="euiToolTipAnchor euiToolTipAnchor--displayBlock"
                       >
                         <div
-                          class="euiCheckbox"
+                          class="euiCheckbox euiCheckbox--compressed"
                         >
                           <input
                             class="euiCheckbox__input"
@@ -249,7 +257,7 @@ exports[`<Notifications /> spec renders 1`] = `
                         class="euiToolTipAnchor euiToolTipAnchor--displayBlock"
                       >
                         <div
-                          class="euiCheckbox"
+                          class="euiCheckbox euiCheckbox--compressed"
                         >
                           <input
                             class="euiCheckbox__input"
@@ -292,9 +300,13 @@ exports[`<Notifications /> spec renders 1`] = `
             class="euiTitle euiTitle--xsmall euiDescribedFormGroup__title"
           >
             <div
-              class="ISM-notifications-first-letter-uppercase"
+              class="euiText euiText--small"
             >
-              shrink, split, clone
+              <h3
+                class="ISM-notifications-first-letter-uppercase"
+              >
+                shrink, split, clone
+              </h3>
             </div>
           </div>
           <div
@@ -311,14 +323,14 @@ exports[`<Notifications /> spec renders 1`] = `
           class="euiFlexItem euiDescribedFormGroup__fields euiDescribedFormGroup__fieldPadding--xsmall"
         >
           <div
-            class="euiFormRow"
+            class="euiFormRow euiFormRow--compressed"
             id="some_html_id-row"
           >
             <div
               class="euiFormRow__fieldWrapper"
             >
               <div
-                class="euiFormRow"
+                class="euiFormRow euiFormRow--compressed"
                 id="some_html_id-row"
               >
                 <div
@@ -344,7 +356,7 @@ exports[`<Notifications /> spec renders 1`] = `
                         class="euiToolTipAnchor euiToolTipAnchor--displayBlock"
                       >
                         <div
-                          class="euiCheckbox"
+                          class="euiCheckbox euiCheckbox--compressed"
                         >
                           <input
                             class="euiCheckbox__input"
@@ -371,7 +383,7 @@ exports[`<Notifications /> spec renders 1`] = `
                         class="euiToolTipAnchor euiToolTipAnchor--displayBlock"
                       >
                         <div
-                          class="euiCheckbox"
+                          class="euiCheckbox euiCheckbox--compressed"
                         >
                           <input
                             class="euiCheckbox__input"
@@ -414,9 +426,13 @@ exports[`<Notifications /> spec renders 1`] = `
             class="euiTitle euiTitle--xsmall euiDescribedFormGroup__title"
           >
             <div
-              class="ISM-notifications-first-letter-uppercase"
+              class="euiText euiText--small"
             >
-              force merge
+              <h3
+                class="ISM-notifications-first-letter-uppercase"
+              >
+                force merge
+              </h3>
             </div>
           </div>
           <div
@@ -433,14 +449,14 @@ exports[`<Notifications /> spec renders 1`] = `
           class="euiFlexItem euiDescribedFormGroup__fields euiDescribedFormGroup__fieldPadding--xsmall"
         >
           <div
-            class="euiFormRow"
+            class="euiFormRow euiFormRow--compressed"
             id="some_html_id-row"
           >
             <div
               class="euiFormRow__fieldWrapper"
             >
               <div
-                class="euiFormRow"
+                class="euiFormRow euiFormRow--compressed"
                 id="some_html_id-row"
               >
                 <div
@@ -466,7 +482,7 @@ exports[`<Notifications /> spec renders 1`] = `
                         class="euiToolTipAnchor euiToolTipAnchor--displayBlock"
                       >
                         <div
-                          class="euiCheckbox"
+                          class="euiCheckbox euiCheckbox--compressed"
                         >
                           <input
                             class="euiCheckbox__input"
@@ -493,7 +509,7 @@ exports[`<Notifications /> spec renders 1`] = `
                         class="euiToolTipAnchor euiToolTipAnchor--displayBlock"
                       >
                         <div
-                          class="euiCheckbox"
+                          class="euiCheckbox euiCheckbox--compressed"
                         >
                           <input
                             class="euiCheckbox__input"
@@ -536,9 +552,13 @@ exports[`<Notifications /> spec renders 1`] = `
             class="euiTitle euiTitle--xsmall euiDescribedFormGroup__title"
           >
             <div
-              class="ISM-notifications-first-letter-uppercase"
+              class="euiText euiText--small"
             >
-              open
+              <h3
+                class="ISM-notifications-first-letter-uppercase"
+              >
+                open
+              </h3>
             </div>
           </div>
           <div
@@ -555,14 +575,14 @@ exports[`<Notifications /> spec renders 1`] = `
           class="euiFlexItem euiDescribedFormGroup__fields euiDescribedFormGroup__fieldPadding--xsmall"
         >
           <div
-            class="euiFormRow"
+            class="euiFormRow euiFormRow--compressed"
             id="some_html_id-row"
           >
             <div
               class="euiFormRow__fieldWrapper"
             >
               <div
-                class="euiFormRow"
+                class="euiFormRow euiFormRow--compressed"
                 id="some_html_id-row"
               >
                 <div
@@ -588,7 +608,7 @@ exports[`<Notifications /> spec renders 1`] = `
                         class="euiToolTipAnchor euiToolTipAnchor--displayBlock"
                       >
                         <div
-                          class="euiCheckbox"
+                          class="euiCheckbox euiCheckbox--compressed"
                         >
                           <input
                             class="euiCheckbox__input"
@@ -615,7 +635,7 @@ exports[`<Notifications /> spec renders 1`] = `
                         class="euiToolTipAnchor euiToolTipAnchor--displayBlock"
                       >
                         <div
-                          class="euiCheckbox"
+                          class="euiCheckbox euiCheckbox--compressed"
                         >
                           <input
                             class="euiCheckbox__input"

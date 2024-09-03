@@ -5,7 +5,17 @@
 
 import React, { ReactChild, useContext, useEffect, useRef, useState } from "react";
 import { unstable_batchedUpdates } from "react-dom";
-import { EuiButton, EuiCallOut, EuiEmptyPrompt, EuiFlexGroup, EuiFlexItem, EuiPanel, EuiSpacer, EuiText, EuiTitle } from "@elastic/eui";
+import {
+  EuiSmallButton,
+  EuiCallOut,
+  EuiEmptyPrompt,
+  EuiFlexGroup,
+  EuiFlexItem,
+  EuiPanel,
+  EuiSpacer,
+  EuiText,
+  EuiTitle,
+} from "@elastic/eui";
 import { get } from "lodash";
 import { CoreStart } from "opensearch-dashboards/public";
 import useField from "../../../../lib/field";
@@ -33,6 +43,8 @@ import {
 import { checkPermissionForSubmitLRONConfig } from "../../../../containers/NotificationConfig";
 import "./index.scss";
 import { DataSourceMenuContext } from "../../../../services/DataSourceMenuContext";
+import { getApplication, getNavigationUI, getUISettings } from "../../../../services/Services";
+import { TopNavControlButtonData, TopNavControlDescriptionData } from "../../../../../../../src/plugins/navigation/public";
 
 export interface NotificationsProps {}
 
@@ -43,6 +55,11 @@ const Notifications = (props: NotificationsProps) => {
   const [submitClicked, setSubmitClicked] = useState(false);
   const [noPermission, setNoPermission] = useState(false);
   const [permissionForUpdate, setPermissionForUpdate] = useState(false);
+  const uiSettings = getUISettings();
+  const useNewUX = uiSettings.get("home:useNewHomePage");
+  const { HeaderControl } = getNavigationUI();
+  const { setAppRightControls, setAppDescriptionControls } = getApplication();
+
   const field = useField({
     values: {} as Partial<FieldState>,
     onBeforeChange(name) {
@@ -142,7 +159,10 @@ const Notifications = (props: NotificationsProps) => {
     field.resetValues(field.getOriginalValues());
   };
   useEffect(() => {
-    coreServices.chrome.setBreadcrumbs([BREADCRUMBS.INDEX_MANAGEMENT, BREADCRUMBS.NOTIFICATION_SETTINGS]);
+    const breadCrumbs = useNewUX
+      ? [BREADCRUMBS.INDEX_NOTIFICATION_SETTINGS]
+      : [BREADCRUMBS.INDEX_MANAGEMENT, BREADCRUMBS.NOTIFICATION_SETTINGS];
+    coreServices.chrome.setBreadcrumbs(breadCrumbs);
     reloadNotifications();
     checkPermissionForSubmitLRONConfig({
       services,
@@ -154,32 +174,62 @@ const Notifications = (props: NotificationsProps) => {
   const values = field.getValues();
   const allErrors = Object.entries(field.getErrors());
 
+  const descriptionData = [
+    {
+      description:
+        "Configure the default notification settings on index operation statuses, such as failed or completed. You can configure additional notification settings while performing an index operation.",
+    } as TopNavControlDescriptionData,
+  ];
+
+  const controlsData = [
+    {
+      id: "Manage channels",
+      label: "Manage channels",
+      href: "notifications-dashboards#/channels",
+      target: "_blank",
+      controlType: "button",
+      display: "base",
+      iconType: "popout",
+      fill: true,
+    } as TopNavControlButtonData,
+  ];
+
   return (
     <>
-      <EuiFlexGroup justifyContent="spaceBetween">
-        <EuiFlexItem>
-          <EuiTitle size="l">
-            <h1>Notification settings</h1>
-          </EuiTitle>
-          <CustomFormRow
-            fullWidth
-            helpText={
-              <>
-                Configure the default notification settings on index operation statuses, such as failed or completed. You can configure
-                additional notification settings while performing an index operation.
-              </>
-            }
-          >
-            <></>
-          </CustomFormRow>
-        </EuiFlexItem>
-        <EuiFlexItem grow={false}>
-          <EuiButton iconType="popout" href="notifications-dashboards#/channels" target="_blank">
-            Manage channels
-          </EuiButton>
-        </EuiFlexItem>
-      </EuiFlexGroup>
-      <EuiSpacer />
+      {useNewUX && (
+        <>
+          <HeaderControl setMountPoint={setAppRightControls} controls={controlsData} />
+          <HeaderControl setMountPoint={setAppDescriptionControls} controls={descriptionData} />
+        </>
+      )}
+      {!useNewUX && (
+        <>
+          <EuiFlexGroup justifyContent="spaceBetween">
+            <EuiFlexItem>
+              <EuiText size="s">
+                <h1>Notification settings</h1>
+              </EuiText>
+              <CustomFormRow
+                fullWidth
+                helpText={
+                  <>
+                    Configure the default notification settings on index operation statuses, such as failed or completed. You can configure
+                    additional notification settings while performing an index operation.
+                  </>
+                }
+              >
+                <></>
+              </CustomFormRow>
+            </EuiFlexItem>
+            <EuiFlexItem grow={false}>
+              <EuiSmallButton iconType="popout" href="notifications-dashboards#/channels" target="_blank">
+                Manage channels
+              </EuiSmallButton>
+            </EuiFlexItem>
+          </EuiFlexGroup>
+          <EuiSpacer />
+        </>
+      )}
       {noPermission ? (
         <EuiPanel>
           <EuiEmptyPrompt
@@ -191,7 +241,7 @@ const Notifications = (props: NotificationsProps) => {
         </EuiPanel>
       ) : (
         <EuiPanel>
-          <EuiText>
+          <EuiText size="s">
             <h2>Defaults for index operations</h2>
           </EuiText>
           {submitClicked && allErrors.length ? (
@@ -243,7 +293,11 @@ const Notifications = (props: NotificationsProps) => {
             });
             return (
               <CustomFormRow
-                label={<div className="ISM-notifications-first-letter-uppercase">{record.title}</div>}
+                label={
+                  <EuiText size="s">
+                    <h3 className="ISM-notifications-first-letter-uppercase">{record.title}</h3>
+                  </EuiText>
+                }
                 helpText={ActionTypeMapDescription[getKeyByValue(ActionTypeMapTitle, record.title) as ActionType]}
                 direction="hoz"
                 key={record.action_name}

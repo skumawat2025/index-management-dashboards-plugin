@@ -6,14 +6,17 @@
 import React, { Ref, forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
 import {
   EuiSpacer,
-  EuiFormRow,
+  EuiCompressedFormRow,
   EuiLink,
   EuiOverlayMask,
   EuiLoadingSpinner,
   EuiContextMenu,
-  EuiButton,
+  EuiSmallButton,
   EuiCallOut,
   EuiTitle,
+  EuiText,
+  EuiPanel,
+  EuiHorizontalRule,
 } from "@elastic/eui";
 import { set, merge, omit, pick } from "lodash";
 import flat from "flat";
@@ -252,7 +255,11 @@ const IndexDetail = (
     return [
       {
         rowProps: {
-          label: "Number of primary shards",
+          label: (
+            <EuiText size="s">
+              <h3>Number of primary shards</h3>
+            </EuiText>
+          ),
           helpText: (
             <>
               <div>Specify the number of primary shards for the index. Default is 1. </div>
@@ -287,7 +294,11 @@ const IndexDetail = (
       },
       {
         rowProps: {
-          label: "Number of replicas",
+          label: (
+            <EuiText size="s">
+              <h3>Number of replicas</h3>
+            </EuiText>
+          ),
           helpText: REPLICA_NUMBER_MESSAGE,
           direction: isEdit ? "hoz" : "ver",
         },
@@ -317,7 +328,11 @@ const IndexDetail = (
       },
       {
         rowProps: {
-          label: "Refresh interval",
+          label: (
+            <EuiText size="s">
+              <h3>Refresh interval</h3>
+            </EuiText>
+          ),
           helpText:
             "Specify how often the index should refresh, which publishes the most recent changes and make them available for search. Default is 1 second.",
           direction: isEdit ? "hoz" : "ver",
@@ -358,7 +373,11 @@ const IndexDetail = (
                   {
                     name: "index",
                     rowProps: {
-                      label: "Index name",
+                      label: (
+                        <EuiText size="s">
+                          <h3>Index name</h3>
+                        </EuiText>
+                      ),
                       helpText: <div>{INDEX_NAMING_MESSAGE}</div>,
                       position: "bottom",
                       style: isEdit ? { display: "none" } : {},
@@ -388,10 +407,15 @@ const IndexDetail = (
                   {
                     name: "aliases",
                     rowProps: {
-                      label: "Index alias",
+                      label: (
+                        <EuiText size="s">
+                          <h3>
+                            Index alias <OptionalLabel />
+                          </h3>
+                        </EuiText>
+                      ),
                       helpText: "Allow this index to be referenced by existing aliases or specify a new alias.",
                       direction: isEdit ? "hoz" : "ver",
-                      isOptional: true,
                     },
                     options: {
                       props: {
@@ -432,9 +456,14 @@ const IndexDetail = (
 
             return (
               <>
-                <ContentPanel title={title} titleSize="s">
+                <EuiPanel>
+                  <EuiText size="s">
+                    {" "}
+                    <h2>{title}</h2>{" "}
+                  </EuiText>
+                  <EuiHorizontalRule margin="xs" />
                   {content}
-                </ContentPanel>
+                </EuiPanel>
                 <EuiSpacer />
               </>
             );
@@ -445,9 +474,9 @@ const IndexDetail = (
             data-test-subj="moreAction"
             panelPaddingSize="none"
             button={
-              <EuiButton iconType="arrowDown" iconSide="right" data-test-subj="importSettingMappingBtn">
+              <EuiSmallButton iconType="arrowDown" iconSide="right" data-test-subj="importSettingMappingBtn">
                 Import settings and mappings
-              </EuiButton>
+              </EuiSmallButton>
             }
           >
             <EuiContextMenu
@@ -455,6 +484,7 @@ const IndexDetail = (
               // The EuiContextMenu has bug when testing in jest
               // the props change won't make it rerender
               key={sourceIndices.join(",")}
+              size="s"
               panels={[
                 {
                   id: 0,
@@ -499,7 +529,7 @@ const IndexDetail = (
                   accordionProps: {
                     initialIsOpen: false,
                     id: "accordionForCreateIndexSettings",
-                    buttonContent: <h4>Advanced settings</h4>,
+                    buttonContent: <h3>Advanced settings</h3>,
                   },
                   rowProps: {
                     label: "Specify advanced index settings",
@@ -550,9 +580,14 @@ const IndexDetail = (
 
             return (
               <>
-                <ContentPanel title="Index settings" titleSize="s">
+                <EuiPanel>
+                  <EuiText size="s">
+                    {" "}
+                    <h2>Index settings</h2>{" "}
+                  </EuiText>
+                  <EuiHorizontalRule margin="xs" />
                   {content}
-                </ContentPanel>
+                </EuiPanel>
                 <EuiSpacer />
               </>
             );
@@ -561,7 +596,7 @@ const IndexDetail = (
         ? null
         : (() => {
             const content = (
-              <EuiFormRow fullWidth>
+              <EuiCompressedFormRow fullWidth>
                 <IndexMapping
                   isEdit={isEdit}
                   value={finalValue?.mappings}
@@ -571,7 +606,7 @@ const IndexDetail = (
                   readonly={readonly}
                   docVersion={docVersion}
                 />
-              </EuiFormRow>
+              </EuiCompressedFormRow>
             );
 
             if (mode && mode === IndicesUpdateMode.mappings) {
@@ -592,37 +627,32 @@ const IndexDetail = (
             }
 
             return (
-              <ContentPanel
-                title={
-                  <>
-                    <EuiTitle size="s">
+              <EuiPanel>
+                <EuiText size="s">
+                  <h2>
+                    Index mapping
+                    <OptionalLabel />
+                  </h2>
+                </EuiText>
+                <EuiCompressedFormRow
+                  fullWidth
+                  helpText={
+                    <>
                       <div>
-                        Index mapping
-                        <OptionalLabel />
+                        Define how documents and their fields are stored and indexed.{" "}
+                        <EuiLink target="_blank" external href={`https://opensearch.org/docs/${docVersion}/opensearch/mappings/`}>
+                          Learn more
+                        </EuiLink>
                       </div>
-                    </EuiTitle>
-                    <EuiFormRow
-                      fullWidth
-                      helpText={
-                        <>
-                          <div>
-                            Define how documents and their fields are stored and indexed.{" "}
-                            <EuiLink target="_blank" external href={`https://opensearch.org/docs/${docVersion}/opensearch/mappings/`}>
-                              Learn more
-                            </EuiLink>
-                          </div>
-                          <div>Mappings and field types cannot be changed after the index is created.</div>
-                        </>
-                      }
-                    >
-                      <></>
-                    </EuiFormRow>
-                  </>
-                }
-                titleSize="s"
-              >
+                      <div>Mappings and field types cannot be changed after the index is created.</div>
+                    </>
+                  }
+                >
+                  <></>
+                </EuiCompressedFormRow>
+                <EuiHorizontalRule margin="xs" />
                 {content}
-              </ContentPanel>
+              </EuiPanel>
             );
           })()}
       {templateSimulateLoading ? (

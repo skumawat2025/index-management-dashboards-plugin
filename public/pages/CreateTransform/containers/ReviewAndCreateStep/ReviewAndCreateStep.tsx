@@ -4,7 +4,7 @@
  */
 
 import React, { Component } from "react";
-import { EuiSpacer, EuiTitle, EuiFlexGroup, EuiFlexItem, EuiCallOut } from "@elastic/eui";
+import { EuiSpacer, EuiFlexGroup, EuiFlexItem, EuiCallOut, EuiText } from "@elastic/eui";
 import { RouteComponentProps } from "react-router-dom";
 import { TransformService } from "../../../../services";
 import { BREADCRUMBS, ROUTES } from "../../../../utils/constants";
@@ -40,6 +40,7 @@ interface ReviewAndCreateStepProps extends RouteComponentProps {
 
   interval: number;
   intervalTimeunit: string;
+  useUpdatedUX: boolean;
 }
 
 export default class ReviewAndCreateStep extends Component<ReviewAndCreateStepProps> {
@@ -59,24 +60,34 @@ export default class ReviewAndCreateStep extends Component<ReviewAndCreateStepPr
   render() {
     if (this.props.currentStep != 4) return null;
 
+    const Title = !this.props.useUpdatedUX
+      ? () => {
+          return (
+            <>
+              <EuiText size="s">
+                <h1>Review and Create</h1>
+              </EuiText>
+              <EuiSpacer />
+            </>
+          );
+        }
+      : () => {};
+
     return (
-      <div style={{ padding: "5px 50px" }}>
+      <div style={this.props.useUpdatedUX ? { padding: "0px" } : { padding: "5px 50px" }}>
         <EuiFlexGroup>
           <EuiFlexItem style={{ maxWidth: 300 }} grow={false}>
             <CreateTransformSteps step={4} />
           </EuiFlexItem>
           <EuiFlexItem style={{ overflow: "auto", flex: 1 }} grow={false}>
-            <EuiTitle size="l">
-              <h1>Review and create</h1>
-            </EuiTitle>
-            <EuiSpacer />
+            {Title()}
             <JobNameAndIndices {...this.props} />
             <EuiSpacer />
             <ReviewDefinition {...this.props} notifications={this.context.notifications} sourceIndex={this.props.sourceIndex[0].label} />
             <EuiSpacer />
             <ReviewSchedule {...this.props} />
             <EuiSpacer />
-            <EuiCallOut color="warning">
+            <EuiCallOut color="warning" size="s">
               <p>You can only change the description and schedule after creating a job. Double-check your choices before proceeding.</p>
             </EuiCallOut>
           </EuiFlexItem>

@@ -10,7 +10,7 @@ import queryString from "query-string";
 import {
   EuiAccordion,
   EuiBasicTable,
-  EuiButton,
+  EuiSmallButton,
   EuiFlexGrid,
   EuiFlexGroup,
   EuiFlexItem,
@@ -21,6 +21,8 @@ import {
   EuiText,
   EuiTitle,
   EuiHealth,
+  EuiHorizontalRule,
+  EuiPanel,
 } from "@elastic/eui";
 import { NotificationService, SnapshotManagementService } from "../../../../services";
 import { SMMetadata, SMPolicy } from "../../../../../models/interfaces";
@@ -424,20 +426,20 @@ export class SnapshotPolicyDetails extends MDSEnabledComponent<SnapshotPolicyDet
           <>
             <EuiFlexGroup style={{ padding: "0px 10px" }} justifyContent="spaceBetween" alignItems="center">
               <EuiFlexItem grow={false}>
-                <EuiTitle size="m">
-                  <span title={policyId}>{_.truncate(policyId)}</span>
-                </EuiTitle>
+                <EuiText size="s">
+                  <h1>{_.truncate(policyId)}</h1>
+                </EuiText>
               </EuiFlexItem>
 
               <EuiFlexItem grow={false}>
                 <EuiFlexGroup alignItems="center" gutterSize="s">
                   <EuiFlexItem grow={false}>
-                    <EuiButton onClick={this.onEdit}>Edit</EuiButton>
+                    <EuiSmallButton onClick={this.onEdit}>Edit</EuiSmallButton>
                   </EuiFlexItem>
                   <EuiFlexItem grow={false}>
-                    <EuiButton onClick={this.showDeleteModal} color="danger" data-test-subj="deleteButton">
+                    <EuiSmallButton onClick={this.showDeleteModal} color="danger" data-test-subj="deleteButton">
                       Delete
-                    </EuiButton>
+                    </EuiSmallButton>
                   </EuiFlexItem>
                 </EuiFlexGroup>
               </EuiFlexItem>
@@ -446,11 +448,17 @@ export class SnapshotPolicyDetails extends MDSEnabledComponent<SnapshotPolicyDet
           </>
         )}
 
-        <ContentPanel title="Policy settings" titleSize="m">
+        <EuiPanel>
+          <EuiFlexGroup gutterSize="xs" alignItems="center">
+            <EuiText size="s">
+              <h2>Policy settings</h2>
+            </EuiText>
+          </EuiFlexGroup>
+          <EuiHorizontalRule margin={"xs"} />
           <EuiFlexGrid columns={3}>
             {policySettingItems.map((item) => (
               <EuiFlexItem key={`${item.term}`}>
-                <EuiText size="xs">
+                <EuiText size="s">
                   <dt>{item.term}</dt>
                   <dd>{item.value}</dd>
                 </EuiText>
@@ -465,7 +473,7 @@ export class SnapshotPolicyDetails extends MDSEnabledComponent<SnapshotPolicyDet
             <EuiFlexGrid columns={3}>
               {advancedSettingItems.map((item) => (
                 <EuiFlexItem key={`${item.term}`}>
-                  <EuiText size="xs">
+                  <EuiText size="s">
                     <dt>{item.term}</dt>
                     <dd>{item.value}</dd>
                   </EuiText>
@@ -473,30 +481,42 @@ export class SnapshotPolicyDetails extends MDSEnabledComponent<SnapshotPolicyDet
               ))}
             </EuiFlexGrid>
           </EuiAccordion>
-        </ContentPanel>
+        </EuiPanel>
 
         <EuiSpacer />
 
-        <ContentPanel title="Snapshot schedule" titleSize="m">
+        <EuiPanel>
+          <EuiFlexGroup gutterSize="xs" alignItems="center">
+            <EuiText size="s">
+              <h2>Snapshot schedule</h2>
+            </EuiText>
+          </EuiFlexGroup>
+          <EuiHorizontalRule margin={"xs"} />
           <EuiFlexGrid columns={3}>
             {snapshotScheduleItems.map((item) => (
               <EuiFlexItem key={`${item.term}`}>
-                <EuiText size="xs">
+                <EuiText size="s">
                   <dt>{item.term}</dt>
                   <dd>{item.value}</dd>
                 </EuiText>
               </EuiFlexItem>
             ))}
           </EuiFlexGrid>
-        </ContentPanel>
+        </EuiPanel>
 
         <EuiSpacer />
 
-        <ContentPanel title="Snapshot retention period" titleSize="m">
+        <EuiPanel>
+          <EuiFlexGroup gutterSize="xs" alignItems="center">
+            <EuiText size="s">
+              <h2>Snapshot retention period</h2>
+            </EuiText>
+          </EuiFlexGroup>
+          <EuiHorizontalRule margin={"xs"} />
           <EuiFlexGrid columns={3}>
             {retentionItems.map((item) => (
               <EuiFlexItem key={`${item.term}`}>
-                <EuiText size="xs">
+                <EuiText size="s">
                   <dt>{item.term}</dt>
                   <dd>{item.value}</dd>
                 </EuiText>
@@ -508,7 +528,7 @@ export class SnapshotPolicyDetails extends MDSEnabledComponent<SnapshotPolicyDet
             <EuiFlexGrid columns={3}>
               {deletionScheduleItems.map((item) => (
                 <EuiFlexItem key={`${item.term}`}>
-                  <EuiText size="xs">
+                  <EuiText size="s">
                     <dt>{item.term}</dt>
                     <dd>{item.value}</dd>
                   </EuiText>
@@ -516,36 +536,47 @@ export class SnapshotPolicyDetails extends MDSEnabledComponent<SnapshotPolicyDet
               ))}
             </EuiFlexGrid>
           )}
-        </ContentPanel>
+        </EuiPanel>
 
         <EuiSpacer />
 
-        <ContentPanel title="Notifications" titleSize="m">
+        <EuiPanel>
+          <EuiFlexGroup gutterSize="xs" alignItems="center">
+            <EuiText size="s">
+              <h2>Notifications</h2>
+            </EuiText>
+          </EuiFlexGroup>
+          <EuiHorizontalRule margin={"xs"} />
           <EuiFlexGrid columns={2}>
             {notificationItems.map((item) => (
               <EuiFlexItem key={`${item.term}`}>
-                <EuiText size="xs">
+                <EuiText size="s">
                   <dt>{item.term}</dt>
                   <dd>{item.value}</dd>
                 </EuiText>
               </EuiFlexItem>
             ))}
           </EuiFlexGrid>
-        </ContentPanel>
+        </EuiPanel>
 
         <EuiSpacer />
 
-        <ContentPanel
-          title="Last creation/deletion"
-          titleSize="m"
-          actions={
-            <EuiButton iconType="refresh" onClick={() => this.getPolicy(policyId)} data-test-subj="refreshButton">
-              Refresh
-            </EuiButton>
-          }
-        >
+        <EuiPanel>
+          <EuiFlexGroup gutterSize="xs" alignItems="center">
+            <EuiFlexItem>
+              <EuiText size="s">
+                <h2>Last creation/deletion</h2>
+              </EuiText>
+            </EuiFlexItem>
+            <EuiFlexItem grow={false}>
+              <EuiSmallButton iconType="refresh" onClick={() => this.getPolicy(policyId)} data-test-subj="refreshButton">
+                Refresh
+              </EuiSmallButton>
+            </EuiFlexItem>
+          </EuiFlexGroup>
+          <EuiHorizontalRule margin={"xs"} />
           <EuiBasicTable items={latestActivities} itemId="name" columns={this.columns} />
-        </ContentPanel>
+        </EuiPanel>
 
         {isDeleteModalVisible && (
           <DeleteModal policyId={policyId} closeDeleteModal={this.closeDeleteModal} onClickDelete={this.onClickDelete} />

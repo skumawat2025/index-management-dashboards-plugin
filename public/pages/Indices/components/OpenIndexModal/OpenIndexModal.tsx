@@ -5,14 +5,15 @@
 
 import React from "react";
 import {
-  EuiButton,
-  EuiButtonEmpty,
+  EuiSmallButton,
+  EuiSmallButtonEmpty,
   EuiModal,
   EuiModalBody,
   EuiModalFooter,
   EuiModalHeader,
   EuiModalHeaderTitle,
   EuiSpacer,
+  EuiText,
 } from "@elastic/eui";
 
 interface OpenIndexModalProps {
@@ -31,28 +32,38 @@ export default function OpenIndexModal(props: OpenIndexModalProps) {
   return (
     <EuiModal onClose={onClose}>
       <EuiModalHeader>
-        <EuiModalHeaderTitle>Open indexes</EuiModalHeaderTitle>
+        <EuiModalHeaderTitle>
+          {" "}
+          <EuiText size="s">
+            {" "}
+            <h2>Open indexes</h2>{" "}
+          </EuiText>{" "}
+        </EuiModalHeaderTitle>
       </EuiModalHeader>
 
       <EuiModalBody>
         <div style={{ lineHeight: 1.5 }}>
-          <p>The following index will be opened.</p>
-          <ul style={{ listStyleType: "disc", listStylePosition: "inside" }}>
-            {selectedItems.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
+          <EuiText size="s">
+            <p>The following index will be opened.</p>
+          </EuiText>
+          <EuiText size="s">
+            <ul style={{ listStyleType: "disc", listStylePosition: "inside" }}>
+              {selectedItems.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </EuiText>
           <EuiSpacer />
         </div>
       </EuiModalBody>
 
       <EuiModalFooter>
-        <EuiButtonEmpty data-test-subj="Open Cancel button" onClick={onClose}>
+        <EuiSmallButtonEmpty data-test-subj="Open Cancel button" onClick={onClose}>
           Cancel
-        </EuiButtonEmpty>
-        <EuiButton data-test-subj="Open Confirm button" onClick={onConfirm} fill>
+        </EuiSmallButtonEmpty>
+        <EuiSmallButton data-test-subj="Open Confirm button" onClick={onConfirm} fill>
           Open
-        </EuiButton>
+        </EuiSmallButton>
       </EuiModalFooter>
     </EuiModal>
   );

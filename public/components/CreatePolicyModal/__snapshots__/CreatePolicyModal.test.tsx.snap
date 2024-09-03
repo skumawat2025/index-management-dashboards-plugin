@@ -35,7 +35,13 @@ exports[`<CreatePolicyModal /> spec renders the component 1`] = `
           <div
             class="euiModalHeader__title"
           >
-            Configuration method
+            <div
+              class="euiText euiText--small"
+            >
+              <h2>
+                Configuration method
+              </h2>
+            </div>
           </div>
         </div>
         <div
@@ -55,9 +61,11 @@ exports[`<CreatePolicyModal /> spec renders the component 1`] = `
                   class="euiText euiText--small"
                   style="margin-top: 0px;"
                 >
-                  Choose how you would like to 
-                  define
-                   your policy, either using a visual editor or writing JSON.
+                  <p>
+                    Choose how you would like to 
+                    define
+                     your policy, either using a visual editor or writing JSON.
+                  </p>
                 </div>
               </div>
               <div
@@ -73,7 +81,7 @@ exports[`<CreatePolicyModal /> spec renders the component 1`] = `
                       class="euiPanel euiPanel--paddingMedium euiPanel--borderRadiusMedium euiPanel--plain euiPanel--hasShadow selected-radio-panel"
                     >
                       <div
-                        class="euiFormRow"
+                        class="euiFormRow euiFormRow--compressed"
                         id="some_html_id-row"
                       >
                         <div
@@ -81,7 +89,7 @@ exports[`<CreatePolicyModal /> spec renders the component 1`] = `
                         >
                           <div
                             aria-describedby="some_html_id-help-0"
-                            class="euiRadio"
+                            class="euiRadio euiRadio--compressed"
                             data-test-subj="createPolicyModalVisualRadio"
                           >
                             <input
@@ -118,7 +126,7 @@ exports[`<CreatePolicyModal /> spec renders the component 1`] = `
                       class="euiPanel euiPanel--paddingMedium euiPanel--borderRadiusMedium euiPanel--plain euiPanel--hasShadow"
                     >
                       <div
-                        class="euiFormRow"
+                        class="euiFormRow euiFormRow--compressed"
                         id="some_html_id-row"
                       >
                         <div
@@ -126,7 +134,7 @@ exports[`<CreatePolicyModal /> spec renders the component 1`] = `
                         >
                           <div
                             aria-describedby="some_html_id-help-0"
-                            class="euiRadio"
+                            class="euiRadio euiRadio--compressed"
                             data-test-subj="createPolicyModalJsonRadio"
                           >
                             <input
@@ -170,7 +178,7 @@ exports[`<CreatePolicyModal /> spec renders the component 1`] = `
               class="euiFlexItem euiFlexItem--flexGrowZero"
             >
               <button
-                class="euiButtonEmpty euiButtonEmpty--primary"
+                class="euiButtonEmpty euiButtonEmpty--primary euiButtonEmpty--small"
                 data-test-subj="createPolicyModalCancelButton"
                 type="button"
               >
@@ -189,7 +197,7 @@ exports[`<CreatePolicyModal /> spec renders the component 1`] = `
               class="euiFlexItem euiFlexItem--flexGrowZero"
             >
               <button
-                class="euiButton euiButton--primary euiButton--fill"
+                class="euiButton euiButton--primary euiButton--small euiButton--fill"
                 data-test-subj="createPolicyModalContinueButton"
                 type="button"
               >
@@ -254,7 +262,13 @@ exports[`<CreatePolicyModal /> spec renders the component w/ edit 1`] = `
           <div
             class="euiModalHeader__title"
           >
-            Configuration method
+            <div
+              class="euiText euiText--small"
+            >
+              <h2>
+                Configuration method
+              </h2>
+            </div>
           </div>
         </div>
         <div
@@ -274,9 +288,11 @@ exports[`<CreatePolicyModal /> spec renders the component w/ edit 1`] = `
                   class="euiText euiText--small"
                   style="margin-top: 0px;"
                 >
-                  Choose how you would like to 
-                  modify
-                   your policy, either using a visual editor or writing JSON.
+                  <p>
+                    Choose how you would like to 
+                    modify
+                     your policy, either using a visual editor or writing JSON.
+                  </p>
                 </div>
               </div>
               <div
@@ -292,7 +308,7 @@ exports[`<CreatePolicyModal /> spec renders the component w/ edit 1`] = `
                       class="euiPanel euiPanel--paddingMedium euiPanel--borderRadiusMedium euiPanel--plain euiPanel--hasShadow selected-radio-panel"
                     >
                       <div
-                        class="euiFormRow"
+                        class="euiFormRow euiFormRow--compressed"
                         id="some_html_id-row"
                       >
                         <div
@@ -300,7 +316,7 @@ exports[`<CreatePolicyModal /> spec renders the component w/ edit 1`] = `
                         >
                           <div
                             aria-describedby="some_html_id-help-0"
-                            class="euiRadio"
+                            class="euiRadio euiRadio--compressed"
                             data-test-subj="createPolicyModalVisualRadio"
                           >
                             <input
@@ -337,7 +353,7 @@ exports[`<CreatePolicyModal /> spec renders the component w/ edit 1`] = `
                       class="euiPanel euiPanel--paddingMedium euiPanel--borderRadiusMedium euiPanel--plain euiPanel--hasShadow"
                     >
                       <div
-                        class="euiFormRow"
+                        class="euiFormRow euiFormRow--compressed"
                         id="some_html_id-row"
                       >
                         <div
@@ -345,7 +361,7 @@ exports[`<CreatePolicyModal /> spec renders the component w/ edit 1`] = `
                         >
                           <div
                             aria-describedby="some_html_id-help-0"
-                            class="euiRadio"
+                            class="euiRadio euiRadio--compressed"
                             data-test-subj="createPolicyModalJsonRadio"
                           >
                             <input
@@ -389,7 +405,7 @@ exports[`<CreatePolicyModal /> spec renders the component w/ edit 1`] = `
               class="euiFlexItem euiFlexItem--flexGrowZero"
             >
               <button
-                class="euiButtonEmpty euiButtonEmpty--primary"
+                class="euiButtonEmpty euiButtonEmpty--primary euiButtonEmpty--small"
                 data-test-subj="createPolicyModalCancelButton"
                 type="button"
               >
@@ -408,7 +424,7 @@ exports[`<CreatePolicyModal /> spec renders the component w/ edit 1`] = `
               class="euiFlexItem euiFlexItem--flexGrowZero"
             >
               <button
-                class="euiButton euiButton--primary euiButton--fill"
+                class="euiButton euiButton--primary euiButton--small euiButton--fill"
                 data-test-subj="createPolicyModalContinueButton"
                 type="button"
               >

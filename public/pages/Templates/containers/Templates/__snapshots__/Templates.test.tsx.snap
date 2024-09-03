@@ -7,7 +7,7 @@ exports[`<Templates /> spec renders the component 1`] = `
 >
   <div
     class="euiFlexGroup euiFlexGroup--gutterLarge euiFlexGroup--alignItemsFlexStart euiFlexGroup--justifyContentSpaceBetween euiFlexGroup--directionRow euiFlexGroup--responsive"
-    style="padding: 0px 10px;"
+    style="padding: 0px 16px;"
   >
     <div
       class="euiFlexItem"
@@ -18,7 +18,7 @@ exports[`<Templates /> spec renders the component 1`] = `
         Templates
       </span>
       <div
-        class="euiFormRow euiFormRow--fullWidth"
+        class="euiFormRow euiFormRow--fullWidth euiFormRow--compressed"
         id="some_html_id-row"
       >
         <div
@@ -73,7 +73,7 @@ exports[`<Templates /> spec renders the component 1`] = `
                   class="euiPopover__anchor"
                 >
                   <button
-                    class="euiButton euiButton--primary"
+                    class="euiButton euiButton--primary euiButton--small"
                     type="button"
                   >
                     <span
@@ -94,13 +94,14 @@ exports[`<Templates /> spec renders the component 1`] = `
               class="euiFlexItem euiFlexItem--flexGrowZero"
             >
               <button
-                class="euiButton euiButton--primary euiButton--fill"
+                class="euiButton euiButton--primary euiButton--small euiButton--fill"
                 data-test-subj="Create templateButton"
                 type="button"
               >
                 <span
                   class="euiButtonContent euiButton__content"
                 >
+                  EuiIconMock
                   <span
                     class="euiButton__text"
                   >
@@ -128,13 +129,13 @@ exports[`<Templates /> spec renders the component 1`] = `
         class="euiFlexItem"
       >
         <div
-          class="euiFormControlLayout euiFormControlLayout--fullWidth"
+          class="euiFormControlLayout euiFormControlLayout--fullWidth euiFormControlLayout--compressed"
         >
           <div
             class="euiFormControlLayout__childrenWrapper"
           >
             <input
-              class="euiFieldSearch euiFieldSearch--fullWidth"
+              class="euiFieldSearch euiFieldSearch--fullWidth euiFieldSearch--compressed"
               placeholder="Search..."
               type="search"
               value=""
@@ -409,7 +410,7 @@ exports[`<Templates /> spec renders the component 1`] = `
                           class="euiText euiText--medium"
                         >
                           <div
-                            class="euiText euiText--medium"
+                            class="euiText euiText--small"
                           >
                             <p>
                               You have no templates.
@@ -427,12 +428,13 @@ exports[`<Templates /> spec renders the component 1`] = `
                           class="euiFlexItem euiFlexItem--flexGrowZero"
                         >
                           <button
-                            class="euiButton euiButton--primary euiButton--fill"
+                            class="euiButton euiButton--primary euiButton--small euiButton--fill"
                             type="button"
                           >
                             <span
                               class="euiButtonContent euiButton__content"
                             >
+                              EuiIconMock
                               <span
                                 class="euiButton__text"
                               >

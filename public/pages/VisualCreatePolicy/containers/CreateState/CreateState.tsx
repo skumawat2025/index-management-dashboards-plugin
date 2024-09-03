@@ -12,14 +12,14 @@ import {
   EuiTitle,
   EuiFlexGroup,
   EuiFlexItem,
-  EuiButtonEmpty,
-  EuiButton,
-  EuiFormRow,
-  EuiFieldText,
+  EuiSmallButtonEmpty,
+  EuiSmallButton,
+  EuiCompressedFormRow,
+  EuiCompressedFieldText,
   EuiHorizontalRule,
   euiDragDropReorder,
   DropResult,
-  EuiSelect,
+  EuiCompressedSelect,
   EuiSpacer,
   EuiText,
   EuiPortal,
@@ -196,13 +196,13 @@ export default class CreateState extends Component<CreateStateProps, CreateState
     const stateOptions = policy.states.map((state) => ({ value: state.name, text: state.name })).filter((s) => s.value !== state?.name);
     return (
       <>
-        <EuiText>
-          <h5>State name</h5>
+        <EuiText size="s">
+          <h3>State name</h3>
           <span /> {/* Dummy span to get rid of last child styling on h5 */}
         </EuiText>
 
-        <EuiFormRow fullWidth isInvalid={!!nameError} error={nameError}>
-          <EuiFieldText
+        <EuiCompressedFormRow fullWidth isInvalid={!!nameError} error={nameError}>
+          <EuiCompressedFieldText
             fullWidth
             isInvalid={!!nameError}
             placeholder="sample_hot_state"
@@ -211,19 +211,19 @@ export default class CreateState extends Component<CreateStateProps, CreateState
             onChange={this.onChangeStateName}
             data-test-subj="create-state-state-name"
           />
-        </EuiFormRow>
+        </EuiCompressedFormRow>
 
         <EuiSpacer />
 
-        <EuiText>
-          <h5>Order</h5>
+        <EuiText size="s">
+          <h3>Order</h3>
           <span /> {/* Dummy span to get rid of last child styling on h5 */}
         </EuiText>
 
         <EuiFlexGroup>
           <EuiFlexItem>
-            <EuiFormRow>
-              <EuiSelect
+            <EuiCompressedFormRow>
+              <EuiCompressedSelect
                 disabled={disableOrderSelections}
                 options={[
                   { value: "after", text: "Add after" },
@@ -233,18 +233,18 @@ export default class CreateState extends Component<CreateStateProps, CreateState
                 onChange={(e) => this.setState({ order: e.target.value })}
                 aria-label="Retry failed policy from"
               />
-            </EuiFormRow>
+            </EuiCompressedFormRow>
           </EuiFlexItem>
           <EuiFlexItem>
-            <EuiFormRow>
-              <EuiSelect
+            <EuiCompressedFormRow>
+              <EuiCompressedSelect
                 disabled={disableOrderSelections}
                 options={stateOptions}
                 value={afterBeforeState}
                 onChange={(e) => this.setState({ afterBeforeState: e.target.value })}
                 aria-label="Retry failed policy from"
               />
-            </EuiFormRow>
+            </EuiCompressedFormRow>
           </EuiFlexItem>
         </EuiFlexGroup>
 
@@ -278,14 +278,14 @@ export default class CreateState extends Component<CreateStateProps, CreateState
     return (
       <EuiFlexGroup justifyContent="spaceBetween">
         <EuiFlexItem grow={false}>
-          <EuiButtonEmpty iconType="cross" onClick={onCloseFlyout} flush="left">
+          <EuiSmallButtonEmpty iconType="cross" onClick={onCloseFlyout} flush="left">
             Cancel
-          </EuiButtonEmpty>
+          </EuiSmallButtonEmpty>
         </EuiFlexItem>
         <EuiFlexItem grow={false}>
-          <EuiButton fill disabled={!name.trim().length || !!nameError} onClick={this.onClickSaveState}>
+          <EuiSmallButton fill disabled={!name.trim().length || !!nameError} onClick={this.onClickSaveState}>
             {isEditing ? "Update state" : "Save state"}
-          </EuiButton>
+          </EuiSmallButton>
         </EuiFlexItem>
       </EuiFlexGroup>
     );
@@ -334,9 +334,11 @@ export default class CreateState extends Component<CreateStateProps, CreateState
       <EuiPortal>
         <EuiFlyout hideCloseButton ownFocus={false} onClose={onCloseFlyout} maxWidth={600} size="m" aria-labelledby="flyoutTitle">
           <EuiFlyoutHeader hasBorder>
-            <EuiTitle size="m">
-              <h2 id="flyoutTitle">{title}</h2>
-            </EuiTitle>
+            <EuiText size="s">
+              <EuiTitle size="m">
+                <h2 id="flyoutTitle">{title}</h2>
+              </EuiTitle>
+            </EuiText>
           </EuiFlyoutHeader>
           {flyoutContent()}
         </EuiFlyout>

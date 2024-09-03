@@ -12,6 +12,28 @@ import { ServicesContext } from "../../../../services";
 import { browserServicesMock, coreServicesMock } from "../../../../../test/mocks";
 import { ROUTES } from "../../../../utils/constants";
 import { CoreServicesContext } from "../../../../components/core_services";
+import { getApplication, getNavigationUI, getUISettings } from "../../../../services/Services";
+
+jest.mock("../../../../services/Services", () => ({
+  ...jest.requireActual("../../../../services/Services"),
+  getUISettings: jest.fn(),
+  getApplication: jest.fn(),
+  getNavigationUI: jest.fn(),
+}));
+
+jest.mock("react-dom", () => ({
+  ...jest.requireActual("react-dom"),
+  createPortal: (element: React.ReactNode) => element,
+}));
+
+beforeEach(() => {
+  (getUISettings as jest.Mock).mockReturnValue({
+    get: jest.fn().mockReturnValue(false), // or false, depending on your test case
+  });
+  (getApplication as jest.Mock).mockReturnValue({});
+
+  (getNavigationUI as jest.Mock).mockReturnValue({});
+});
 
 function renderNotificationsWithRouter(initialEntries = [ROUTES.NOTIFICATIONS] as string[]) {
   return {

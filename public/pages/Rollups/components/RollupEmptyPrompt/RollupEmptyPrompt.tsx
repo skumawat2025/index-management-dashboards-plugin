@@ -4,7 +4,7 @@
  */
 
 import React from "react";
-import { EuiButton, EuiEmptyPrompt, EuiText } from "@elastic/eui";
+import { EuiSmallButton, EuiEmptyPrompt, EuiText } from "@elastic/eui";
 import { PLUGIN_NAME, ROUTES } from "../../../../utils/constants";
 
 export const TEXT = {
@@ -26,16 +26,21 @@ const getActions: React.SFC<RollupEmptyPromptProps> = ({ filterIsApplied, loadin
   }
   if (filterIsApplied) {
     return (
-      <EuiButton fill onClick={resetFilters} data-test-subj="rollupEmptyPromptRestFilters">
+      <EuiSmallButton fill onClick={resetFilters} data-test-subj="rollupEmptyPromptRestFilters">
         Reset Filters
-      </EuiButton>
+      </EuiSmallButton>
     );
   }
 
   return (
-    <EuiButton href={`${PLUGIN_NAME}#${ROUTES.CREATE_ROLLUP}`} data-test-subj="emptyPromptCreateRollupButton">
-      Create rollup
-    </EuiButton>
+    <EuiSmallButton
+      href={`${PLUGIN_NAME}#${ROUTES.CREATE_ROLLUP}`}
+      data-test-subj="emptyPromptCreateRollupButton"
+      iconType={"plus"}
+      fill={true}
+    >
+      Create rollup job
+    </EuiSmallButton>
   );
 };
 
@@ -49,7 +54,7 @@ const RollupEmptyPrompt: React.SFC<RollupEmptyPromptProps> = (props) => (
   <EuiEmptyPrompt
     style={{ maxWidth: "45em" }}
     body={
-      <EuiText>
+      <EuiText size="s">
         <p>{getMessagePrompt(props)}</p>
       </EuiText>
     }

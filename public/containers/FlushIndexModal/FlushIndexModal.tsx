@@ -5,8 +5,8 @@
 
 import React, { useCallback, useContext, useState, useEffect } from "react";
 import {
-  EuiButton,
-  EuiButtonEmpty,
+  EuiSmallButton,
+  EuiSmallButtonEmpty,
   EuiCallOut,
   EuiModal,
   EuiModalBody,
@@ -14,6 +14,7 @@ import {
   EuiModalHeader,
   EuiModalHeaderTitle,
   EuiSpacer,
+  EuiText,
 } from "@elastic/eui";
 import { CoreStart } from "opensearch-dashboards/public";
 import { CoreServicesContext } from "../../components/core_services";
@@ -157,29 +158,45 @@ export default function FlushIndexModal(props: FlushIndexModalProps) {
   return (
     <EuiModal onClose={onClose}>
       <EuiModalHeader>
-        <EuiModalHeaderTitle data-test-subj="flushModalTitle">Flush {flushTarget}</EuiModalHeaderTitle>
+        <EuiModalHeaderTitle data-test-subj="flushModalTitle">
+          <EuiText size="s">
+            <h2>Flush {flushTarget}</h2>
+          </EuiText>
+        </EuiModalHeaderTitle>
       </EuiModalHeader>
 
       <EuiModalBody>
         <div style={{ lineHeight: 1.5 }}>
           {/* we will not display this part if not flushAll and there is no flushable items */}
-          {flushAll && <p>{flushAllMessage}</p>}
+          {flushAll && (
+            <EuiText size="s">
+              <p>{flushAllMessage}</p>
+            </EuiText>
+          )}
           {!!unBlockedItems.length && (
             <>
-              <p>{`The following ${flushTarget} will be flushed:`}</p>
-              <ul style={{ listStyleType: "disc", listStylePosition: "inside" }}>
-                {unBlockedItems.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
+              <EuiText size="s">
+                <p>{`The following ${flushTarget} will be flushed:`}</p>
+              </EuiText>
+              <EuiText size="s">
+                <ul style={{ listStyleType: "disc", listStylePosition: "inside" }}>
+                  {unBlockedItems.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </EuiText>
             </>
           )}
           <EuiSpacer />
           <EuiCallOut data-test-subj="flushBlockedCallout" color="warning" size="s" hidden={!blockedItems.length}>
-            <p>{blockedItemsMessageTemplate(flushTarget)}</p>
+            <EuiText size="s">
+              <p>{blockedItemsMessageTemplate(flushTarget)}</p>
+            </EuiText>
             <ul style={{ listStyleType: "disc", listStylePosition: "inside" }}>
               {blockedItems.map((item) => (
-                <li key={item}>{item}</li>
+                <EuiText size="s">
+                  <li key={item}>{item}</li>
+                </EuiText>
               ))}
             </ul>
           </EuiCallOut>
@@ -188,12 +205,12 @@ export default function FlushIndexModal(props: FlushIndexModalProps) {
       </EuiModalBody>
 
       <EuiModalFooter>
-        <EuiButtonEmpty data-test-subj="flushCancelButton" onClick={onClose}>
+        <EuiSmallButtonEmpty data-test-subj="flushCancelButton" onClick={onClose}>
           Cancel
-        </EuiButtonEmpty>
-        <EuiButton data-test-subj="flushConfirmButton" onClick={onFlushConfirm} fill>
+        </EuiSmallButtonEmpty>
+        <EuiSmallButton data-test-subj="flushConfirmButton" onClick={onFlushConfirm} fill>
           Flush
-        </EuiButton>
+        </EuiSmallButton>
       </EuiModalFooter>
     </EuiModal>
   );

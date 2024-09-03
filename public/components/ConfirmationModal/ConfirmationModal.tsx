@@ -5,14 +5,15 @@
 
 import React from "react";
 import {
-  EuiButton,
+  EuiSmallButton,
   EuiModal,
   EuiModalBody,
   EuiModalFooter,
   EuiModalHeader,
   EuiModalHeaderTitle,
   EuiOverlayMask,
-  EuiButtonEmpty,
+  EuiSmallButtonEmpty,
+  EuiText,
   // @ts-ignore
 } from "@elastic/eui";
 
@@ -41,16 +42,24 @@ const ConfirmationModal: React.SFC<ConfirmationModalProps> = ({
       // @ts-ignore */}
       <EuiModal onCancel={onClose} onClose={onClose} maxWidth={1000} {...modalProps}>
         <EuiModalHeader>
-          <EuiModalHeaderTitle>{title}</EuiModalHeaderTitle>
+          <EuiModalHeaderTitle>
+            <EuiText size="s">
+              <h2>{title}</h2>
+            </EuiText>
+          </EuiModalHeaderTitle>
         </EuiModalHeader>
 
-        <EuiModalBody>{bodyMessage}</EuiModalBody>
+        <EuiModalBody>
+          <EuiText size="s">
+            <p>{bodyMessage}</p>
+          </EuiText>
+        </EuiModalBody>
 
         <EuiModalFooter>
-          <EuiButtonEmpty onClick={onClose} data-test-subj="confirmationModalCloseButton">
+          <EuiSmallButtonEmpty onClick={onClose} data-test-subj="confirmationModalCloseButton">
             Cancel
-          </EuiButtonEmpty>
-          <EuiButton
+          </EuiSmallButtonEmpty>
+          <EuiSmallButton
             onClick={() => {
               onAction();
               onClose();
@@ -60,7 +69,7 @@ const ConfirmationModal: React.SFC<ConfirmationModalProps> = ({
             {...actionProps}
           >
             {actionMessage}
-          </EuiButton>
+          </EuiSmallButton>
         </EuiModalFooter>
       </EuiModal>
     </EuiOverlayMask>

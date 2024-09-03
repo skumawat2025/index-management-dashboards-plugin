@@ -8,8 +8,8 @@ import { CoreStart } from "opensearch-dashboards/public";
 import { ServicesContext } from "../../../../services";
 import { CoreServicesContext } from "../../../../components/core_services";
 import {
-  EuiButton,
-  EuiButtonEmpty,
+  EuiSmallButton,
+  EuiSmallButtonEmpty,
   EuiLoadingSpinner,
   EuiModal,
   EuiModalBody,
@@ -17,6 +17,7 @@ import {
   EuiModalHeader,
   EuiModalHeaderTitle,
   EuiSpacer,
+  EuiText,
 } from "@elastic/eui";
 import { submitTemplateChange, useComponentMapTemplate } from "../../utils/hooks";
 import { Link } from "react-router-dom";
@@ -100,7 +101,11 @@ export default function DeleteTemplateModal(props: DeleteTemplateModalProps) {
   return (
     <EuiModal onClose={onClose}>
       <EuiModalHeader>
-        <EuiModalHeaderTitle>Delete {selectedItems[0]}</EuiModalHeaderTitle>
+        <EuiModalHeaderTitle>
+          <EuiText size="s">
+            <h2>Delete {selectedItems[0]}</h2>
+          </EuiText>
+        </EuiModalHeaderTitle>
       </EuiModalHeader>
 
       <EuiModalBody>
@@ -108,13 +113,15 @@ export default function DeleteTemplateModal(props: DeleteTemplateModalProps) {
           <EuiLoadingSpinner size="xl" />
         ) : (
           <div style={{ lineHeight: 1.5 }}>
-            <p>
-              {!linkedIndexItemCount
-                ? "The following component template will be permanently deleted. This action cannot be undone."
-                : `The component template ${selectedItems.join(
-                    ", "
-                  )} will be permanently deleted. The component template will be unlinked from ${linkedIndexItemCount} index templates:`}
-            </p>
+            <EuiText size="s">
+              <p>
+                {!linkedIndexItemCount
+                  ? "The following component template will be permanently deleted. This action cannot be undone."
+                  : `The component template ${selectedItems.join(
+                      ", "
+                    )} will be permanently deleted. The component template will be unlinked from ${linkedIndexItemCount} index templates:`}
+              </p>
+            </EuiText>
             {!linkedIndexItemCount ? (
               <ul style={{ listStyleType: "disc", listStylePosition: "inside" }}>
                 {selectedItems.map((item) => (
@@ -146,16 +153,23 @@ export default function DeleteTemplateModal(props: DeleteTemplateModalProps) {
       </EuiModalBody>
 
       <EuiModalFooter>
-        <EuiButtonEmpty disabled={loading} isLoading={loading} data-test-subj="deletaCancelButton" onClick={onClose}>
+        <EuiSmallButtonEmpty disabled={loading} isLoading={loading} data-test-subj="deletaCancelButton" onClick={onClose}>
           Cancel
-        </EuiButtonEmpty>
+        </EuiSmallButtonEmpty>
         {!linkedIndexItemCount ? (
-          <EuiButton disabled={loading} isLoading={loading} data-test-subj="deleteConfirmButton" onClick={onConfirm} fill color="danger">
+          <EuiSmallButton
+            disabled={loading}
+            isLoading={loading}
+            data-test-subj="deleteConfirmButton"
+            onClick={onConfirm}
+            fill
+            color="danger"
+          >
             Delete
-          </EuiButton>
+          </EuiSmallButton>
         ) : null}
         {linkedIndexItemCount ? (
-          <EuiButton
+          <EuiSmallButton
             data-test-subj="deleteConfirmUnlinkButton"
             onClick={onConfirm}
             disabled={!checked || loading}
@@ -164,7 +178,7 @@ export default function DeleteTemplateModal(props: DeleteTemplateModalProps) {
             color="danger"
           >
             Apply changes
-          </EuiButton>
+          </EuiSmallButton>
         ) : null}
       </EuiModalFooter>
     </EuiModal>

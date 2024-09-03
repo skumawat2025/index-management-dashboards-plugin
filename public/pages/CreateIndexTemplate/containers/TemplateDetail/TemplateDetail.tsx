@@ -5,8 +5,9 @@
 
 import React, { forwardRef, useContext, useEffect, useImperativeHandle, useRef, Ref, useState } from "react";
 import {
-  EuiButton,
+  EuiSmallButton,
   EuiButtonEmpty,
+  EuiButtonIcon,
   EuiCodeBlock,
   EuiFlexGroup,
   EuiFlexItem,
@@ -14,7 +15,12 @@ import {
   EuiSpacer,
   EuiTab,
   EuiTabs,
+  EuiText,
   EuiTitle,
+  EuiPanel,
+  EuiTextColor,
+  EuiAccordion,
+  htmlIdGenerator,
 } from "@elastic/eui";
 import queryString from "query-string";
 import { TemplateItem, TemplateItemRemote } from "../../../../../models/interfaces";
@@ -43,6 +49,8 @@ import { diffJson } from "../../../../utils/helpers";
 import UnsavedChangesBottomBar from "../../../../components/UnsavedChangesBottomBar";
 import { IndexForm } from "../../../../containers/IndexForm";
 import { TABS_ENUM, tabs } from "../../constant";
+import { getApplication, getNavigationUI, getUISettings } from "../../../../services/Services";
+import { TopNavControlDescriptionData, TopNavControlLinkData } from "src/plugins/navigation/public";
 
 export interface TemplateDetailProps {
   templateName?: string;
@@ -51,10 +59,11 @@ export interface TemplateDetailProps {
   history: RouteComponentProps["history"];
   location: RouteComponentProps["location"];
   dataSourceId: string;
+  useUpdatedUX?: boolean;
 }
 
 const TemplateDetail = (props: TemplateDetailProps, ref: Ref<FieldInstance>) => {
-  const { templateName, onCancel, onSubmitSuccess, history } = props;
+  const { templateName, onCancel, onSubmitSuccess, history, useUpdatedUX } = props;
   const isEdit = !!templateName;
   const services = useContext(ServicesContext) as BrowserServices;
   const coreServices = useContext(CoreServicesContext) as CoreStart;
@@ -171,7 +180,7 @@ const TemplateDetail = (props: TemplateDetailProps, ref: Ref<FieldInstance>) => 
 
   const PreviewTemplateButton = () => (
     <EuiFlexItem grow={false}>
-      <EuiButton
+      <EuiSmallButton
         onClick={async () => {
           const result = await simulateTemplate({
             template: field.getValues(),
@@ -188,80 +197,174 @@ const TemplateDetail = (props: TemplateDetailProps, ref: Ref<FieldInstance>) => 
         color="ghost"
       >
         Preview template
-      </EuiButton>
+      </EuiSmallButton>
     </EuiFlexItem>
   );
+  const { HeaderControl } = getNavigationUI();
+  const { setAppDescriptionControls, setAppRightControls } = getApplication();
+
+  const descriptionData = [
+    {
+      description: "Define an automated snapshot schedule and retention period with a snapshot policy.",
+      links: {
+        label: "Learn more",
+        href: coreServices.docLinks.links.opensearch.indexTemplates.base,
+        iconType: "popout",
+        iconSide: "right",
+        controlType: "link",
+        target: "_blank",
+        flush: "both",
+      } as TopNavControlLinkData,
+    } as TopNavControlDescriptionData,
+  ];
+
+  const HeaderRight = [
+    {
+      renderComponent: (
+        <>
+          <EuiButtonIcon display="base" iconType="trash" aria-label="Delete" color="danger" onClick={() => setVisible(true)} size="s" />
+          <DeleteTemplateModal
+            visible={visible}
+            selectedItems={[templateName]}
+            onClose={() => {
+              setVisible(false);
+            }}
+            onDelete={() => {
+              setVisible(false);
+              history.replace(ROUTES.TEMPLATES);
+            }}
+          />
+        </>
+      ),
+    },
+    {
+      renderComponent: (
+        <EuiSmallButton
+          fill
+          onClick={() => {
+            const showValue: TemplateItemRemote = {
+              ...values,
+              template: IndexForm.transformIndexDetailToRemote(values.template),
+            };
+            Modal.show({
+              locale: {
+                ok: "Close",
+              },
+              style: {
+                width: 800,
+              },
+              "data-test-subj": "templateJSONDetailModal",
+              title: (
+                <EuiText size="s">
+                  <h2>{values.name}</h2>
+                </EuiText>
+              ),
+              content: (
+                <EuiCodeBlock language="json" isCopyable fontSize="s">
+                  {JSON.stringify(showValue, null, 2)}
+                </EuiCodeBlock>
+              ),
+            });
+          }}
+        >
+          View JSON
+        </EuiSmallButton>
+      ),
+    },
+  ];
+
+  const Title = () => {
+    return !useUpdatedUX ? (
+      <>
+        <EuiFlexGroup alignItems="center">
+          <EuiFlexItem>
+            <EuiText size="s">
+              {isEdit ? <h1 title={values.name}>{templateName}</h1> : <h1>{isEdit ? "Edit" : "Create"} template</h1>}
+            </EuiText>
+            {isEdit ? null : (
+              <CustomFormRow
+                fullWidth
+                label=""
+                helpText={
+                  <div>
+                    Index templates let you initialize new indexes with predefined mappings and settings.{" "}
+                    <EuiLink external target="_blank" href={coreServices.docLinks.links.opensearch.indexTemplates.base}>
+                      Learn more
+                    </EuiLink>
+                  </div>
+                }
+              >
+                <></>
+              </CustomFormRow>
+            )}
+          </EuiFlexItem>
+          {isEdit ? (
+            <>
+              <EuiFlexItem grow={false} style={{ flexDirection: "row" }}>
+                <EuiSmallButton
+                  style={{ marginRight: 20 }}
+                  onClick={() => {
+                    const showValue: TemplateItemRemote = {
+                      ...values,
+                      template: IndexForm.transformIndexDetailToRemote(values.template),
+                    };
+                    Modal.show({
+                      locale: {
+                        ok: "Close",
+                      },
+                      style: {
+                        width: 800,
+                      },
+                      "data-test-subj": "templateJSONDetailModal",
+                      title: (
+                        <EuiText size="s">
+                          <h2>{values.name}</h2>
+                        </EuiText>
+                      ),
+                      content: (
+                        <EuiCodeBlock language="json" isCopyable>
+                          {JSON.stringify(showValue, null, 2)}
+                        </EuiCodeBlock>
+                      ),
+                    });
+                  }}
+                >
+                  View JSON
+                </EuiSmallButton>
+                <EuiSmallButton color="danger" onClick={() => setVisible(true)}>
+                  Delete
+                </EuiSmallButton>
+                <DeleteTemplateModal
+                  visible={visible}
+                  selectedItems={[templateName]}
+                  onClose={() => {
+                    setVisible(false);
+                  }}
+                  onDelete={() => {
+                    setVisible(false);
+                    history.replace(ROUTES.TEMPLATES);
+                  }}
+                />
+              </EuiFlexItem>
+            </>
+          ) : null}
+        </EuiFlexGroup>
+        <EuiSpacer />
+      </>
+    ) : (
+      <>
+        {isEdit ? (
+          <HeaderControl controls={HeaderRight} setMountPoint={setAppRightControls} />
+        ) : (
+          <HeaderControl controls={descriptionData} setMountPoint={setAppDescriptionControls} />
+        )}
+      </>
+    );
+  };
 
   return (
     <>
-      <EuiFlexGroup alignItems="center">
-        <EuiFlexItem>
-          <EuiTitle size="l">
-            {isEdit ? <h1 title={values.name}>{templateName}</h1> : <h1>{isEdit ? "Edit" : "Create"} template</h1>}
-          </EuiTitle>
-          {isEdit ? null : (
-            <CustomFormRow
-              fullWidth
-              label=""
-              helpText={
-                <div>
-                  Index templates let you initialize new indexes with predefined mappings and settings.{" "}
-                  <EuiLink external target="_blank" href={coreServices.docLinks.links.opensearch.indexTemplates.base}>
-                    Learn more
-                  </EuiLink>
-                </div>
-              }
-            >
-              <></>
-            </CustomFormRow>
-          )}
-        </EuiFlexItem>
-        {isEdit ? (
-          <EuiFlexItem grow={false} style={{ flexDirection: "row" }}>
-            <EuiButton
-              style={{ marginRight: 20 }}
-              onClick={() => {
-                const showValue: TemplateItemRemote = {
-                  ...values,
-                  template: IndexForm.transformIndexDetailToRemote(values.template),
-                };
-                Modal.show({
-                  locale: {
-                    ok: "Close",
-                  },
-                  style: {
-                    width: 800,
-                  },
-                  "data-test-subj": "templateJSONDetailModal",
-                  title: values.name,
-                  content: (
-                    <EuiCodeBlock language="json" isCopyable>
-                      {JSON.stringify(showValue, null, 2)}
-                    </EuiCodeBlock>
-                  ),
-                });
-              }}
-            >
-              View JSON
-            </EuiButton>
-            <EuiButton color="danger" onClick={() => setVisible(true)}>
-              Delete
-            </EuiButton>
-            <DeleteTemplateModal
-              visible={visible}
-              selectedItems={[templateName]}
-              onClose={() => {
-                setVisible(false);
-              }}
-              onDelete={() => {
-                setVisible(false);
-                history.replace(ROUTES.TEMPLATES);
-              }}
-            />
-          </EuiFlexItem>
-        ) : null}
-      </EuiFlexGroup>
-      <EuiSpacer />
+      {Title()}
       {isEdit ? (
         <>
           <OverviewTemplate {...subCompontentProps} />
@@ -270,7 +373,7 @@ const TemplateDetail = (props: TemplateDetailProps, ref: Ref<FieldInstance>) => 
       ) : null}
       {isEdit ? (
         <>
-          <EuiTabs>
+          <EuiTabs size="s">
             {tabs.map((item) => (
               <EuiTab
                 onClick={() => {
@@ -299,13 +402,48 @@ const TemplateDetail = (props: TemplateDetailProps, ref: Ref<FieldInstance>) => 
           <EuiSpacer />
         </>
       ) : null}
+      {/* <EuiPanel>
+        {
+          isEdit && selectedTabId === TABS_ENUM.SUMMARY ? (
+            <EuiText size="s">
+              <h2>Preview template</h2>
+            </EuiText>
+          ) : values._meta?.flow === FLOW_ENUM.COMPONENTS ? (
+            <EuiText size="s">
+              <h2>Override template definition</h2>
+            </EuiText>
+          ) : (
+            <EuiText size="s">
+              <h2>Template definition</h2>
+            </EuiText>
+          )
+        }
+        {
+          (!isEdit || selectedTabId !== TABS_ENUM.SUMMARY) && values._meta?.flow === FLOW_ENUM.COMPONENTS
+            ? <EuiText size="xs">
+                <EuiTextColor color="subdued">Provide additional configurations such as index aliases, settings, and mappings. Configurations defined in this section will take precedent if they overlap with the associated component templates.</EuiTextColor>
+              </EuiText>
+            : undefined
+        }
+        {(!isEdit || selectedTabId !== TABS_ENUM.SUMMARY) && values._meta?.flow === FLOW_ENUM.COMPONENTS
+          ? <EuiAccordion id={htmlIdGenerator()()} forceState={isAccordionOpen} onToggle={toggleAccordion} buttonContent={titleContent}></EuiAccordion> : undefined
+        }
+      </EuiPanel> */}
       <ContentPanel
         title={
-          isEdit && selectedTabId === TABS_ENUM.SUMMARY
-            ? "Preview template"
-            : values._meta?.flow === FLOW_ENUM.COMPONENTS
-            ? "Override template definition"
-            : "Template definition"
+          isEdit && selectedTabId === TABS_ENUM.SUMMARY ? (
+            <EuiText size="s">
+              <h2>Preview template</h2>
+            </EuiText>
+          ) : values._meta?.flow === FLOW_ENUM.COMPONENTS ? (
+            <EuiText size="s">
+              <h2>Override template definition</h2>
+            </EuiText>
+          ) : (
+            <EuiText size="s">
+              <h2>Template definition</h2>
+            </EuiText>
+          )
         }
         subTitleText={
           (!isEdit || selectedTabId !== TABS_ENUM.SUMMARY) && values._meta?.flow === FLOW_ENUM.COMPONENTS
@@ -350,7 +488,7 @@ const TemplateDetail = (props: TemplateDetailProps, ref: Ref<FieldInstance>) => 
               </EuiFlexItem>
               <PreviewTemplateButton />
               <EuiFlexItem grow={false}>
-                <EuiButton
+                <EuiSmallButton
                   fill
                   onClick={async () => {
                     const result = await onSubmit();
@@ -365,9 +503,10 @@ const TemplateDetail = (props: TemplateDetailProps, ref: Ref<FieldInstance>) => 
                   }}
                   isLoading={isSubmitting}
                   data-test-subj="CreateIndexTemplateCreateButton"
+                  iconType={"plus"}
                 >
                   Create template
-                </EuiButton>
+                </EuiSmallButton>
               </EuiFlexItem>
             </EuiFlexGroup>
           </BottomBar>

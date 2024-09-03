@@ -6,17 +6,17 @@
 import React, { Component, Fragment } from "react";
 import _ from "lodash";
 import {
-  EuiButton,
-  EuiButtonEmpty,
+  EuiSmallButton,
+  EuiSmallButtonEmpty,
   EuiModal,
   EuiModalBody,
   EuiModalFooter,
   EuiModalHeader,
   EuiModalHeaderTitle,
   EuiOverlayMask,
-  EuiComboBox,
-  EuiFormRow,
-  EuiFieldText,
+  EuiCompressedComboBox,
+  EuiCompressedFormRow,
+  EuiCompressedFieldText,
   EuiCallOut,
   EuiText,
   EuiSpacer,
@@ -200,7 +200,7 @@ export default class ApplyPolicyModal extends Component<ApplyPolicyModalProps, A
 
     if (hasSingleIndexSelected) {
       return (
-        <EuiFormRow
+        <EuiCompressedFormRow
           label="Rollover alias"
           helpText={
             <EuiText size="xs" grow={false}>
@@ -216,14 +216,14 @@ export default class ApplyPolicyModal extends Component<ApplyPolicyModalProps, A
           error={rolloverAliasError}
           fullWidth
         >
-          <EuiFieldText
+          <EuiCompressedFieldText
             isInvalid={hasSubmitted && !!rolloverAliasError}
             placeholder="Rollover alias"
             value={rolloverAlias}
             onChange={this.onChangeRolloverAlias}
             fullWidth
           />
-        </EuiFormRow>
+        </EuiCompressedFormRow>
       );
     }
 
@@ -259,13 +259,12 @@ export default class ApplyPolicyModal extends Component<ApplyPolicyModalProps, A
 
     return (
       <Fragment>
-        <EuiText size="xs" grow={false}>
-          <p>
-            <strong>Preview</strong>
-          </p>
+        <EuiSpacer />
+        <EuiText size="s" grow={false}>
+          <h4>Preview</h4>
         </EuiText>
         <EuiSpacer size="s" />
-        <EuiCodeBlock language="json" fontSize="m" style={{ height: "200px" }}>
+        <EuiCodeBlock language="json" fontSize="s" style={{ height: "200px" }}>
           {policyString}
         </EuiCodeBlock>
         <EuiSpacer size="m" />
@@ -283,18 +282,33 @@ export default class ApplyPolicyModal extends Component<ApplyPolicyModalProps, A
             // @ts-ignore */}
         <EuiModal onCancel={onClose} onClose={onClose}>
           <EuiModalHeader>
-            <EuiModalHeaderTitle>Apply policy</EuiModalHeaderTitle>
+            <EuiModalHeaderTitle>
+              {" "}
+              <EuiText size="s">
+                {" "}
+                <h2>Apply policy</h2>{" "}
+              </EuiText>{" "}
+            </EuiModalHeaderTitle>
           </EuiModalHeader>
 
           <EuiModalBody>
-            <EuiText size="xs" grow={false}>
+            <EuiText size="s" grow={false}>
               <p>
                 Choose the policy you want to use for the selected indices. A copy of the policy will be created and applied to the indices.
               </p>
             </EuiText>
             <EuiSpacer size="m" />
-            <EuiFormRow label="Policy ID" isInvalid={hasSubmitted && !!selectedPolicyError} error={selectedPolicyError} fullWidth>
-              <EuiComboBox
+            <EuiCompressedFormRow
+              label={
+                <EuiText size="s">
+                  <h4>Policy ID</h4>
+                </EuiText>
+              }
+              isInvalid={hasSubmitted && !!selectedPolicyError}
+              error={selectedPolicyError}
+              fullWidth
+            >
+              <EuiCompressedComboBox
                 placeholder="Search policies"
                 async
                 options={policyOptions}
@@ -306,19 +320,19 @@ export default class ApplyPolicyModal extends Component<ApplyPolicyModalProps, A
                 onSearchChange={this.onPolicySearchChange}
                 fullWidth
               />
-            </EuiFormRow>
+            </EuiCompressedFormRow>
             {this.renderPreview()}
             {this.renderRollover()}
           </EuiModalBody>
 
           <EuiModalFooter>
-            <EuiButtonEmpty onClick={onClose} data-test-subj="applyPolicyModalCloseButton">
+            <EuiSmallButtonEmpty onClick={onClose} data-test-subj="applyPolicyModalCloseButton">
               Cancel
-            </EuiButtonEmpty>
+            </EuiSmallButtonEmpty>
 
-            <EuiButton onClick={this.onSubmit} fill data-test-subj="applyPolicyModalEditButton">
+            <EuiSmallButton onClick={this.onSubmit} fill data-test-subj="applyPolicyModalEditButton">
               Apply
-            </EuiButton>
+            </EuiSmallButton>
           </EuiModalFooter>
         </EuiModal>
       </EuiOverlayMask>

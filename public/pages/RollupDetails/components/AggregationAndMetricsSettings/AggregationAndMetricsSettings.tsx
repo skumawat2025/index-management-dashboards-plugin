@@ -16,6 +16,8 @@ import {
   //@ts-ignore
   Pagination,
   EuiTableSortingType,
+  EuiHorizontalRule,
+  EuiPanel,
 } from "@elastic/eui";
 import { ContentPanel } from "../../../../components/ContentPanel";
 import { DEFAULT_PAGE_SIZE_OPTIONS } from "../../../Rollups/utils/constants";
@@ -26,7 +28,9 @@ import {
   AGGREGATION_AND_METRIC_SETTINGS,
   BaseAggregationAndMetricsState,
   BaseAggregationColumns,
-  BaseMetricsColumns, sequenceTableComponents, sourceFieldComponents
+  BaseMetricsColumns,
+  sequenceTableComponents,
+  sourceFieldComponents,
 } from "../../../Commons/BaseAggregationAndMetricSettings";
 
 interface AggregationAndMetricsSettingsProps {
@@ -41,8 +45,7 @@ interface AggregationAndMetricsSettingsProps {
   onChangeMetricsShown: (from: number, size: number) => void;
 }
 
-interface AggregationAndMetricsSettingsState extends BaseAggregationAndMetricsState {
-}
+interface AggregationAndMetricsSettingsState extends BaseAggregationAndMetricsState {}
 
 const aggregationColumns: Readonly<EuiTableFieldDataColumnType<DimensionItem>>[] = BaseAggregationColumns;
 
@@ -130,14 +133,17 @@ export default class AggregationAndMetricsSettings extends Component<
       interval = intervalValue[0] + " " + parseTimeunit(intervalUnit[0]);
     }
     return (
-      <ContentPanel
-        bodyStyles={{ padding: "initial" }}
-        title={AGGREGATION_AND_METRIC_SETTINGS}
-        titleSize="m"
-      >
-        <div style={{ paddingLeft: "10px" }}>
-          <EuiSpacer size="s" />
-          <EuiText>
+      <EuiPanel>
+        <EuiFlexGroup gutterSize="xs">
+          <EuiFlexItem>
+            <EuiText size="s">
+              <h2>{AGGREGATION_AND_METRIC_SETTINGS}</h2>
+            </EuiText>
+          </EuiFlexItem>
+        </EuiFlexGroup>
+        <EuiHorizontalRule margin={"xs"} />
+        <div>
+          <EuiText size="s">
             <h3>Additional metrics</h3>
           </EuiText>
           <EuiFlexGrid columns={3}>
@@ -163,37 +169,34 @@ export default class AggregationAndMetricsSettings extends Component<
           <EuiSpacer size="s" />
           <EuiFlexGroup gutterSize="xs">
             <EuiFlexItem grow={false}>
-              <EuiText>
+              <EuiText size="s">
                 <h3>Additional aggregations</h3>
               </EuiText>
             </EuiFlexItem>
             <EuiFlexItem grow={false}>
-              <EuiText color="subdued" textAlign="left">
+              <EuiText color="subdued" textAlign="left" size="s">
                 <h3>{`(${selectedDimensionField.length})`}</h3>
               </EuiText>
             </EuiFlexItem>
           </EuiFlexGroup>
 
-          {
-            sequenceTableComponents(selectedDimensionField, dimensionsShown, aggregationColumns,
-              dimensionPagination, dimensionSorting, this.onDimensionTableChange)
-          }
+          {sequenceTableComponents(
+            selectedDimensionField,
+            dimensionsShown,
+            aggregationColumns,
+            dimensionPagination,
+            dimensionSorting,
+            this.onDimensionTableChange
+          )}
 
-          <EuiSpacer size="m" />
+          <EuiSpacer size="s" />
 
-          <EuiSpacer />
+          {additionalMetricsComponent(selectedMetrics)}
 
-          {
-            additionalMetricsComponent(selectedMetrics)
-          }
-
-          {
-            sourceFieldComponents(selectedMetrics, metricsShown, metricsColumns, pagination,
-              sorting, this.onTableChange)
-          }
+          {sourceFieldComponents(selectedMetrics, metricsShown, metricsColumns, pagination, sorting, this.onTableChange)}
           <EuiSpacer size="s" />
         </div>
-      </ContentPanel>
+      </EuiPanel>
     );
   }
 }

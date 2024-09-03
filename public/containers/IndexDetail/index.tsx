@@ -2,10 +2,9 @@
  * Copyright OpenSearch Contributors
  * SPDX-License-Identifier: Apache-2.0
  */
-import { EuiSpacer } from "@elastic/eui";
+import { EuiSpacer, EuiText, EuiTitle, EuiHorizontalRule, EuiPanel } from "@elastic/eui";
 import React, { useContext, useEffect, useState } from "react";
 import { CatIndex } from "../../../server/models/interfaces";
-import { ContentPanel } from "../../components/ContentPanel";
 import { CoreServicesContext } from "../../components/core_services";
 import { ServicesContext } from "../../services";
 import DescriptionListHoz from "../../components/DescriptionListHoz";
@@ -43,25 +42,46 @@ export default function IndexDetail(props: IIndexDetailProps) {
     })();
   }, [props.indices.join(","), setLoading, setItems, coreServices]);
   return (
-    <ContentPanel title="Source index details" titleSize="s">
-      <EuiSpacer />
+    <EuiPanel>
+      <EuiText size="s">
+        <h2>Source index details</h2>
+      </EuiText>
+      <EuiHorizontalRule margin="xs" />
+      <EuiSpacer size="s" />
       {items && items.length ? (
         <DescriptionListHoz
+          compressed
           listItems={[
             {
-              title: "Index name",
+              title: (
+                <EuiText size="s">
+                  <h4>Index name</h4>
+                </EuiText>
+              ),
               description: items[0].index,
             },
             {
-              title: "Primary shards",
+              title: (
+                <EuiText size="s">
+                  <h4>Primary shards</h4>
+                </EuiText>
+              ),
               description: items[0].pri,
             },
             {
-              title: "Replica shards",
+              title: (
+                <EuiText size="s">
+                  <h4>Replica shards</h4>
+                </EuiText>
+              ),
               description: items[0].rep,
             },
             {
-              title: "Total index size",
+              title: (
+                <EuiText size="s">
+                  <h4>Total index size</h4>
+                </EuiText>
+              ),
               description: items[0]["store.size"],
             },
           ]}
@@ -69,6 +89,6 @@ export default function IndexDetail(props: IIndexDetailProps) {
       ) : null}
       <EuiSpacer />
       {loading ? null : props.children}
-    </ContentPanel>
+    </EuiPanel>
   );
 }

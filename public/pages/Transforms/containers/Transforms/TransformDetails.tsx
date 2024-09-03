@@ -8,9 +8,9 @@ import {
   EuiTitle,
   EuiFlexGroup,
   EuiFlexItem,
-  EuiButton,
+  EuiSmallButton,
   EuiOverlayMask,
-  EuiButtonEmpty,
+  EuiSmallButtonEmpty,
   EuiModalFooter,
   EuiModal,
   EuiModalHeader,
@@ -21,6 +21,9 @@ import {
   EuiContextMenuPanel,
   EuiTextColor,
   EuiPopover,
+  EuiHealth,
+  EuiText,
+  EuiButtonIcon,
 } from "@elastic/eui";
 import { TransformService } from "../../../../services";
 import { RouteComponentProps } from "react-router-dom";
@@ -37,6 +40,9 @@ import TransformSettings from "./TransformSettings";
 import GeneralInformation from "../../components/GeneralInformation";
 import { buildIntervalScheduleText } from "../../../CreateRollup/utils/helpers";
 import { useUpdateUrlWithDataSourceProperties } from "../../../../components/MDSEnabledComponent";
+import { getApplication, getNavigationUI, getUISettings } from "../../../../services/Services";
+import { ModalConsumer } from "../../../../components/Modal";
+import { ContentPanelActions } from "../../../../components/ContentPanel";
 
 interface TransformDetailsProps extends RouteComponentProps {
   transformService: TransformService;
@@ -63,13 +69,15 @@ interface TransformDetailsState {
   isModalOpen: boolean;
   isDeleteModalOpen: boolean;
   isPopOverOpen: boolean;
+  useUpdatedUX: boolean;
 }
 
 export class TransformDetails extends Component<TransformDetailsProps, TransformDetailsState> {
   static contextType = CoreServicesContext;
   constructor(props: TransformDetailsProps) {
     super(props);
-
+    const uiSettings = getUISettings();
+    const useUpdatedUX = uiSettings.get("home:useNewHomePage");
     this.state = {
       id: "",
       description: "",
@@ -91,14 +99,21 @@ export class TransformDetails extends Component<TransformDetailsProps, Transform
       isModalOpen: false,
       isDeleteModalOpen: false,
       isPopOverOpen: false,
+      useUpdatedUX: useUpdatedUX,
     };
   }
 
   componentDidMount = async (): Promise<void> => {
-    this.context.chrome.setBreadcrumbs([BREADCRUMBS.INDEX_MANAGEMENT, BREADCRUMBS.TRANSFORMS]);
+    const breadCrumbs = this.state.useUpdatedUX
+      ? [BREADCRUMBS.TRANSFORMS, BREADCRUMBS.TRANSFORMS]
+      : [BREADCRUMBS.INDEX_MANAGEMENT, BREADCRUMBS.TRANSFORMS];
+    this.context.chrome.setBreadcrumbs(breadCrumbs);
     const { id } = queryString.parse(this.props.location.search);
     if (typeof id === "string") {
-      this.context.chrome.setBreadcrumbs([BREADCRUMBS.INDEX_MANAGEMENT, BREADCRUMBS.TRANSFORMS, { text: id }]);
+      const breadCrumbsUp = this.state.useUpdatedUX
+        ? [BREADCRUMBS.TRANSFORMS, { text: id }]
+        : [BREADCRUMBS.INDEX_MANAGEMENT, BREADCRUMBS.TRANSFORMS, { text: id }];
+      this.context.chrome.setBreadcrumbs(breadCrumbsUp);
       this.props.history.push(`${ROUTES.TRANSFORM_DETAILS}?id=${id}`);
       await this.getTransform(id);
       this.forceUpdate();
@@ -223,9 +238,15 @@ export class TransformDetails extends Component<TransformDetailsProps, Transform
       scheduleText = buildIntervalScheduleText(transformJson.transform.continuous, interval, intervalTimeUnit);
     }
     const actionButton = (
-      <EuiButton iconType="arrowDown" iconSide="right" disabled={false} onClick={this.onActionButtonClick} data-test-subj="actionButton">
+      <EuiSmallButton
+        iconType="arrowDown"
+        iconSide="right"
+        disabled={false}
+        onClick={this.onActionButtonClick}
+        data-test-subj="actionButton"
+      >
         Actions
-      </EuiButton>
+      </EuiSmallButton>
     );
 
     const actionItems = [
@@ -279,13 +300,98 @@ export class TransformDetails extends Component<TransformDetailsProps, Transform
       </EuiContextMenuItem>,
     ];
 
-    return (
+    const { HeaderControl } = getNavigationUI();
+    const { setAppBadgeControls, setAppRightControls } = getApplication();
+
+    const onClickEnable = () => {
+      this.closePopover();
+      this.onEnable();
+    };
+
+    const onClickDisable = () => {
+      this.closePopover();
+      this.onDisable();
+    };
+
+    const HeaderRight = [
+      {
+        renderComponent: (
+          <>
+            <EuiButtonIcon
+              display="base"
+              iconType="trash"
+              aria-label="Delete"
+              color="danger"
+              onClick={() => {
+                this.closePopover();
+                this.showDeleteModal();
+              }}
+              size="s"
+            />
+          </>
+        ),
+      },
+      {
+        renderComponent: (
+          <EuiSmallButton onClick={() => (!this.state.enabled ? onClickEnable() : onClickDisable())}>
+            {this.state.enabled ? "Disable" : "Enable"}
+          </EuiSmallButton>
+        ),
+      },
+      {
+        renderComponent: (
+          <EuiSmallButton
+            onClick={() => {
+              this.closePopover();
+              this.showJsonModal();
+            }}
+          >
+            View JSON
+          </EuiSmallButton>
+        ),
+      },
+      {
+        renderComponent: (
+          <EuiFlexItem>
+            <ModalConsumer>
+              {() => (
+                <ContentPanelActions
+                  size="s"
+                  actions={[
+                    {
+                      text: "Edit",
+                      buttonProps: {
+                        onClick: () => this.onEdit(),
+                        fill: true,
+                      },
+                    },
+                  ]}
+                />
+              )}
+            </ModalConsumer>
+          </EuiFlexItem>
+        ),
+      },
+    ];
+
+    const badgeControlData = [
+      {
+        renderComponent: (
+          <>
+            <EuiHealth color={this.state.enabled ? "success" : "danger"} />
+            <EuiText size="s">{this.state.enabled ? "Enabled" : "Disabled"}</EuiText>
+          </>
+        ),
+      },
+    ];
+
+    return !this.state.useUpdatedUX ? (
       <div style={{ padding: "5px 50px" }}>
         <EuiFlexGroup style={{ padding: "0px 10px" }} justifyContent="spaceBetween" alignItems="center">
           <EuiFlexItem grow={false}>
-            <EuiTitle size="m">
-              <h2>{id}</h2>
-            </EuiTitle>
+            <EuiText size="s">
+              <h1>{id}</h1>
+            </EuiText>
           </EuiFlexItem>
 
           <EuiFlexItem grow={false}>
@@ -300,7 +406,7 @@ export class TransformDetails extends Component<TransformDetailsProps, Transform
                   anchorPosition="downLeft"
                   data-test-subj="actionPopover"
                 >
-                  <EuiContextMenuPanel items={actionItems} />
+                  <EuiContextMenuPanel items={actionItems} size="s" />
                 </EuiPopover>
               </EuiFlexItem>
             </EuiFlexGroup>
@@ -323,6 +429,60 @@ export class TransformDetails extends Component<TransformDetailsProps, Transform
         <EuiSpacer />
         <TransformStatus metadata={metadata} />
         <EuiSpacer />
+        <TransformSettings
+          {...this.props}
+          transformService={this.props.transformService}
+          transformId={id}
+          sourceIndex={sourceIndex}
+          transformJson={transformJson}
+          groupsShown={groupsShown}
+          aggregationsShown={aggregationsShown}
+        />
+
+        {isModalOpen && (
+          <EuiOverlayMask>
+            <EuiModal onClose={this.closeModal}>
+              <EuiModalHeader>
+                <EuiModalHeaderTitle>
+                  <EuiText size="s">
+                    <h2>{"View JSON of " + id}</h2>
+                  </EuiText>
+                </EuiModalHeaderTitle>
+              </EuiModalHeader>
+
+              <EuiModalBody>
+                <EuiCodeBlock language="json" fontSize="s" paddingSize="m" overflowHeight={600} inline={false} isCopyable>
+                  {JSON.stringify(transformJson, null, 4)}
+                </EuiCodeBlock>
+              </EuiModalBody>
+
+              <EuiModalFooter>
+                <EuiSmallButtonEmpty onClick={this.closeModal}>Close</EuiSmallButtonEmpty>
+              </EuiModalFooter>
+            </EuiModal>
+          </EuiOverlayMask>
+        )}
+
+        {isDeleteModalOpen && <DeleteModal item={id} closeDeleteModal={this.closeDeleteModal} onClickDelete={this.onClickDelete} />}
+      </div>
+    ) : (
+      <div style={{ padding: "0px 0px" }}>
+        <HeaderControl setMountPoint={setAppBadgeControls} controls={badgeControlData} />
+        <HeaderControl controls={HeaderRight} setMountPoint={setAppRightControls} />
+        <GeneralInformation
+          id={id}
+          description={description}
+          sourceIndex={sourceIndex}
+          targetIndex={targetIndex}
+          sourceIndexFilter={sourceIndexFilter}
+          scheduledText={scheduleText}
+          pageSize={pageSize}
+          enabledAt={enabledAt}
+          updatedAt={updatedAt}
+          onEdit={this.onEdit}
+        />
+        <EuiSpacer />
+        <TransformStatus metadata={metadata} />
         <EuiSpacer />
         <TransformSettings
           {...this.props}
@@ -336,19 +496,23 @@ export class TransformDetails extends Component<TransformDetailsProps, Transform
 
         {isModalOpen && (
           <EuiOverlayMask>
-            <EuiModal onClose={this.closeModal} style={{ padding: "5px 30px" }}>
+            <EuiModal onClose={this.closeModal}>
               <EuiModalHeader>
-                <EuiModalHeaderTitle>{"View JSON of " + id} </EuiModalHeaderTitle>
+                <EuiModalHeaderTitle>
+                  <EuiText size="s">
+                    <h2>{"View JSON of " + id}</h2>
+                  </EuiText>
+                </EuiModalHeaderTitle>
               </EuiModalHeader>
 
               <EuiModalBody>
-                <EuiCodeBlock language="json" fontSize="m" paddingSize="m" overflowHeight={600} inline={false} isCopyable>
+                <EuiCodeBlock language="json" fontSize="s" paddingSize="m" overflowHeight={600} inline={false} isCopyable>
                   {JSON.stringify(transformJson, null, 4)}
                 </EuiCodeBlock>
               </EuiModalBody>
 
               <EuiModalFooter>
-                <EuiButtonEmpty onClick={this.closeModal}>Close</EuiButtonEmpty>
+                <EuiSmallButtonEmpty onClick={this.closeModal}>Close</EuiSmallButtonEmpty>
               </EuiModalFooter>
             </EuiModal>
           </EuiOverlayMask>

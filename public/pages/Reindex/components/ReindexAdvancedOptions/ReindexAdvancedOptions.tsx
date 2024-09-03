@@ -5,7 +5,16 @@
 
 import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 import CustomFormRow, { OptionalLabel } from "../../../../components/CustomFormRow";
-import { EuiCheckbox, EuiComboBox, EuiComboBoxOptionOption, EuiFieldNumber, EuiLink, EuiRadioGroup, EuiSpacer } from "@elastic/eui";
+import {
+  EuiCompressedCheckbox,
+  EuiCompressedComboBox,
+  EuiComboBoxOptionOption,
+  EuiCompressedFieldNumber,
+  EuiLink,
+  EuiCompressedRadioGroup,
+  EuiSpacer,
+  EuiText,
+} from "@elastic/eui";
 import { CoreServicesContext } from "../../../../components/core_services";
 import { CoreStart } from "opensearch-dashboards/public";
 
@@ -57,7 +66,11 @@ const ReindexAdvancedOptions = (props: ReindexOptionsProps) => {
   return (
     <div>
       <CustomFormRow
-        label="Reindex only unique documents"
+        label={
+          <EuiText size="s">
+            <h3>Reindex only unique documents</h3>
+          </EuiText>
+        }
         helpText={
           <>
             You can choose to copy only the documents that do not exist in the destination index. By default, OpenSearch will copy all
@@ -68,7 +81,7 @@ const ReindexAdvancedOptions = (props: ReindexOptionsProps) => {
           </>
         }
       >
-        <EuiCheckbox
+        <EuiCompressedCheckbox
           id="uniqueCheckbox"
           label="Reindex only unique documents"
           checked={reindexUniqueDocuments}
@@ -78,7 +91,11 @@ const ReindexAdvancedOptions = (props: ReindexOptionsProps) => {
       <EuiSpacer />
 
       <CustomFormRow
-        label="Version conflicts"
+        label={
+          <EuiText size="s">
+            <h3>Version conflicts</h3>
+          </EuiText>
+        }
         helpText={
           <>
             Instead of failing the reindexing operation, ignore any version conflicts during reindexing.{" "}
@@ -88,7 +105,7 @@ const ReindexAdvancedOptions = (props: ReindexOptionsProps) => {
           </>
         }
       >
-        <EuiCheckbox
+        <EuiCompressedCheckbox
           id="ConflictsOptionCheckbox"
           label="Ignore conflicts during reindexing"
           checked={ignoreConflicts}
@@ -98,11 +115,15 @@ const ReindexAdvancedOptions = (props: ReindexOptionsProps) => {
       <EuiSpacer />
 
       <CustomFormRow
-        label="Slice reindexing operation"
+        label={
+          <EuiText size="s">
+            <h3>Slice reindexing operation</h3>
+          </EuiText>
+        }
         helpText="Divide this reindexing operation into smaller subtasks to run in parallel."
       >
         <>
-          <EuiCheckbox
+          <EuiCompressedCheckbox
             id="sliceEnabledCheckBox"
             data-test-subj="sliceEnabled"
             label="Slice this reindexing operation"
@@ -115,7 +136,7 @@ const ReindexAdvancedOptions = (props: ReindexOptionsProps) => {
           {sliceEnabled ? (
             <>
               <EuiSpacer />
-              <EuiRadioGroup
+              <EuiCompressedRadioGroup
                 options={[
                   {
                     id: "auto",
@@ -144,10 +165,14 @@ const ReindexAdvancedOptions = (props: ReindexOptionsProps) => {
           <CustomFormRow
             isInvalid={!!sliceErr}
             error={sliceErr}
-            label="Number of subtasks"
+            label={
+              <EuiText size="s">
+                <h3>Number of subtasks</h3>
+              </EuiText>
+            }
             helpText="Specify the number of subtasks to divide this operation into."
           >
-            <EuiFieldNumber
+            <EuiCompressedFieldNumber
               data-test-subj="slices"
               value={slices}
               placeholder="Specify a number"
@@ -163,8 +188,11 @@ const ReindexAdvancedOptions = (props: ReindexOptionsProps) => {
       <CustomFormRow
         label={
           <>
-            Transform with ingest pipeline
-            <OptionalLabel />
+            <EuiText size="s">
+              <h3>
+                Transform with ingest pipeline <OptionalLabel />
+              </h3>
+            </EuiText>
           </>
         }
         helpText={
@@ -176,7 +204,7 @@ const ReindexAdvancedOptions = (props: ReindexOptionsProps) => {
           </>
         }
       >
-        <EuiComboBox
+        <EuiCompressedComboBox
           aria-label="Ingest Pipeline"
           placeholder="Select an ingest pipeline"
           data-test-subj="pipelineCombobox"

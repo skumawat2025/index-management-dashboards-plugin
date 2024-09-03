@@ -4,10 +4,10 @@
  */
 
 import React, { Component, Fragment } from "react";
-import { EuiSpacer, EuiFormRow, EuiCallOut, EuiText, EuiLink } from "@elastic/eui";
+import { EuiSpacer, EuiCompressedFormRow, EuiCallOut, EuiText, EuiLink, EuiFlexGroup, EuiHorizontalRule, EuiPanel } from "@elastic/eui";
 import { EuiComboBoxOptionOption } from "@elastic/eui/src/components/combo_box/types";
 import _ from "lodash";
-import EuiComboBox from "../../../../components/ComboBoxWithoutWarning";
+import EuiCompressedComboBox from "../../../../components/ComboBoxWithoutWarning";
 import { ContentPanel } from "../../../../components/ContentPanel";
 import { IndexItem } from "../../../../../models/interfaces";
 import IndexService from "../../../../services/IndexService";
@@ -121,72 +121,86 @@ export default class RollupIndices extends Component<RollupIndicesProps, RollupI
     } = this.props;
     const { isLoading, indexOptions, targetIndexOptions } = this.state;
     return (
-      <ContentPanel bodyStyles={{ padding: "initial" }} title="Indices" titleSize="m">
-        <div style={{ paddingLeft: "10px" }}>
-          <EuiSpacer size="s" />
-          <EuiCallOut color="warning">
+      <EuiPanel>
+        <EuiFlexGroup gutterSize="xs" alignItems="center">
+          <EuiText size="s">
+            <h2>Indices</h2>
+          </EuiText>
+        </EuiFlexGroup>
+        <EuiHorizontalRule margin={"xs"} />
+        <EuiSpacer size="s" />
+        <EuiCallOut color="warning">
+          <EuiText size="s">
             <p>You can't change indices after creating a job. Double-check the source and target index names before proceeding.</p>
-          </EuiCallOut>
-          {hasAggregation && (
-            <Fragment>
-              <EuiSpacer />
-              <EuiCallOut color="warning">
-                <p>Note: changing source index will erase all existing definitions about aggregations and metrics.</p>
-              </EuiCallOut>
-            </Fragment>
-          )}
-          <EuiSpacer size="m" />
-          <EuiFormRow
-            label="Source index"
-            error={sourceIndexError}
+          </EuiText>
+        </EuiCallOut>
+        {hasAggregation && (
+          <Fragment>
+            <EuiSpacer />
+            <EuiCallOut color="warning">
+              <p>Note: changing source index will erase all existing definitions about aggregations and metrics.</p>
+            </EuiCallOut>
+          </Fragment>
+        )}
+        <EuiSpacer size="m" />
+        <EuiCompressedFormRow
+          label={
+            <EuiText size="s">
+              <h3>Source index</h3>
+            </EuiText>
+          }
+          error={sourceIndexError}
+          isInvalid={sourceIndexError != ""}
+          helpText="The index pattern on which to performed the rollup job. You can use * as a wildcard."
+        >
+          <EuiCompressedComboBox
+            placeholder="Select source index"
+            options={indexOptions}
+            selectedOptions={sourceIndex}
+            onChange={onChangeSourceIndex}
+            singleSelection={{ asPlainText: true }}
+            onSearchChange={this.onIndexSearchChange}
+            isLoading={isLoading}
             isInvalid={sourceIndexError != ""}
-            helpText="The index pattern on which to performed the rollup job. You can use * as a wildcard."
-          >
-            <EuiComboBox
-              placeholder="Select source index"
-              options={indexOptions}
-              selectedOptions={sourceIndex}
-              onChange={onChangeSourceIndex}
-              singleSelection={{ asPlainText: true }}
-              onSearchChange={this.onIndexSearchChange}
-              isLoading={isLoading}
-              isInvalid={sourceIndexError != ""}
-              data-test-subj="sourceIndexCombobox"
-            />
-          </EuiFormRow>
+            data-test-subj="sourceIndexCombobox"
+          />
+        </EuiCompressedFormRow>
 
-          <EuiFormRow
-            label="Target index"
-            error={targetIndexError}
+        <EuiCompressedFormRow
+          label={
+            <EuiText size="s">
+              <h3>Target index</h3>
+            </EuiText>
+          }
+          error={targetIndexError}
+          isInvalid={targetIndexError != ""}
+          helpText={
+            <EuiText size={"xs"}>
+              {
+                "The target index stores rollup results. You can select an existing index or type in a new index name with embedded variables "
+              }
+              {
+                <EuiLink external href={ROLLUP_RESULTS_HELP_TEXT_LINK} target={"_blank"} rel="noopener noreferrer">
+                  Learn more
+                </EuiLink>
+              }
+            </EuiText>
+          }
+        >
+          <EuiCompressedComboBox
+            placeholder="Select or create target index"
+            options={targetIndexOptions}
+            selectedOptions={targetIndex}
+            onChange={onChangeTargetIndex}
+            onCreateOption={this.onCreateOption}
+            singleSelection={{ asPlainText: true }}
+            onSearchChange={this.onIndexSearchChange}
+            isLoading={isLoading}
             isInvalid={targetIndexError != ""}
-            helpText={
-              <EuiText size={"xs"}>
-                {
-                  "The target index stores rollup results. You can select an existing index or type in a new index name with embedded variables "
-                }
-                {
-                  <EuiLink external href={ROLLUP_RESULTS_HELP_TEXT_LINK} target={"_blank"} rel="noopener noreferrer">
-                    Learn more
-                  </EuiLink>
-                }
-              </EuiText>
-            }
-          >
-            <EuiComboBox
-              placeholder="Select or create target index"
-              options={targetIndexOptions}
-              selectedOptions={targetIndex}
-              onChange={onChangeTargetIndex}
-              onCreateOption={this.onCreateOption}
-              singleSelection={{ asPlainText: true }}
-              onSearchChange={this.onIndexSearchChange}
-              isLoading={isLoading}
-              isInvalid={targetIndexError != ""}
-              data-test-subj="targetIndexCombobox"
-            />
-          </EuiFormRow>
-        </div>
-      </ContentPanel>
+            data-test-subj="targetIndexCombobox"
+          />
+        </EuiCompressedFormRow>
+      </EuiPanel>
     );
   }
 }

@@ -10,22 +10,24 @@ exports[`<IndexPolicies /> spec renders the component 1`] = `
   >
     <div
       class="euiFlexGroup euiFlexGroup--gutterLarge euiFlexGroup--alignItemsFlexStart euiFlexGroup--justifyContentSpaceBetween euiFlexGroup--directionRow euiFlexGroup--responsive"
-      style="padding: 0px 10px;"
+      style="padding: 0px 16px;"
     >
       <div
         class="euiFlexItem"
       >
-        <h3
-          class="euiTitle euiTitle--large"
+        <div
+          class="euiText euiText--small"
         >
-          State management policies
-          <span
-            class="panel-header-count"
-          >
-             
-             
-          </span>
-        </h3>
+          <h1>
+            State management policies
+            <span
+              class="panel-header-count"
+            >
+               
+               
+            </span>
+          </h1>
+        </div>
       </div>
       <div
         class="euiFlexItem euiFlexItem--flexGrowZero"
@@ -43,7 +45,7 @@ exports[`<IndexPolicies /> spec renders the component 1`] = `
                 class="euiFlexItem euiFlexItem--flexGrowZero"
               >
                 <button
-                  class="euiButton euiButton--primary euiButton-isDisabled"
+                  class="euiButton euiButton--primary euiButton--small euiButton-isDisabled"
                   data-test-subj="DeleteButton"
                   disabled=""
                   type="button"
@@ -63,7 +65,7 @@ exports[`<IndexPolicies /> spec renders the component 1`] = `
                 class="euiFlexItem euiFlexItem--flexGrowZero"
               >
                 <button
-                  class="euiButton euiButton--primary euiButton-isDisabled"
+                  class="euiButton euiButton--primary euiButton--small euiButton-isDisabled"
                   data-test-subj="EditButton"
                   disabled=""
                   type="button"
@@ -83,7 +85,7 @@ exports[`<IndexPolicies /> spec renders the component 1`] = `
                 class="euiFlexItem euiFlexItem--flexGrowZero"
               >
                 <button
-                  class="euiButton euiButton--primary"
+                  class="euiButton euiButton--primary euiButton--small"
                   data-test-subj="Create policyButton"
                   type="button"
                 >
@@ -117,13 +119,13 @@ exports[`<IndexPolicies /> spec renders the component 1`] = `
           class="euiFlexItem"
         >
           <div
-            class="euiFormControlLayout euiFormControlLayout--fullWidth"
+            class="euiFormControlLayout euiFormControlLayout--fullWidth euiFormControlLayout--compressed"
           >
             <div
               class="euiFormControlLayout__childrenWrapper"
             >
               <input
-                class="euiFieldSearch euiFieldSearch--fullWidth"
+                class="euiFieldSearch euiFieldSearch--fullWidth euiFieldSearch--compressed"
                 placeholder="Search"
                 type="search"
                 value=""
@@ -351,7 +353,7 @@ exports[`<IndexPolicies /> spec renders the component 1`] = `
                             class="euiText euiText--medium"
                           >
                             <div
-                              class="euiText euiText--medium"
+                              class="euiText euiText--small"
                             >
                               <p>
                                 Loading policies...

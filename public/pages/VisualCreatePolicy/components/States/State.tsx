@@ -4,7 +4,7 @@
  */
 
 import React from "react";
-import { EuiAccordion, EuiText, EuiPanel, EuiFlexGroup, EuiFlexItem, EuiButtonIcon, EuiToolTip } from "@elastic/eui";
+import { EuiAccordion, EuiText, EuiPanel, EuiFlexGroup, EuiFlexItem, EuiSmallButtonIcon, EuiToolTip } from "@elastic/eui";
 import "brace/theme/github";
 import "brace/mode/json";
 import { State as StateData } from "../../../../../models/interfaces";
@@ -32,7 +32,7 @@ const State = ({ state, isInitialState, idx, onClickEditState, onClickDeleteStat
     buttonContent={
       <EuiFlexGroup justifyContent="center" alignItems="center">
         <EuiFlexItem grow={false}>
-          <EuiText>
+          <EuiText size="s">
             <strong>{state.name}</strong>
           </EuiText>
         </EuiFlexItem>
@@ -64,7 +64,7 @@ const State = ({ state, isInitialState, idx, onClickEditState, onClickDeleteStat
             <ModalConsumer>
               {({ onShow, onClose }) => (
                 <EuiToolTip position="top" content={<p>Delete state</p>}>
-                  <EuiButtonIcon
+                  <EuiSmallButtonIcon
                     iconType="trash"
                     aria-label="Delete"
                     color="danger"
@@ -94,7 +94,7 @@ const State = ({ state, isInitialState, idx, onClickEditState, onClickDeleteStat
           </EuiFlexItem>
           <EuiFlexItem grow={false}>
             <EuiToolTip position="top" content={<p>Edit state</p>}>
-              <EuiButtonIcon iconType="pencil" aria-label="Edit" color="primary" onClick={() => onClickEditState(state)} />
+              <EuiSmallButtonIcon iconType="pencil" aria-label="Edit" color="primary" onClick={() => onClickEditState(state)} />
             </EuiToolTip>
           </EuiFlexItem>
         </EuiFlexGroup>
@@ -105,17 +105,19 @@ const State = ({ state, isInitialState, idx, onClickEditState, onClickDeleteStat
     <EuiFlexGroup direction="column" gutterSize="l">
       <EuiFlexItem grow={false}>
         <EuiText>
-          <h4>Actions</h4>
+          <h5>Actions</h5>
         </EuiText>
       </EuiFlexItem>
       <EuiFlexItem>
         {!state.actions?.length ? (
-          <EuiText>No actions. Edit state to add actions.</EuiText>
+          <EuiText size="s">No actions. Edit state to add actions.</EuiText>
         ) : (
           <EuiFlexGroup wrap>
             {state.actions.map((action, index) => (
               <EuiFlexItem grow={false} key={`${makeId()}-${index}`}>
-                <EuiPanel>{actionRepoSingleton.getUIActionFromData(action).content()}</EuiPanel>
+                <EuiPanel paddingSize="s">
+                  <EuiText size="s">{actionRepoSingleton.getUIActionFromData(action).content()}</EuiText>
+                </EuiPanel>
               </EuiFlexItem>
             ))}
           </EuiFlexGroup>
@@ -123,17 +125,17 @@ const State = ({ state, isInitialState, idx, onClickEditState, onClickDeleteStat
       </EuiFlexItem>
       <EuiFlexItem grow={false}>
         <EuiText>
-          <h4>Transitions</h4>
+          <h5>Transitions</h5>
         </EuiText>
       </EuiFlexItem>
       <EuiFlexItem>
         {!state.transitions?.length ? (
-          <EuiText>No transitions. Edit state to add transitions.</EuiText>
+          <EuiText size="s">No transitions. Edit state to add transitions.</EuiText>
         ) : (
           <EuiFlexGroup wrap>
             {state.transitions.map((transition, index) => (
               <EuiFlexItem grow={false} key={`${makeId()}-${index}`}>
-                <EuiPanel>
+                <EuiPanel paddingSize="s">
                   <TransitionContent transition={transition} />
                 </EuiPanel>
               </EuiFlexItem>

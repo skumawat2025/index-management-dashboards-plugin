@@ -6,7 +6,7 @@
 import React from "react";
 import {
   EuiSpacer,
-  EuiButton,
+  EuiSmallButton,
   // @ts-ignore
   EuiCodeEditor,
   EuiText,
@@ -14,6 +14,10 @@ import {
   EuiCopy,
   EuiLink,
   EuiIcon,
+  EuiPanel,
+  EuiHorizontalRule,
+  EuiFlexItem,
+  EuiFlexGroup,
 } from "@elastic/eui";
 import { ContentPanel } from "../../../../components/ContentPanel";
 import "brace/theme/github";
@@ -30,34 +34,40 @@ interface DefinePolicyProps {
 
 // TODO: Add custom autocomplete for Policy syntax
 const DefinePolicy = ({ jsonString, onChange, onAutoIndent, hasJSONError }: DefinePolicyProps) => (
-  <ContentPanel
-    bodyStyles={{ padding: "initial" }}
-    title="Define policy"
-    titleSize="s"
-    actions={[
-      <EuiCopy textToCopy={jsonString}>
-        {(copy: () => void) => (
-          <EuiButton iconType="copyClipboard" onClick={copy}>
-            Copy
-          </EuiButton>
-        )}
-      </EuiCopy>,
-      <EuiButton iconType="editorAlignLeft" onClick={onAutoIndent} disabled={hasJSONError}>
-        Auto indent
-      </EuiButton>,
-    ]}
-  >
-    <div style={{ paddingLeft: "10px" }}>
-      <EuiText size="xs">
-        <p>
-          You can think of policies as state machines. "Actions" are the operations ISM performs when an index is in a certain state.
-          "Transitions" define when to move from one state to another.{" "}
-          <EuiLink href={DOCUMENTATION_URL} target="_blank" rel="noopener noreferrer">
-            Learn more
-          </EuiLink>
-        </p>
+  <EuiPanel>
+    <EuiFlexGroup justifyContent="spaceBetween" gutterSize="xs" alignItems="center">
+      <EuiText size="s">
+        <h2>{`Define policy`}</h2>
       </EuiText>
-    </div>
+      <EuiFlexItem grow={false}>
+        <EuiFlexGroup justifyContent="spaceBetween" alignItems="center" gutterSize="s">
+          <EuiFlexItem>
+            <EuiCopy textToCopy={jsonString}>
+              {(copy: () => void) => (
+                <EuiSmallButton iconType="copyClipboard" onClick={copy}>
+                  Copy
+                </EuiSmallButton>
+              )}
+            </EuiCopy>
+          </EuiFlexItem>
+          <EuiFlexItem>
+            <EuiSmallButton iconType="editorAlignLeft" onClick={onAutoIndent} disabled={hasJSONError}>
+              Auto indent
+            </EuiSmallButton>
+          </EuiFlexItem>
+        </EuiFlexGroup>
+      </EuiFlexItem>
+    </EuiFlexGroup>
+    <EuiHorizontalRule margin={"xs"} />
+    <EuiText size="xs">
+      <p>
+        You can think of policies as state machines. "Actions" are the operations ISM performs when an index is in a certain state.
+        "Transitions" define when to move from one state to another.{" "}
+        <EuiLink href={DOCUMENTATION_URL} target="_blank" rel="noopener noreferrer">
+          Learn more
+        </EuiLink>
+      </p>
+    </EuiText>
     <EuiSpacer size="m" />
     <DarkModeConsumer>
       {(isDarkMode) => (
@@ -72,7 +82,7 @@ const DefinePolicy = ({ jsonString, onChange, onAutoIndent, hasJSONError }: Defi
         />
       )}
     </DarkModeConsumer>
-  </ContentPanel>
+  </EuiPanel>
 );
 
 export default DefinePolicy;

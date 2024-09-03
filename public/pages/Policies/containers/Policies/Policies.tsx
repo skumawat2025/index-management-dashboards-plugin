@@ -18,7 +18,7 @@ import {
   // @ts-ignore
   Pagination,
   EuiTableSelectionType,
-  EuiButton,
+  EuiSmallButton,
   EuiContextMenuItem,
   EuiTextColor,
   EuiFlexGroup,
@@ -26,6 +26,10 @@ import {
   EuiCompressedFieldSearch,
   EuiPopover,
   EuiContextMenuPanel,
+  EuiContextMenu,
+  EuiIcon,
+  EuiPanel,
+  EuiSpacer,
 } from "@elastic/eui";
 import _ from "lodash";
 import { ContentPanel, ContentPanelActions } from "../../../../components/ContentPanel";
@@ -430,45 +434,42 @@ export class Policies extends MDSEnabledComponent<PoliciesProps, PoliciesState> 
     };
 
     const actionsButton = (
-      <EuiButton
+      <EuiSmallButton
         iconType="arrowDown"
         iconSide="right"
         disabled={!selectedItems.length}
         onClick={this.onActionButtonClick}
         data-test-subj="actionButton"
-        size="s"
       >
         Actions
-      </EuiButton>
+      </EuiSmallButton>
     );
 
-    const popoverActionItems = [
-      <EuiContextMenuItem
-        key="Edit"
-        icon="pencil"
-        disabled={selectedItems.length != 1}
-        data-test-subj="editButton"
-        size="s"
-        onClick={() => {
-          this.closePopover();
-          this.onShowEditModal();
-        }}
-      >
-        Edit
-      </EuiContextMenuItem>,
-      <EuiContextMenuItem
-        key="Delete"
-        icon="trash"
-        disabled={!selectedItems.length}
-        data-test-subj="deleteButton"
-        size="s"
-        onClick={() => {
-          this.closePopover();
-          this.onShowDeleteModal();
-        }}
-      >
-        <EuiTextColor color="danger">Delete</EuiTextColor>
-      </EuiContextMenuItem>,
+    const popoverItems = [
+      {
+        id: 0,
+        width: 159,
+        items: [
+          {
+            name: "Edit",
+            icon: "pencil",
+            disabled: selectedItems.length != 1,
+            onClick: () => {
+              this.closePopover();
+              this.onShowEditModal();
+            },
+          },
+          {
+            name: "Delete",
+            icon: <EuiIcon type="trash" size="m" color="danger" />,
+            disabled: !selectedItems.length,
+            onClick: () => {
+              this.closePopover();
+              this.onShowDeleteModal();
+            },
+          },
+        ],
+      },
     ];
 
     return !useNewUX ? (
@@ -524,8 +525,8 @@ export class Policies extends MDSEnabledComponent<PoliciesProps, PoliciesState> 
             } as TopNavControlButtonData,
           ]}
         />
-        <ContentPanel>
-          <EuiFlexGroup gutterSize="s" alignItems="center" style={{ padding: "0px 0px 16px 0px" }}>
+        <EuiPanel>
+          <EuiFlexGroup gutterSize="s" alignItems="center">
             <EuiFlexItem grow={true}>
               <EuiCompressedFieldSearch
                 autoFocus
@@ -543,13 +544,15 @@ export class Policies extends MDSEnabledComponent<PoliciesProps, PoliciesState> 
                 isOpen={isPopoverOpen}
                 closePopover={this.closePopover}
                 anchorPosition="downRight"
+                panelPaddingSize="s"
               >
-                <EuiContextMenuPanel items={popoverActionItems} />
+                <EuiContextMenu initialPanelId={0} panels={popoverItems} size="s" />
               </EuiPopover>
             </EuiFlexItem>
           </EuiFlexGroup>
+          <EuiSpacer size="s" />
           {CommonTable()}
-        </ContentPanel>
+        </EuiPanel>
         {CreateModal()}
         {DeleteModal()}
         {EditModal()}

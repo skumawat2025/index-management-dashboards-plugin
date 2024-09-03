@@ -4,15 +4,17 @@
  */
 
 import {
-  EuiButton,
-  EuiButtonEmpty,
-  EuiButtonIcon,
+  EuiSmallButton,
+  EuiSmallButtonEmpty,
+  EuiSmallButtonIcon,
   EuiCallOut,
   EuiFlexGroup,
   EuiFlexItem,
   EuiSpacer,
   EuiTitle,
   EuiText,
+  EuiHorizontalRule,
+  EuiPanel,
 } from "@elastic/eui";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
@@ -140,7 +142,7 @@ export default function ForceMergeWrapper(props: Omit<ForceMergeProps, "services
   const advanceTitle = (
     <EuiFlexGroup gutterSize="none" justifyContent="flexStart" alignItems="center">
       <EuiFlexItem grow={false}>
-        <EuiButtonIcon
+        <EuiSmallButtonIcon
           iconType={advancedSettingsOpen ? "arrowDown" : "arrowRight"}
           color="text"
           data-test-subj="advanceOptionToggle"
@@ -151,9 +153,9 @@ export default function ForceMergeWrapper(props: Omit<ForceMergeProps, "services
         />
       </EuiFlexItem>
       <EuiFlexItem grow={false}>
-        <EuiTitle size="s">
-          <h3>Advanced settings</h3>
-        </EuiTitle>
+        <EuiText size="s">
+          <h2>Advanced settings</h2>
+        </EuiText>
       </EuiFlexItem>
     </EuiFlexGroup>
   );
@@ -198,9 +200,9 @@ export default function ForceMergeWrapper(props: Omit<ForceMergeProps, "services
       {useNewUX && <HeaderControl setMountPoint={setAppDescriptionControls} controls={descriptionData} />}
       {!useNewUX && (
         <>
-          <EuiTitle size="l">
+          <EuiText size="s">
             <h1>Force merge</h1>
-          </EuiTitle>
+          </EuiText>
           <CustomFormRow
             fullWidth
             helpText="Manually merge shards of indexes or backing indexes of data streams. You can also use force merge to clear up deleted documents within indexes."
@@ -211,10 +213,19 @@ export default function ForceMergeWrapper(props: Omit<ForceMergeProps, "services
         </>
       )}
 
-      <ContentPanel title="Configure source index" titleSize="s">
-        <EuiSpacer />
+      <EuiPanel>
+        <EuiFlexGroup gutterSize="xs" alignItems="center">
+          <EuiText size="s">
+            <h2>Configure source index</h2>
+          </EuiText>
+        </EuiFlexGroup>
+        <EuiHorizontalRule margin={"xs"} />
         <CustomFormRow
-          label="Select source indexes or data streams"
+          label={
+            <EuiText size="s">
+              <h3>Select source indexes or data streams</h3>
+            </EuiText>
+          }
           isInvalid={!!field.getError("indexes")}
           error={field.getError("indexes")}
           fullWidth
@@ -242,18 +253,20 @@ export default function ForceMergeWrapper(props: Omit<ForceMergeProps, "services
           />
         </CustomFormRow>
 
-        <EuiSpacer />
         {notReadOnlyIndexes.length ? (
-          <EuiCallOut color="warning" title="We recommend force merge with read-only indexes">
-            {notReadOnlyIndexes.map((item) => item[0]).join(", ")} is not a read-only index. We recommend only performing force merge with
-            read-only indexes to pervent large segments being produced.
-          </EuiCallOut>
+          <>
+            <EuiSpacer />
+            <EuiCallOut color="warning" title="We recommend force merge with read-only indexes">
+              {notReadOnlyIndexes.map((item) => item[0]).join(", ")} is not a read-only index. We recommend only performing force merge with
+              read-only indexes to pervent large segments being produced.
+            </EuiCallOut>
+          </>
         ) : null}
-      </ContentPanel>
+      </EuiPanel>
 
       <EuiSpacer />
 
-      <ContentPanel title={advanceTitle} noExtraPadding>
+      <ContentPanel title={advanceTitle} noExtraPadding titleSize="s">
         {advancedSettingsOpen && (
           <>
             <EuiSpacer size="s" />
@@ -266,16 +279,16 @@ export default function ForceMergeWrapper(props: Omit<ForceMergeProps, "services
 
       <EuiSpacer />
 
-      <EuiFlexGroup alignItems="center" justifyContent="flexEnd">
+      <EuiFlexGroup alignItems="center" justifyContent="flexEnd" gutterSize="s">
         <EuiFlexItem grow={false}>
-          <EuiButtonEmpty onClick={onCancel} data-test-subj="reindexCancelButton">
+          <EuiSmallButtonEmpty onClick={onCancel} data-test-subj="reindexCancelButton">
             Cancel
-          </EuiButtonEmpty>
+          </EuiSmallButtonEmpty>
         </EuiFlexItem>
         <EuiFlexItem grow={false}>
-          <EuiButton fill onClick={onClickAction} isLoading={executing} data-test-subj="forceMergeConfirmButton">
+          <EuiSmallButton fill onClick={onClickAction} isLoading={executing} data-test-subj="forceMergeConfirmButton">
             Force merge
-          </EuiButton>
+          </EuiSmallButton>
         </EuiFlexItem>
       </EuiFlexGroup>
     </div>

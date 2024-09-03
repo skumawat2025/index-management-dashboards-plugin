@@ -6,13 +6,15 @@ HTMLCollection [
     <div
       style="padding: 0px 50px;"
     >
-      <h1
-        class="euiTitle euiTitle--medium"
-      >
-        Split index
-      </h1>
       <div
-        class="euiFormRow euiFormRow--fullWidth"
+        class="euiText euiText--small"
+      >
+        <h1>
+          Split index
+        </h1>
+      </div>
+      <div
+        class="euiFormRow euiFormRow--fullWidth euiFormRow--compressed"
         id="some_html_id-row"
       >
         <div

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 import React, { useMemo, useState } from "react";
-import { EuiButton, EuiContextMenu } from "@elastic/eui";
+import { EuiSmallButton, EuiContextMenu } from "@elastic/eui";
 import { RouteComponentProps } from "react-router-dom";
 import SimplePopover from "../../../../components/SimplePopover";
 import DeleteIndexModal from "../DeleteAliasModal";
@@ -12,6 +12,7 @@ import FlushIndexModal from "../../../../containers/FlushIndexModal";
 import RefreshActionModal from "../../../../containers/RefreshAction";
 import { IAlias } from "../../interface";
 import { ROUTES, INDEX_OP_TARGET_TYPE } from "../../../../utils/constants";
+import { getUISettings } from "../../../../services/Services";
 
 export interface AliasesActionsProps {
   selectedItems: IAlias[];
@@ -44,6 +45,10 @@ export default function AliasesActions(props: AliasesActionsProps) {
   };
 
   const renderKey = useMemo(() => Date.now(), [selectedItems]);
+  const uiSettings = getUISettings();
+  const useUpdatedUX = uiSettings.get("home:useNewHomePage");
+
+  const size = useUpdatedUX ? "s" : undefined;
 
   return (
     <>
@@ -51,9 +56,9 @@ export default function AliasesActions(props: AliasesActionsProps) {
         data-test-subj="moreAction"
         panelPaddingSize="none"
         button={
-          <EuiButton iconType="arrowDown" iconSide="right">
+          <EuiSmallButton iconType="arrowDown" iconSide="right">
             Actions
-          </EuiButton>
+          </EuiSmallButton>
         }
       >
         <EuiContextMenu
@@ -61,6 +66,7 @@ export default function AliasesActions(props: AliasesActionsProps) {
           // The EuiContextMenu has bug when testing in jest
           // the props change won't make it rerender
           key={renderKey}
+          size="s"
           panels={[
             {
               id: 0,

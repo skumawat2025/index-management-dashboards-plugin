@@ -6,14 +6,16 @@
 import {
   EuiAccordion,
   EuiComboBoxOptionOption,
-  EuiFieldText,
+  EuiCompressedFieldText,
   EuiFlyout,
   EuiFlyoutBody,
   EuiFlyoutFooter,
   EuiFlyoutHeader,
-  EuiFormRow,
+  EuiCompressedFormRow,
   EuiSpacer,
   EuiTitle,
+  EuiText,
+  EuiFormHelpText,
 } from "@elastic/eui";
 import _ from "lodash";
 
@@ -211,26 +213,35 @@ export class CreateSnapshotFlyout extends MDSEnabledComponent<CreateSnapshotProp
     } = this.state;
 
     const repoOptions = repositories.map((r) => ({ value: r.id, text: r.id }));
+    const invalidChar = ["\\", "/", "*", "?", '"', "<", ">", "|", " ", ",", " ", "#"];
 
     return (
       <EuiFlyout ownFocus={false} onClose={onCloseFlyout} maxWidth={600} size="m" hideCloseButton>
         <EuiFlyoutHeader hasBorder>
-          <EuiTitle size="m">
-            <h2 id="flyoutTitle"> Create snapshot</h2>
-          </EuiTitle>
+          <EuiText size="s">
+            <EuiTitle size="m">
+              <h2 id="flyoutTitle"> Create snapshot</h2>
+            </EuiTitle>
+          </EuiText>
         </EuiFlyoutHeader>
 
         <EuiFlyoutBody>
           <CustomLabel title="Snapshot name" />
-          <EuiFormRow isInvalid={!!snapshotIdError} error={snapshotIdError}>
-            <EuiFieldText
+          <EuiCompressedFormRow isInvalid={!!snapshotIdError} error={snapshotIdError}>
+            <EuiCompressedFieldText
               value={snapshotId}
               onChange={(e) => {
                 this.setState({ snapshotId: e.target.value });
               }}
               data-test-subj="snapshotNameInput"
+              placeholder="Enter snapshot name"
             />
-          </EuiFormRow>
+          </EuiCompressedFormRow>
+          <EuiFormHelpText>
+            {" "}
+            A valid snapshot name must not start with _ and must be lowercase. It must not contain any of the following characters:{" "}
+            {invalidChar.map((char) => `[${char}]`).join(" ")}{" "}
+          </EuiFormHelpText>
 
           <EuiSpacer size="m" />
 
@@ -248,7 +259,14 @@ export class CreateSnapshotFlyout extends MDSEnabledComponent<CreateSnapshotProp
 
           <EuiSpacer size="l" />
 
-          <EuiAccordion id="advanced_settings_accordian" buttonContent="Advanced options">
+          <EuiAccordion
+            id="advanced_settings_accordian"
+            buttonContent={
+              <EuiText size="s">
+                <h3>Advanced options</h3>
+              </EuiText>
+            }
+          >
             <EuiSpacer size="m" />
 
             <SnapshotAdvancedSettings

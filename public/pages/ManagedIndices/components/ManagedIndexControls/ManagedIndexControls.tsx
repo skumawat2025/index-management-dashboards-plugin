@@ -4,8 +4,26 @@
  */
 
 import React, { Component } from "react";
-import { ArgsWithQuery, ArgsWithError, EuiFlexGroup, EuiFlexItem, EuiPagination, EuiSearchBar, EuiSwitch } from "@elastic/eui";
+import {
+  ArgsWithQuery,
+  ArgsWithError,
+  EuiFlexGroup,
+  EuiFlexItem,
+  EuiPagination,
+  EuiSearchBar,
+  EuiCompressedSwitch,
+  EuiButton,
+  EuiPopover,
+  EuiContextMenuPanel,
+  EuiButtonIcon,
+  EuiButtonEmpty,
+  EuiSpacer,
+} from "@elastic/eui";
 import { DataStream } from "../../../../../server/models/interfaces";
+import { ManagedIndices } from "../../containers/ManagedIndices/ManagedIndices";
+import { ManagedIndexItem } from "plugins/index-management-dashboards-plugin/models/interfaces";
+import { getUISettings } from "../../../../services/Services";
+import { size } from "lodash";
 
 interface ManagedIndexControlsProps {
   search: string;
@@ -14,6 +32,7 @@ interface ManagedIndexControlsProps {
   onRefresh: () => void;
   getDataStreams: () => Promise<DataStream[]>;
   toggleShowDataStreams: () => void;
+  Actions?: React.JSX.Element;
 }
 
 export default class ManagedIndexControls extends Component<ManagedIndexControlsProps, object> {
@@ -31,7 +50,7 @@ export default class ManagedIndexControls extends Component<ManagedIndexControls
   };
 
   render() {
-    const { search, onSearchChange, showDataStreams, toggleShowDataStreams } = this.props;
+    const { search, onSearchChange, showDataStreams, toggleShowDataStreams, Actions } = this.props;
 
     const schema = {
       strict: true,
@@ -55,22 +74,60 @@ export default class ManagedIndexControls extends Component<ManagedIndexControls
             multiSelect: false,
             cache: 60000,
             options: () => this.getDataStreams(),
+            popoverProps: {
+              button: (
+                <EuiButtonEmpty size="s" iconType="arrowDown" iconSide="right" flush="right">
+                  Data streams2
+                </EuiButtonEmpty>
+              ),
+            },
           },
         ]
       : undefined;
 
-    return (
+    const uiSettings = getUISettings();
+    const useUpdatedUX = uiSettings.get("home:useNewHomePage");
+
+    return useUpdatedUX ? (
+      <>
+        <EuiFlexGroup alignItems="center" gutterSize="s">
+          <EuiFlexItem>
+            <EuiSearchBar
+              query={search}
+              box={{ placeholder: "Search", schema, incremental: true, compressed: true }}
+              compressed
+              onChange={onSearchChange}
+              filters={filters}
+            />
+          </EuiFlexItem>
+          <EuiFlexItem grow={false}>
+            <EuiButtonIcon iconType="refresh" data-test-subj="refreshButton" display="base" size="s" />
+          </EuiFlexItem>
+          <EuiFlexItem grow={false}>{Actions}</EuiFlexItem>
+          <EuiFlexItem grow={false}>
+            <EuiCompressedSwitch
+              label="Show data stream indexes"
+              checked={showDataStreams}
+              onChange={toggleShowDataStreams}
+              data-test-subj="toggleShowDataStreams"
+            />
+          </EuiFlexItem>
+        </EuiFlexGroup>
+        <EuiSpacer size="m" />
+      </>
+    ) : (
       <EuiFlexGroup style={{ padding: "0px 5px" }} alignItems="center">
         <EuiFlexItem>
           <EuiSearchBar
             query={search}
             box={{ placeholder: "Search index name", schema, incremental: true }}
+            compressed
             onChange={onSearchChange}
             filters={filters}
           />
         </EuiFlexItem>
         <EuiFlexItem grow={false}>
-          <EuiSwitch
+          <EuiCompressedSwitch
             label="Show data stream indexes"
             checked={showDataStreams}
             onChange={toggleShowDataStreams}

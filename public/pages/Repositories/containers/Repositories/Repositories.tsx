@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 import {
-  EuiButton,
+  EuiSmallButton,
   EuiContextMenuItem,
   EuiContextMenuPanel,
   EuiInMemoryTable,
@@ -12,6 +12,7 @@ import {
   EuiText,
   EuiTextColor,
   EuiButtonIcon,
+  EuiPanel,
 } from "@elastic/eui";
 import { getErrorMessage } from "../../../../utils/helpers";
 import React, { Component, useContext } from "react";
@@ -29,6 +30,7 @@ import { DataSourceMenuContext, DataSourceMenuProperties } from "../../../../ser
 import MDSEnabledComponent from "../../../../components/MDSEnabledComponent";
 import { useUpdateUrlWithDataSourceProperties } from "../../../../components/MDSEnabledComponent";
 import { getApplication, getNavigationUI, getUISettings } from "../../../../services/Services";
+import { TopNavControlDescriptionData } from "src/plugins/navigation/public";
 
 interface RepositoriesProps extends RouteComponentProps, DataSourceMenuProperties {
   snapshotManagementService: SnapshotManagementService;
@@ -207,7 +209,6 @@ export class Repositories extends MDSEnabledComponent<RepositoriesProps, Reposit
     const popoverActionItems = [
       <EuiContextMenuItem
         key="Edit"
-        icon="empty"
         disabled={selectedItems.length != 1}
         data-test-subj="editButton"
         onClick={() => {
@@ -219,7 +220,6 @@ export class Repositories extends MDSEnabledComponent<RepositoriesProps, Reposit
       </EuiContextMenuItem>,
       <EuiContextMenuItem
         key="Delete"
-        icon="empty"
         disabled={!selectedItems.length}
         data-test-subj="deleteButton"
         onClick={() => {
@@ -231,7 +231,7 @@ export class Repositories extends MDSEnabledComponent<RepositoriesProps, Reposit
       </EuiContextMenuItem>,
     ];
     const popoverButton = (
-      <EuiButton
+      <EuiSmallButton
         iconType="arrowDown"
         iconSide="right"
         disabled={!selectedItems.length}
@@ -241,18 +241,18 @@ export class Repositories extends MDSEnabledComponent<RepositoriesProps, Reposit
         data-test-subj="actionButton"
       >
         Actions
-      </EuiButton>
+      </EuiSmallButton>
     );
     const actions = [
-      <EuiButton iconType="refresh" onClick={this.getRepos} data-test-subj="refreshButton">
+      <EuiSmallButton iconType="refresh" onClick={this.getRepos} data-test-subj="refreshButton">
         Refresh
-      </EuiButton>,
-      <EuiButton disabled={!selectedItems.length} onClick={this.showDeleteModal} data-test-subj="deleteButton" color="danger">
+      </EuiSmallButton>,
+      <EuiSmallButton disabled={!selectedItems.length} onClick={this.showDeleteModal} data-test-subj="deleteButton" color="danger">
         Delete
-      </EuiButton>,
-      <EuiButton onClick={this.onClickCreate} fill={true}>
+      </EuiSmallButton>,
+      <EuiSmallButton onClick={this.onClickCreate} fill={true} iconType="plus">
         Create repository
-      </EuiButton>,
+      </EuiSmallButton>,
     ];
 
     const renderToolsRight = () => {
@@ -270,7 +270,7 @@ export class Repositories extends MDSEnabledComponent<RepositoriesProps, Reposit
 
     const renderToolsLeft = () => {
       return [
-        <EuiButton
+        <EuiSmallButton
           iconType="trash"
           iconSide="left"
           iconSize="s"
@@ -279,11 +279,10 @@ export class Repositories extends MDSEnabledComponent<RepositoriesProps, Reposit
           data-test-subj="deleteButton"
           aria-label="delete"
           color="danger"
-          size="s"
           minWidth={75}
         >
           Delete
-        </EuiButton>,
+        </EuiSmallButton>,
       ];
     };
 
@@ -292,9 +291,10 @@ export class Repositories extends MDSEnabledComponent<RepositoriesProps, Reposit
       toolsLeft: useNewUX ? renderToolsLeft() : undefined,
       box: {
         placeholder: "Search repository",
-        compressed: useNewUX ? true : false,
+        compressed: true,
         increamental: true,
       },
+      compressed: true,
       filters: [
         {
           type: "field_value_selection",
@@ -321,12 +321,8 @@ export class Repositories extends MDSEnabledComponent<RepositoriesProps, Reposit
 
     const descriptionData = [
       {
-        renderComponent: (
-          <EuiText size="s" color="subdued">
-            Repositories are remote storage locations used to store snapshots.
-          </EuiText>
-        ),
-      },
+        description: "Repositories are remote storage locations used to store snapshots.",
+      } as TopNavControlDescriptionData,
     ];
 
     const controlControlsData = [
@@ -341,20 +337,8 @@ export class Repositories extends MDSEnabledComponent<RepositoriesProps, Reposit
       },
     ];
 
-    const { HeaderControl } = getNavigationUI();
-    const { setAppRightControls, setAppDescriptionControls } = getApplication();
-    const useTitle = useNewUX ? undefined : "Repositories";
-    const useActions = useNewUX ? undefined : actions;
-    const useSubTitleText = useNewUX ? undefined : subTitleText;
-
-    return (
-      <>
-        {useNewUX ? (
-          <>
-            <HeaderControl setMountPoint={setAppRightControls} controls={controlControlsData} />
-            <HeaderControl setMountPoint={setAppDescriptionControls} controls={descriptionData} />
-          </>
-        ) : null}
+    const repositoriesTable = () => {
+      return !useNewUX ? (
         <ContentPanel title={useTitle} actions={useActions} subTitleText={useSubTitleText}>
           <EuiInMemoryTable
             items={repositories}
@@ -367,6 +351,43 @@ export class Repositories extends MDSEnabledComponent<RepositoriesProps, Reposit
             loading={loading}
           />
         </ContentPanel>
+      ) : (
+        <EuiPanel>
+          <EuiInMemoryTable
+            items={repositories}
+            itemId="id"
+            columns={this.columns}
+            pagination={true}
+            isSelectable={true}
+            selection={{ onSelectionChange: (selectedItems) => this.setState({ selectedItems }) }}
+            search={search}
+            loading={loading}
+          />
+        </EuiPanel>
+      );
+    };
+
+    const { HeaderControl } = getNavigationUI();
+    const { setAppRightControls, setAppDescriptionControls } = getApplication();
+    const useTitle = useNewUX 
+      ? undefined 
+      : (
+        <EuiText size="s">
+          <h1>Repositories</h1>
+        </EuiText>
+      );  
+    const useActions = useNewUX ? undefined : actions;
+    const useSubTitleText = useNewUX ? undefined : subTitleText;
+
+    return (
+      <>
+        {useNewUX ? (
+          <>
+            <HeaderControl setMountPoint={setAppRightControls} controls={controlControlsData} />
+            <HeaderControl setMountPoint={setAppDescriptionControls} controls={descriptionData} />
+          </>
+        ) : null}
+        {repositoriesTable()}
 
         {showFlyout && (
           <CreateRepositoryFlyout

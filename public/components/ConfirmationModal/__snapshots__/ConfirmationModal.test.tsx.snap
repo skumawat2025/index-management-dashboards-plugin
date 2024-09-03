@@ -35,7 +35,13 @@ exports[`<ConfirmationModal /> spec renders the component 1`] = `
           <div
             class="euiModalHeader__title"
           >
-            some title
+            <div
+              class="euiText euiText--small"
+            >
+              <h2>
+                some title
+              </h2>
+            </div>
           </div>
         </div>
         <div
@@ -44,14 +50,20 @@ exports[`<ConfirmationModal /> spec renders the component 1`] = `
           <div
             class="euiModalBody__overflow"
           >
-            some body message
+            <div
+              class="euiText euiText--small"
+            >
+              <p>
+                some body message
+              </p>
+            </div>
           </div>
         </div>
         <div
           class="euiModalFooter"
         >
           <button
-            class="euiButtonEmpty euiButtonEmpty--primary"
+            class="euiButtonEmpty euiButtonEmpty--primary euiButtonEmpty--small"
             data-test-subj="confirmationModalCloseButton"
             type="button"
           >
@@ -66,7 +78,7 @@ exports[`<ConfirmationModal /> spec renders the component 1`] = `
             </span>
           </button>
           <button
-            class="euiButton euiButton--primary euiButton--fill"
+            class="euiButton euiButton--primary euiButton--small euiButton--fill"
             data-test-subj="confirmationModalActionButton"
             type="button"
           >

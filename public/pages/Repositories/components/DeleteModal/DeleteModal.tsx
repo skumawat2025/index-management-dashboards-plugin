@@ -4,7 +4,7 @@
  */
 
 import React, { ChangeEvent, Component } from "react";
-import { EuiConfirmModal, EuiFieldText, EuiForm, EuiFormRow, EuiOverlayMask, EuiSpacer } from "@elastic/eui";
+import { EuiConfirmModal, EuiCompressedFieldText, EuiForm, EuiCompressedFormRow, EuiOverlayMask, EuiSpacer, EuiText } from "@elastic/eui";
 
 interface DeleteModalProps {
   closeDeleteModal: (event?: any) => void;
@@ -41,7 +41,11 @@ export default class DeleteModal extends Component<DeleteModalProps, DeleteModal
     return (
       <EuiOverlayMask>
         <EuiConfirmModal
-          title={`Delete ${type}`}
+          title={
+            <EuiText size="s">
+              <h2>Delete {type}</h2>
+            </EuiText>
+          }
           onCancel={closeDeleteModal}
           onConfirm={() => {
             onClickDelete();
@@ -59,9 +63,14 @@ export default class DeleteModal extends Component<DeleteModalProps, DeleteModal
             </p>
             <EuiSpacer size="s" />
             {!!confirmation && (
-              <EuiFormRow helpText={`To confirm deletion, type "delete".`}>
-                <EuiFieldText value={confirmDeleteText} placeholder="delete" onChange={this.onChange} data-test-subj="deleteTextField" />
-              </EuiFormRow>
+              <EuiCompressedFormRow helpText={`To confirm deletion, type "delete".`}>
+                <EuiCompressedFieldText
+                  value={confirmDeleteText}
+                  placeholder="delete"
+                  onChange={this.onChange}
+                  data-test-subj="deleteTextField"
+                />
+              </EuiCompressedFormRow>
             )}
           </EuiForm>
         </EuiConfirmModal>

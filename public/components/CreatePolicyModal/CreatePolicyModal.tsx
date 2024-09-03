@@ -5,19 +5,19 @@
 
 import React, { useState } from "react";
 import {
-  EuiButton,
+  EuiSmallButton,
   EuiModal,
   EuiModalBody,
   EuiModalFooter,
   EuiModalHeader,
   EuiModalHeaderTitle,
   EuiOverlayMask,
-  EuiButtonEmpty,
+  EuiSmallButtonEmpty,
   EuiFlexGroup,
   EuiFlexItem,
   EuiText,
-  EuiFormRow,
-  EuiRadio,
+  EuiCompressedFormRow,
+  EuiCompressedRadio,
   EuiPanel,
 } from "@elastic/eui";
 
@@ -35,46 +35,54 @@ const CreatePolicyModal: React.SFC<CreatePolicyModalProps> = ({ isEdit = false, 
       // @ts-ignore */}
       <EuiModal onCancel={onClose} onClose={onClose} maxWidth={600}>
         <EuiModalHeader>
-          <EuiModalHeaderTitle>Configuration method</EuiModalHeaderTitle>
+          <EuiModalHeaderTitle>
+            <EuiText size="s">
+              <h2>Configuration method</h2>
+            </EuiText>
+          </EuiModalHeaderTitle>
         </EuiModalHeader>
 
         <EuiModalBody>
           <EuiFlexGroup gutterSize="m" direction="column" style={{ margin: "-4px" }}>
             <EuiFlexItem grow={false}>
               <EuiText size="s" style={{ marginTop: 0 }}>
-                Choose how you would like to {isEdit ? "modify" : "define"} your policy, either using a visual editor or writing JSON.
+                <p>
+                  Choose how you would like to {isEdit ? "modify" : "define"} your policy, either using a visual editor or writing JSON.
+                </p>
               </EuiText>
             </EuiFlexItem>
             <EuiFlexItem grow={false}>
               <EuiFlexGroup>
                 <EuiFlexItem>
                   <EuiPanel className={visual ? "selected-radio-panel" : ""}>
-                    <EuiFormRow
+                    <EuiCompressedFormRow
                       helpText={`Use the visual editor to ${isEdit ? "update" : "create"} your policy${
                         isEdit ? "" : " using pre-defined options."
                       }`}
                     >
-                      <EuiRadio
+                      <EuiCompressedRadio
                         id="create-policy-visual"
                         label="Visual editor"
                         checked={visual}
                         onChange={(e) => setVisual(e.target.checked)}
                         data-test-subj="createPolicyModalVisualRadio"
                       />
-                    </EuiFormRow>
+                    </EuiCompressedFormRow>
                   </EuiPanel>
                 </EuiFlexItem>
                 <EuiFlexItem>
                   <EuiPanel className={visual ? "" : "selected-radio-panel"}>
-                    <EuiFormRow helpText={`Use the JSON editor to ${isEdit ? "update" : "create or import"} your policy using JSON.`}>
-                      <EuiRadio
+                    <EuiCompressedFormRow
+                      helpText={`Use the JSON editor to ${isEdit ? "update" : "create or import"} your policy using JSON.`}
+                    >
+                      <EuiCompressedRadio
                         id="create-policy-json"
                         label="JSON editor"
                         checked={!visual}
                         onChange={(e) => setVisual(!e.target.checked)}
                         data-test-subj="createPolicyModalJsonRadio"
                       />
-                    </EuiFormRow>
+                    </EuiCompressedFormRow>
                   </EuiPanel>
                 </EuiFlexItem>
               </EuiFlexGroup>
@@ -85,12 +93,12 @@ const CreatePolicyModal: React.SFC<CreatePolicyModalProps> = ({ isEdit = false, 
         <EuiModalFooter>
           <EuiFlexGroup justifyContent="flexEnd">
             <EuiFlexItem grow={false}>
-              <EuiButtonEmpty onClick={onClose} data-test-subj="createPolicyModalCancelButton">
+              <EuiSmallButtonEmpty onClick={onClose} data-test-subj="createPolicyModalCancelButton">
                 Cancel
-              </EuiButtonEmpty>
+              </EuiSmallButtonEmpty>
             </EuiFlexItem>
             <EuiFlexItem grow={false}>
-              <EuiButton
+              <EuiSmallButton
                 onClick={() => {
                   onClose();
                   onClickContinue(visual);
@@ -99,7 +107,7 @@ const CreatePolicyModal: React.SFC<CreatePolicyModalProps> = ({ isEdit = false, 
                 data-test-subj="createPolicyModalContinueButton"
               >
                 Continue
-              </EuiButton>
+              </EuiSmallButton>
             </EuiFlexItem>
           </EuiFlexGroup>
         </EuiModalFooter>

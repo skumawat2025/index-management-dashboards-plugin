@@ -4,7 +4,7 @@
  */
 
 import React, { ChangeEvent, Component, Fragment } from "react";
-import { EuiConfirmModal, EuiForm, EuiFormRow, EuiFieldText, EuiOverlayMask, EuiSpacer } from "@elastic/eui";
+import { EuiConfirmModal, EuiForm, EuiCompressedFormRow, EuiCompressedFieldText, EuiOverlayMask, EuiSpacer, EuiText } from "@elastic/eui";
 
 interface DeleteModalProps {
   rollupId: string;
@@ -30,7 +30,11 @@ export default class DeleteModal extends Component<DeleteModalProps, DeleteModal
     return (
       <EuiOverlayMask>
         <EuiConfirmModal
-          title="Delete job(s)"
+          title={
+            <EuiText size="s">
+              <h2>Delete job(s)</h2>
+            </EuiText>
+          }
           onCancel={closeDeleteModal}
           onConfirm={onClickDelete}
           cancelButtonText="Cancel"
@@ -41,13 +45,20 @@ export default class DeleteModal extends Component<DeleteModalProps, DeleteModal
         >
           <EuiForm>
             <Fragment>
-              By deleting "<strong>{rollupId}</strong>", all future scheduled rollup execution will be canceled. However, your target index
-              will remain as it is.
+              <EuiText size="s">
+                By deleting "<strong>{rollupId}</strong>", all future scheduled rollup execution will be canceled. However, your target
+                index will remain as it is.
+              </EuiText>
             </Fragment>
             <EuiSpacer size="s" />
-            <EuiFormRow helpText="To confirm deletion, enter delete in the text field">
-              <EuiFieldText value={confirmDeleteText} placeholder="delete" onChange={this.onChange} data-test-subj="deleteTextField" />
-            </EuiFormRow>
+            <EuiCompressedFormRow helpText="To confirm deletion, enter delete in the text field">
+              <EuiCompressedFieldText
+                value={confirmDeleteText}
+                placeholder="delete"
+                onChange={this.onChange}
+                data-test-subj="deleteTextField"
+              />
+            </EuiCompressedFormRow>
           </EuiForm>
         </EuiConfirmModal>
       </EuiOverlayMask>

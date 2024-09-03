@@ -9,11 +9,10 @@ import {
   EuiTitle,
   EuiFlexGroup,
   EuiFlexItem,
-  EuiButton,
-  EuiButtonEmpty,
+  EuiSmallButton,
+  EuiSmallButtonEmpty,
   EuiCallOut,
   EuiLink,
-  EuiIcon,
   EuiText,
 } from "@elastic/eui";
 import queryString from "query-string";
@@ -29,6 +28,7 @@ import { CoreServicesContext } from "../../../../components/core_services";
 import { DataSourceMenuContext, DataSourceMenuProperties } from "../../../../services/DataSourceMenuContext";
 import { useUpdateUrlWithDataSourceProperties } from "../../../../components/MDSEnabledComponent";
 import { getApplication, getNavigationUI, getUISettings } from "../../../../services/Services";
+import { TopNavControlDescriptionData, TopNavControlLinkData } from "src/plugins/navigation/public";
 
 interface CreatePolicyProps extends RouteComponentProps, DataSourceMenuProperties {
   isEdit: boolean;
@@ -250,15 +250,17 @@ export class CreatePolicy extends Component<CreatePolicyProps, CreatePolicyState
 
     const descriptionData = [
       {
-        renderComponent: (
-          <EuiText size="s" color="subdued">
-            Policies let you automatically perform administrative operations on indices.{" "}
-            <EuiLink href={POLICY_DOCUMENTATION_URL} target="_blank" rel="noopener noreferrer">
-              Learn more
-            </EuiLink>
-          </EuiText>
-        ),
-      },
+        description: "Policies let you automatically perform administrative operations on indices.",
+        links: {
+          label: "Learn more",
+          href: POLICY_DOCUMENTATION_URL,
+          iconType: "popout",
+          iconSide: "right",
+          controlType: "link",
+          target: "_blank",
+          flush: "both",
+        } as TopNavControlLinkData,
+      } as TopNavControlDescriptionData,
     ];
 
     let hasJSONError = false;
@@ -294,16 +296,16 @@ export class CreatePolicy extends Component<CreatePolicyProps, CreatePolicyState
           </EuiCallOut>
         )}
         <EuiSpacer />
-        <EuiFlexGroup alignItems="center" justifyContent="flexEnd">
+        <EuiFlexGroup alignItems="center" justifyContent="flexEnd" gutterSize="s">
           <EuiFlexItem grow={false}>
-            <EuiButtonEmpty onClick={this.onCancel} data-test-subj="createPolicyCancelButton">
+            <EuiSmallButtonEmpty onClick={this.onCancel} data-test-subj="createPolicyCancelButton">
               Cancel
-            </EuiButtonEmpty>
+            </EuiSmallButtonEmpty>
           </EuiFlexItem>
           <EuiFlexItem grow={false}>
-            <EuiButton fill onClick={this.onSubmit} isLoading={isSubmitting} data-test-subj="createPolicyCreateButton">
+            <EuiSmallButton fill onClick={this.onSubmit} isLoading={isSubmitting} data-test-subj="createPolicyCreateButton">
               {isEdit ? "Update" : "Create"}
-            </EuiButton>
+            </EuiSmallButton>
           </EuiFlexItem>
         </EuiFlexGroup>
       </div>

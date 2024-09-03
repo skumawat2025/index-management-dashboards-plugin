@@ -5,9 +5,9 @@
 
 import React, { useEffect, useState } from "react";
 import {
-  EuiButton,
-  EuiButtonEmpty,
-  EuiFieldText,
+  EuiSmallButton,
+  EuiSmallButtonEmpty,
+  EuiCompressedFieldText,
   EuiModal,
   EuiModalBody,
   EuiModalFooter,
@@ -44,38 +44,46 @@ export default function CloseIndexModal(props: CloseIndexModalProps) {
   return (
     <EuiModal onClose={onClose}>
       <EuiModalHeader>
-        <EuiModalHeaderTitle>Close indexes</EuiModalHeaderTitle>
+        <EuiModalHeaderTitle>
+          <EuiText size="s">
+            <h2>Close indexes</h2>
+          </EuiText>
+        </EuiModalHeaderTitle>
       </EuiModalHeader>
 
       <EuiModalBody>
         <>
-          <EuiCallOut color="warning" hidden={!showWarning}>
+          <EuiCallOut color="warning" size="s" hidden={!showWarning}>
             This index may contain critical system data. Closing system indexes may break OpenSearch.
+            <EuiSpacer />
           </EuiCallOut>
-          <EuiSpacer />
         </>
         <div style={{ lineHeight: 1.5 }}>
-          <p>The following index will be closed. It is not possible to index documents or to search for documents in a closed index.</p>
-          <ul style={{ listStyleType: "disc", listStylePosition: "inside" }}>
-            {selectedItems.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
+          <EuiText size="s">
+            <p>The following index will be closed. It is not possible to index documents or to search for documents in a closed index.</p>
+          </EuiText>
+          <EuiText size="s">
+            <ul style={{ listStyleType: "disc", listStylePosition: "inside" }}>
+              {selectedItems.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </EuiText>
           <EuiSpacer />
-          <EuiText color="subdued">
+          <EuiText color="subdued" size="s">
             To confirm your action, type <b style={{ color: "#000" }}>close</b>.
           </EuiText>
-          <EuiFieldText placeholder="close" fullWidth value={value} onChange={(e) => setValue(e.target.value)} />
+          <EuiCompressedFieldText placeholder="close" fullWidth value={value} onChange={(e) => setValue(e.target.value)} />
         </div>
       </EuiModalBody>
 
       <EuiModalFooter>
-        <EuiButtonEmpty data-test-subj="Close Cancel button" onClick={onClose}>
+        <EuiSmallButtonEmpty data-test-subj="Close Cancel button" onClick={onClose}>
           Cancel
-        </EuiButtonEmpty>
-        <EuiButton data-test-subj="Close Confirm button" onClick={onConfirm} fill disabled={value !== "close"}>
+        </EuiSmallButtonEmpty>
+        <EuiSmallButton data-test-subj="Close Confirm button" onClick={onConfirm} fill disabled={value !== "close"}>
           Close
-        </EuiButton>
+        </EuiSmallButton>
       </EuiModalFooter>
     </EuiModal>
   );

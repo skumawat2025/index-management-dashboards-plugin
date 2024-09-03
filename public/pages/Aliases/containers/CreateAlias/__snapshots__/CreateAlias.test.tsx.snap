@@ -39,10 +39,14 @@ HTMLCollection [
             <div
               class="euiModalHeader__title"
             >
-              <h1>
-                Create
-                 alias
-              </h1>
+              <div
+                class="euiText euiText--small"
+              >
+                <h2>
+                  Create
+                   alias
+                </h2>
+              </div>
             </div>
           </div>
           <div
@@ -55,7 +59,7 @@ HTMLCollection [
                 class="euiForm"
               >
                 <div
-                  class="euiFormRow"
+                  class="euiFormRow euiFormRow--compressed"
                   data-test-subj="form-name-alias"
                   id="some_html_id-row"
                 >
@@ -67,7 +71,13 @@ HTMLCollection [
                       class="euiFormLabel euiFormRow__label"
                       for="some_html_id"
                     >
-                      Alias name
+                      <div
+                        class="euiText euiText--small"
+                      >
+                        <h3>
+                          Alias name
+                        </h3>
+                      </div>
                     </label>
                   </div>
                   <div
@@ -77,13 +87,13 @@ HTMLCollection [
                       class="euiToolTipAnchor euiToolTipAnchor--displayBlock"
                     >
                       <div
-                        class="euiFormControlLayout"
+                        class="euiFormControlLayout euiFormControlLayout--compressed"
                       >
                         <div
                           class="euiFormControlLayout__childrenWrapper"
                         >
                           <input
-                            class="euiFieldText"
+                            class="euiFieldText euiFieldText--compressed"
                             placeholder="Specify alias name"
                             type="text"
                             value=""
@@ -100,7 +110,7 @@ HTMLCollection [
                   </div>
                 </div>
                 <div
-                  class="euiFormRow"
+                  class="euiFormRow euiFormRow--compressed"
                   data-test-subj="form-name-indexArray"
                   id="some_html_id-row"
                 >
@@ -112,7 +122,13 @@ HTMLCollection [
                       class="euiFormLabel euiFormRow__label"
                       for="some_html_id"
                     >
-                      Indexes or index patterns
+                      <div
+                        class="euiText euiText--small"
+                      >
+                        <h3>
+                          Indexes or index patterns
+                        </h3>
+                      </div>
                     </label>
                   </div>
                   <div
@@ -127,17 +143,17 @@ HTMLCollection [
                     <div
                       aria-expanded="false"
                       aria-haspopup="listbox"
-                      class="euiComboBox"
+                      class="euiComboBox euiComboBox--compressed"
                       role="combobox"
                     >
                       <div
-                        class="euiFormControlLayout"
+                        class="euiFormControlLayout euiFormControlLayout--compressed"
                       >
                         <div
                           class="euiFormControlLayout__childrenWrapper"
                         >
                           <div
-                            class="euiComboBox__inputWrap euiComboBox__inputWrap-isLoading euiComboBox__inputWrap-isClearable"
+                            class="euiComboBox__inputWrap euiComboBox__inputWrap--compressed euiComboBox__inputWrap-isLoading euiComboBox__inputWrap-isClearable"
                             data-test-subj="comboBoxInput"
                             tabindex="-1"
                           >
@@ -193,7 +209,7 @@ HTMLCollection [
           >
             <div>
               <button
-                class="euiButton euiButton--primary"
+                class="euiButton euiButton--primary euiButton--small"
                 data-test-subj="cancelCreateAliasButton"
                 style="margin-right: 20px;"
                 type="button"
@@ -209,13 +225,14 @@ HTMLCollection [
                 </span>
               </button>
               <button
-                class="euiButton euiButton--primary euiButton--fill"
+                class="euiButton euiButton--primary euiButton--small euiButton--fill"
                 data-test-subj="createAliasButton"
                 type="button"
               >
                 <span
                   class="euiButtonContent euiButton__content"
                 >
+                  EuiIconMock
                   <span
                     class="euiButton__text"
                   >

@@ -113,8 +113,10 @@ export const BREADCRUMBS = Object.freeze({
   INDEX_DETAIL: { text: "Index Detail", href: "#" },
   REINDEX: { text: "Reindex", href: `#${ROUTES.REINDEX}` },
   ALIASES: { text: "Aliases", href: `#${ROUTES.ALIASES}` },
+  NEW_ALIASES: { text: "Index aliases", href: `#${ROUTES.ALIASES}` },
   TEMPLATES: { text: "Templates", href: `#${ROUTES.TEMPLATES}` },
-  CREATE_TEMPLATE: { text: "Create template", href: `#${ROUTES.CREATE_TEMPLATE}` },
+  NEW_TEMPLATES: { text: "Index templates", href: `#${ROUTES.TEMPLATES}` },
+  CREATE_TEMPLATE: { text: "Create index template", href: `#${ROUTES.CREATE_TEMPLATE}` },
   EDIT_TEMPLATE: { text: "Edit template", href: `#${ROUTES.CREATE_TEMPLATE}` },
   SPLIT_INDEX: { text: "Split Index", href: `#${ROUTES.SPLIT_INDEX}` },
   SHRINK_INDEX: { text: "Shrink index", href: `#${ROUTES.SHRINK_INDEX}` },
@@ -125,6 +127,7 @@ export const BREADCRUMBS = Object.freeze({
   COMPOSABLE_TEMPLATES: { text: "Component templates", href: `#${ROUTES.COMPOSABLE_TEMPLATES}` },
   CREATE_COMPOSABLE_TEMPLATE: { text: "Create component template", href: `#${ROUTES.CREATE_COMPOSABLE_TEMPLATE}` },
   NOTIFICATION_SETTINGS: { text: "Notification settings", href: `#${ROUTES.NOTIFICATIONS}` },
+  INDEX_NOTIFICATION_SETTINGS: { text: "Index operations notifications", href: `#${ROUTES.NOTIFICATIONS}` },
 });
 
 // TODO: EUI has a SortDirection already

@@ -11,7 +11,19 @@ import { ServicesContext } from "../../../../services";
 import { BrowserServices } from "../../../../models/interfaces";
 import { CoreServicesContext } from "../../../../components/core_services";
 import IndexFormWrapper, { IndexForm } from "../../../../containers/IndexForm";
-import { EuiButton, EuiButtonEmpty, EuiCallOut, EuiFlexGroup, EuiFlexItem, EuiSpacer, EuiTitle, EuiLink, EuiText } from "@elastic/eui";
+import {
+  EuiSmallButton,
+  EuiSmallButtonEmpty,
+  EuiCallOut,
+  EuiFlexGroup,
+  EuiFlexItem,
+  EuiSpacer,
+  EuiTitle,
+  EuiLink,
+  EuiText,
+  EuiHorizontalRule,
+  EuiPanel,
+} from "@elastic/eui";
 import CustomFormRow from "../../../../components/CustomFormRow";
 import { ContentPanel } from "../../../../components/ContentPanel";
 import FormGenerator, { AllBuiltInComponents, IFormGeneratorRef } from "../../../../components/FormGenerator";
@@ -189,7 +201,7 @@ export default function Rollover(props: RolloverProps) {
                 </CustomFormRow>
               </EuiFlexItem>
               <EuiFlexItem grow={false}>
-                <EuiButton
+                <EuiSmallButton
                   disabled={!writeIndexValue}
                   fill
                   color="primary"
@@ -208,7 +220,7 @@ export default function Rollover(props: RolloverProps) {
                   }}
                 >
                   Assign as write index
-                </EuiButton>
+                </EuiSmallButton>
               </EuiFlexItem>
             </EuiFlexGroup>
           </>
@@ -228,8 +240,7 @@ export default function Rollover(props: RolloverProps) {
     {
       renderComponent: (
         <EuiText size="s" color="subdued">
-          Manually merge shards of indexes or backing indexes of data streams. You can also use force merge to clear up deleted documents
-          within indexes.
+          Rollover creates a new writing index for a data stream or index alias.
         </EuiText>
       ),
     },
@@ -240,9 +251,9 @@ export default function Rollover(props: RolloverProps) {
       {useNewUX && <HeaderControl setMountPoint={setAppDescriptionControls} controls={descriptionData} />}
       {!useNewUX && (
         <>
-          <EuiTitle>
+          <EuiText size="s">
             <h1>Roll over</h1>
-          </EuiTitle>
+          </EuiText>
           <CustomFormRow
             helpText="Rollover creates a new writing index for a data stream or index alias."
             style={{
@@ -253,7 +264,13 @@ export default function Rollover(props: RolloverProps) {
           </CustomFormRow>
         </>
       )}
-      <ContentPanel title="Configure source" titleSize="s">
+      <EuiPanel>
+        <EuiFlexGroup gutterSize="xs" alignItems="center">
+          <EuiText size="s">
+            <h2>Configure source</h2>
+          </EuiText>
+        </EuiFlexGroup>
+        <EuiHorizontalRule margin={"xs"} />
         {sourceType === "alias" && filterByMinimatch(tempValue.source || "", SYSTEM_ALIAS) ? (
           <>
             <EuiCallOut color="warning">
@@ -269,7 +286,11 @@ export default function Rollover(props: RolloverProps) {
             {
               name: "source",
               rowProps: {
-                label: "Select an alias or data stream",
+                label: (
+                  <EuiText size="s">
+                    <h3>Select an alias or data stream</h3>
+                  </EuiText>
+                ),
                 helpText: "Select an alias or data stream to roll over.",
               },
               options: {
@@ -304,8 +325,16 @@ export default function Rollover(props: RolloverProps) {
             return (
               <>
                 <EuiSpacer />
-                <CustomFormRow label="Assigned write index">
-                  <span>{writingIndex}</span>
+                <CustomFormRow
+                  label={
+                    <EuiText size="s">
+                      <h3>Assigned write index</h3>
+                    </EuiText>
+                  }
+                >
+                  <EuiText size="s">
+                    <span>{writingIndex}</span>
+                  </EuiText>
                 </CustomFormRow>
               </>
             );
@@ -313,25 +342,30 @@ export default function Rollover(props: RolloverProps) {
 
           return null;
         })()}
-      </ContentPanel>
+      </EuiPanel>
       <EuiSpacer />
       {sourceType === "alias" && writingIndex ? (
         <>
-          <ContentPanel
-            title="Configure new rollover index"
-            titleSize="s"
-            actions={
-              <EuiButton
-                onClick={() => {
-                  indexFormRef.current?.importSettings({
-                    index: writingIndex,
-                  });
-                }}
-              >
-                Import from old write index
-              </EuiButton>
-            }
-          >
+          <EuiPanel>
+            <EuiFlexGroup gutterSize="xs" alignItems="center">
+              <EuiFlexItem>
+                <EuiText size="s">
+                  <h2>Configure new rollover index</h2>
+                </EuiText>
+              </EuiFlexItem>
+              <EuiFlexItem grow={false}>
+                <EuiSmallButton
+                  onClick={() => {
+                    indexFormRef.current?.importSettings({
+                      index: writingIndex,
+                    });
+                  }}
+                >
+                  Import from old write index
+                </EuiSmallButton>
+              </EuiFlexItem>
+            </EuiFlexGroup>
+            <EuiHorizontalRule margin={"xs"} />
             <IndexFormWrapper
               {...field.registerField({
                 name: "targetIndex",
@@ -351,13 +385,13 @@ export default function Rollover(props: RolloverProps) {
               ref={indexFormRef}
               withoutPanel
             />
-          </ContentPanel>
+          </EuiPanel>
           <EuiSpacer />
         </>
       ) : null}
-      <EuiFlexGroup alignItems="center" justifyContent="flexEnd">
+      <EuiFlexGroup alignItems="center" justifyContent="flexEnd" gutterSize="s">
         <EuiFlexItem grow={false}>
-          <EuiButtonEmpty
+          <EuiSmallButtonEmpty
             onClick={() => {
               if (sourceType === "alias") {
                 props.history.push(ROUTES.ALIASES);
@@ -368,10 +402,10 @@ export default function Rollover(props: RolloverProps) {
             data-test-subj="rolloverCancelButton"
           >
             Cancel
-          </EuiButtonEmpty>
+          </EuiSmallButtonEmpty>
         </EuiFlexItem>
         <EuiFlexItem grow={false}>
-          <EuiButton
+          <EuiSmallButton
             disabled={loading || (sourceType === "alias" && !writingIndex)}
             fill
             onClick={async () => {
@@ -408,7 +442,7 @@ export default function Rollover(props: RolloverProps) {
             data-test-subj="rolloverSubmitButton"
           >
             Roll over
-          </EuiButton>
+          </EuiSmallButton>
         </EuiFlexItem>
       </EuiFlexGroup>
     </div>

@@ -4,7 +4,18 @@
  */
 
 import React, { forwardRef, useCallback, useState, Ref, useRef, useMemo, useImperativeHandle } from "react";
-import { EuiTreeView, EuiIcon, EuiTreeViewProps, EuiButton, EuiSpacer, EuiButtonGroup, EuiLink, EuiCallOut } from "@elastic/eui";
+import {
+  EuiTreeView,
+  EuiIcon,
+  EuiTreeViewProps,
+  EuiSmallButton,
+  EuiButton,
+  EuiSpacer,
+  EuiButtonGroup,
+  EuiLink,
+  EuiCallOut,
+  EuiText,
+} from "@elastic/eui";
 import { set, get, isEmpty } from "lodash";
 import MonacoJSONEditor, { IJSONEditorRef } from "../MonacoJSONEditor";
 import { Modal } from "../Modal";
@@ -156,6 +167,7 @@ const IndexMapping = (
         idSelected={editorMode as string}
         onChange={(id) => setEditorMode(id as EDITOR_MODE)}
         legend="Editor Type"
+        buttonSize="s"
         options={[
           {
             label: readonly ? "Tree view" : "Visual Editor",
@@ -174,7 +186,7 @@ const IndexMapping = (
         <>
           {noAdditionalPropertiesValidator(transformArrayToObject(newValue)) ? null : (
             <>
-              <EuiCallOut color="warning" title="You have advanced configurations not supported by the visual editor">
+              <EuiCallOut color="warning" title="You have advanced configurations not supported by the visual editor" size="s">
                 To view or modify all of your configurations, switch to the JSON editor.
               </EuiCallOut>
               <EuiSpacer />
@@ -189,15 +201,17 @@ const IndexMapping = (
               items={transformValueToTreeItems(value)}
             />
           ) : (
-            <p>You have no field mappings.</p>
+            <EuiText size="s">
+              <p>You have no field mappings.</p>
+            </EuiText>
           )}
           {readonly ? null : (
             <>
               <EuiSpacer />
-              <EuiButton style={{ marginRight: 8 }} data-test-subj="createIndexAddFieldButton" onClick={() => addField("")}>
+              <EuiSmallButton style={{ marginRight: 8 }} data-test-subj="createIndexAddFieldButton" onClick={() => addField("")}>
                 Add new field
-              </EuiButton>
-              <EuiButton
+              </EuiSmallButton>
+              <EuiSmallButton
                 data-test-subj="createIndexAddObjectFieldButton"
                 onClick={() =>
                   addField("", {
@@ -206,7 +220,7 @@ const IndexMapping = (
                 }
               >
                 Add new object
-              </EuiButton>
+              </EuiSmallButton>
             </>
           )}
         </>

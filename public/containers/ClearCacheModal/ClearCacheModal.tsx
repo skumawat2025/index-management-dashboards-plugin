@@ -12,8 +12,8 @@ import { CoreServicesContext } from "../../components/core_services";
 import { INDEX_OP_BLOCKS_TYPE, INDEX_OP_TARGET_TYPE } from "../../utils/constants";
 import { getErrorMessage, filterBlockedItems } from "../../utils/helpers";
 import {
-  EuiButton,
-  EuiButtonEmpty,
+  EuiSmallButton,
+  EuiSmallButtonEmpty,
   EuiCallOut,
   EuiModal,
   EuiModalBody,
@@ -21,6 +21,7 @@ import {
   EuiModalHeader,
   EuiModalHeaderTitle,
   EuiSpacer,
+  EuiText,
 } from "@elastic/eui";
 
 export interface ClearCacheModalProps {
@@ -176,21 +177,29 @@ export default function ClearCacheModal(props: ClearCacheModalProps) {
       <div style={{ lineHeight: 1.5 }}>
         {unBlockedItems.length > 0 && (
           <>
-            <p>{hint}</p>
-            <ul style={{ listStyleType: "disc", listStylePosition: "inside" }}>
-              {unBlockedItems.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
+            <EuiText size="s">
+              <p>{hint}</p>
+            </EuiText>
+            <EuiText size="s">
+              <ul style={{ listStyleType: "disc", listStylePosition: "inside" }}>
+                {unBlockedItems.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </EuiText>
             <EuiSpacer />
           </>
         )}
       </div>
       <EuiCallOut color="warning" iconType="warning" hidden={blockedItems.length == 0} size="s">
-        <p>{blockHint}</p>
+        <EuiText size="s">
+          <p>{blockHint}</p>
+        </EuiText>
         <ul style={{ listStyleType: "disc", listStylePosition: "inside" }}>
           {blockedItems.map((item) => (
-            <li key={item}>{item}</li>
+            <EuiText size="s">
+              <li key={item}>{item}</li>
+            </EuiText>
           ))}
         </ul>
       </EuiCallOut>
@@ -200,7 +209,9 @@ export default function ClearCacheModal(props: ClearCacheModalProps) {
   const noSpecificIndexesChildren: React.ReactChild = (
     <>
       <div style={{ lineHeight: 1.5 }}>
-        <p>Cache will be cleared for all open indexes.</p>
+        <EuiText size="s">
+          <p>Cache will be cleared for all open indexes.</p>
+        </EuiText>
         <EuiSpacer />
       </div>
     </>
@@ -209,23 +220,27 @@ export default function ClearCacheModal(props: ClearCacheModalProps) {
   return (
     <EuiModal onClose={onClose}>
       <EuiModalHeader>
-        <EuiModalHeaderTitle>Clear cache for {type}</EuiModalHeaderTitle>
+        <EuiModalHeaderTitle>
+          <EuiText size="s">
+            <h2>Clear cache for {type}</h2>
+          </EuiText>
+        </EuiModalHeaderTitle>
       </EuiModalHeader>
 
       <EuiModalBody>{!!selectedItems && selectedItems.length > 0 ? specificIndexesChildren : noSpecificIndexesChildren}</EuiModalBody>
 
       <EuiModalFooter>
-        <EuiButtonEmpty data-test-subj="ClearCacheCancelButton" onClick={onClose}>
+        <EuiSmallButtonEmpty data-test-subj="ClearCacheCancelButton" onClick={onClose}>
           Cancel
-        </EuiButtonEmpty>
-        <EuiButton
+        </EuiSmallButtonEmpty>
+        <EuiSmallButton
           data-test-subj="ClearCacheConfirmButton"
           onClick={onConfirm}
           fill
           isDisabled={selectedItems.length > 0 && unBlockedItems.length == 0}
         >
           Clear cache
-        </EuiButton>
+        </EuiSmallButton>
       </EuiModalFooter>
     </EuiModal>
   );

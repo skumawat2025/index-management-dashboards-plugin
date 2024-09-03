@@ -5,7 +5,7 @@
 
 import React, { ChangeEvent } from "react";
 import {
-  EuiButton,
+  EuiSmallButton,
   EuiText,
   EuiHorizontalRule,
   EuiFlexGroup,
@@ -14,8 +14,9 @@ import {
   EuiLink,
   EuiIcon,
   EuiEmptyPrompt,
-  EuiFormRow,
+  EuiCompressedFormRow,
   EuiSelect,
+  EuiPanel,
 } from "@elastic/eui";
 import { ContentPanel } from "../../../../components/ContentPanel";
 import "brace/theme/github";
@@ -35,27 +36,29 @@ interface StatesProps {
 
 const States = ({ onOpenFlyout, policy, onClickEditState, onClickDeleteState, onChangeDefaultState, isReadOnly = false }: StatesProps) => {
   return (
-    <ContentPanel
-      bodyStyles={{ padding: "initial" }}
-      title={`States (${policy.states.length})`}
-      titleSize="s"
-      subTitleText={
-        <EuiText color="subdued" size="s" style={{ padding: "5px 0px" }}>
-          <p style={{ fontWeight: 200 }}>
-            You can think of policies as state machines. "Actions" are the operations ISM performs when an index is in a certain state.
-            <br />
-            "Transitions" define when to move from one state to another.{" "}
-            <EuiLink href={STATES_DOCUMENTATION_URL} target="_blank" rel="noopener noreferrer">
-              Learn more
-            </EuiLink>
-          </p>
+    <EuiPanel>
+      <EuiFlexGroup gutterSize="xs" alignItems="center">
+        <EuiText size="s">
+          <h2>{`States (${policy.states.length})`}</h2>
         </EuiText>
-      }
-    >
-      <div style={{ padding: "0px 10px" }}>
+      </EuiFlexGroup>
+
+      <EuiText color="subdued" size="xs">
+        <p style={{ fontWeight: 350 }}>
+          You can think of policies as state machines. "Actions" are the operations ISM performs when an index is in a certain state.
+          <br />
+          "Transitions" define when to move from one state to another.{" "}
+          <EuiLink href={STATES_DOCUMENTATION_URL} target="_blank" rel="noopener noreferrer">
+            Learn more
+          </EuiLink>
+        </p>
+      </EuiText>
+      <EuiHorizontalRule margin={"xs"} />
+
+      <div>
         {!isReadOnly && (
           <>
-            <EuiFormRow style={{ maxWidth: "300px", padding: "15px" }} isInvalid={false} error={null}>
+            <EuiCompressedFormRow style={{ maxWidth: "300px" }} isInvalid={false} error={null}>
               <EuiSelect
                 compressed
                 prepend="Initial state"
@@ -63,9 +66,8 @@ const States = ({ onOpenFlyout, policy, onClickEditState, onClickDeleteState, on
                 value={policy.default_state}
                 onChange={onChangeDefaultState}
               />
-            </EuiFormRow>
-            <EuiSpacer size="s" />
-            <EuiHorizontalRule margin="none" />
+            </EuiCompressedFormRow>
+            <EuiHorizontalRule margin={"xs"} />
           </>
         )}
 
@@ -89,24 +91,28 @@ const States = ({ onOpenFlyout, policy, onClickEditState, onClickDeleteState, on
           (!!policy.states.length ? (
             <>
               <EuiSpacer />
-              <EuiButton onClick={onOpenFlyout} data-test-subj="states-add-state-button">
+              <EuiSmallButton onClick={onOpenFlyout} data-test-subj="states-add-state-button">
                 Add state
-              </EuiButton>
+              </EuiSmallButton>
             </>
           ) : (
             <EuiEmptyPrompt
-              title={<h2>No states</h2>}
+              title={
+                <EuiText>
+                  <h3>No states</h3>
+                </EuiText>
+              }
               titleSize="s"
               body={<p>Your policy currently has no states defined. Add states to manage your index lifecycle.</p>}
               actions={
-                <EuiButton color="primary" onClick={onOpenFlyout} data-test-subj="states-add-state-button">
+                <EuiSmallButton color="primary" onClick={onOpenFlyout} data-test-subj="states-add-state-button">
                   Add state
-                </EuiButton>
+                </EuiSmallButton>
               }
             />
           ))}
       </div>
-    </ContentPanel>
+    </EuiPanel>
   );
 };
 

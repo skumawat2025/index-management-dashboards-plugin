@@ -4,8 +4,17 @@
  */
 
 import React, { ChangeEvent } from "react";
-import { EuiSpacer, EuiFormRow, EuiFieldText, EuiTextArea, EuiText, EuiFlexGroup, EuiFlexItem } from "@elastic/eui";
-import { ContentPanel } from "../../../../components/ContentPanel";
+import {
+  EuiSpacer,
+  EuiCompressedFormRow,
+  EuiCompressedFieldText,
+  EuiTextArea,
+  EuiText,
+  EuiFlexGroup,
+  EuiFlexItem,
+  EuiHorizontalRule,
+  EuiPanel,
+} from "@elastic/eui";
 
 interface ConfigureRollupProps {
   isEdit: boolean;
@@ -17,30 +26,48 @@ interface ConfigureRollupProps {
 }
 
 const ConfigureRollup = ({ isEdit, rollupId, rollupIdError, onChangeName, onChangeDescription, description }: ConfigureRollupProps) => (
-  <ContentPanel bodyStyles={{ padding: "initial" }} title="Job name and description" titleSize="m">
-    <div style={{ paddingLeft: "10px" }}>
-      <EuiSpacer size="s" />
-      <EuiFormRow label="Name" helpText="Specify a unique, descriptive name." isInvalid={!!rollupIdError} error={rollupIdError}>
-        <EuiFieldText isInvalid={!!rollupIdError} placeholder="my-rollupjob1" value={rollupId} onChange={onChangeName} disabled={isEdit} />
-      </EuiFormRow>
-      <EuiSpacer />
-      <EuiFlexGroup gutterSize="xs">
-        <EuiFlexItem grow={false}>
-          <EuiText size="xs">
-            <h4>Description</h4>
-          </EuiText>
-        </EuiFlexItem>
-        <EuiFlexItem>
-          <EuiText size="xs" color="subdued">
-            <i> – optional</i>
-          </EuiText>
-        </EuiFlexItem>
-      </EuiFlexGroup>
-      <EuiSpacer size="xs" />
-      <EuiFormRow>
-        <EuiTextArea compressed={true} value={description} onChange={onChangeDescription} data-test-subj="description" />
-      </EuiFormRow>
-    </div>
-  </ContentPanel>
+  <EuiPanel>
+    <EuiFlexGroup gutterSize="xs" alignItems="center">
+      <EuiText size="s">
+        <h2>Job name and description</h2>
+      </EuiText>
+    </EuiFlexGroup>
+    <EuiHorizontalRule margin={"xs"} />
+    <EuiCompressedFormRow
+      label={
+        <EuiText size="s">
+          <h3>Name</h3>
+        </EuiText>
+      }
+      helpText="Specify a unique, descriptive name."
+      isInvalid={!!rollupIdError}
+      error={rollupIdError}
+    >
+      <EuiCompressedFieldText
+        isInvalid={!!rollupIdError}
+        placeholder="my-rollupjob1"
+        value={rollupId}
+        onChange={onChangeName}
+        disabled={isEdit}
+      />
+    </EuiCompressedFormRow>
+    <EuiSpacer />
+    <EuiFlexGroup gutterSize="xs" alignItems="center">
+      <EuiFlexItem grow={false}>
+        <EuiText size="s">
+          <h3>Description</h3>
+        </EuiText>
+      </EuiFlexItem>
+      <EuiFlexItem>
+        <EuiText color="subdued">
+          <i> – optional</i>
+        </EuiText>
+      </EuiFlexItem>
+    </EuiFlexGroup>
+    <EuiSpacer size="xs" />
+    <EuiCompressedFormRow>
+      <EuiTextArea compressed={true} value={description} onChange={onChangeDescription} data-test-subj="description" />
+    </EuiCompressedFormRow>
+  </EuiPanel>
 );
 export default ConfigureRollup;

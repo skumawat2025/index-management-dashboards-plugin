@@ -4,7 +4,17 @@
  */
 
 import React, { ChangeEvent, Component, useContext } from "react";
-import { EuiText, EuiSpacer, EuiTitle, EuiFlexGroup, EuiFlexItem, EuiButton, EuiLink, EuiIcon } from "@elastic/eui";
+import {
+  EuiText,
+  EuiSpacer,
+  EuiTitle,
+  EuiFlexGroup,
+  EuiFlexItem,
+  EuiSmallButton,
+  EuiLink,
+  EuiIcon,
+  EuiSmallButtonEmpty,
+} from "@elastic/eui";
 import { RouteComponentProps } from "react-router-dom";
 import queryString from "query-string";
 import { EMPTY_DEFAULT_POLICY } from "../../utils/constants";
@@ -23,6 +33,7 @@ import { DataSourceMenuContext, DataSourceMenuProperties } from "../../../../ser
 import { useUpdateUrlWithDataSourceProperties } from "../../../../components/MDSEnabledComponent";
 import { Data } from "vega";
 import { getApplication, getNavigationUI, getUISettings } from "../../../../services/Services";
+import { TopNavControlDescriptionData, TopNavControlLinkData } from "src/plugins/navigation/public";
 
 interface VisualCreatePolicyProps extends RouteComponentProps, DataSourceMenuProperties {
   isEdit: boolean;
@@ -292,25 +303,30 @@ export class VisualCreatePolicy extends Component<VisualCreatePolicyProps, Visua
 
     const descriptionData = [
       {
-        renderComponent: (
-          <EuiText size="s" color="subdued">
-            Policies let you automatically perform administrative operations on indices.{" "}
-            <EuiLink href={POLICY_DOCUMENTATION_URL} target="_blank" rel="noopener noreferrer">
-              Learn more
-            </EuiLink>
-          </EuiText>
-        ),
-      },
+        description: "Policies let you automatically perform administrative operations on indices.",
+        links: {
+          label: "Learn more",
+          href: POLICY_DOCUMENTATION_URL,
+          iconType: "popout",
+          iconSide: "right",
+          controlType: "link",
+          target: "_blank",
+          flush: "both",
+        } as TopNavControlLinkData,
+      } as TopNavControlDescriptionData,
     ];
+
     const padding_style = useNewUX ? { padding: "0px 0px" } : { padding: "25px 50px" };
     return (
       <div style={padding_style}>
         {!useNewUX ? (
           <>
-            <EuiTitle size="l">
-              <h1>{isEdit ? "Edit" : "Create"} policy</h1>
-            </EuiTitle>
-            <EuiSpacer />
+            <EuiText size="s">
+              <EuiTitle size="l">
+                <h1>{isEdit ? "Edit" : "Create"} policy</h1>
+              </EuiTitle>
+            </EuiText>
+            <EuiSpacer size="s" />
             <EuiText size="s">
               <p>
                 Policies let you automatically perform administrative operations on indices.{" "}
@@ -362,14 +378,14 @@ export class VisualCreatePolicy extends Component<VisualCreatePolicyProps, Visua
           <CreateState state={editingState} policy={policy} onSaveState={this.onSaveState} onCloseFlyout={this.onCloseFlyout} />
         )}
 
-        <EuiFlexGroup alignItems="center" justifyContent="flexEnd">
+        <EuiFlexGroup alignItems="center" justifyContent="flexEnd" gutterSize="s">
           <EuiFlexItem grow={false}>
-            <EuiButton onClick={this.onCancel}>Cancel</EuiButton>
+            <EuiSmallButtonEmpty onClick={this.onCancel}>Cancel</EuiSmallButtonEmpty>
           </EuiFlexItem>
           <EuiFlexItem grow={false}>
-            <EuiButton fill onClick={this.onSubmit}>
+            <EuiSmallButton fill onClick={this.onSubmit}>
               {isEdit ? "Update" : "Create"}
-            </EuiButton>
+            </EuiSmallButton>
           </EuiFlexItem>
         </EuiFlexGroup>
       </div>

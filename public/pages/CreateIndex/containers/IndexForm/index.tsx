@@ -4,7 +4,7 @@
  */
 
 import React, { Component, forwardRef, useContext } from "react";
-import { EuiSpacer, EuiFlexGroup, EuiFlexItem, EuiButton, EuiButtonEmpty, EuiLoadingSpinner } from "@elastic/eui";
+import { EuiSpacer, EuiFlexGroup, EuiFlexItem, EuiSmallButton, EuiSmallButtonEmpty, EuiLoadingSpinner } from "@elastic/eui";
 import { get, set, differenceWith, isEqual, merge } from "lodash";
 import { diffArrays } from "diff";
 import flattern from "flat";
@@ -55,6 +55,7 @@ export interface IndexFormProps
   onCancel?: () => void;
   onSubmitSuccess?: (indexName: string) => void;
   hideButtons?: boolean;
+  useUpdatedUX?: boolean;
 }
 
 interface CreateIndexState {
@@ -423,7 +424,7 @@ export class IndexForm extends Component<IndexFormProps & { services: BrowserSer
 
   render() {
     const isEdit = this.isEdit;
-    const { hideButtons, readonly } = this.props;
+    const { hideButtons, readonly, useUpdatedUX } = this.props;
     const { indexDetail, isSubmitting, oldIndexDetail, loading } = this.state;
 
     if (loading) {
@@ -466,14 +467,20 @@ export class IndexForm extends Component<IndexFormProps & { services: BrowserSer
             <EuiSpacer />
             <EuiFlexGroup alignItems="center" justifyContent="flexEnd">
               <EuiFlexItem grow={false}>
-                <EuiButtonEmpty onClick={this.onCancel} data-test-subj="createIndexCancelButton">
+                <EuiSmallButtonEmpty onClick={this.onCancel} data-test-subj="createIndexCancelButton">
                   Cancel
-                </EuiButtonEmpty>
+                </EuiSmallButtonEmpty>
               </EuiFlexItem>
               <EuiFlexItem grow={false}>
-                <EuiButton fill onClick={this.onSubmit} isLoading={isSubmitting} data-test-subj="createIndexCreateButton">
+                <EuiSmallButton
+                  fill
+                  onClick={this.onSubmit}
+                  isLoading={isSubmitting}
+                  data-test-subj="createIndexCreateButton"
+                  iconType={isEdit ? undefined : "plus"}
+                >
                   {isEdit ? "Update" : "Create"}
-                </EuiButton>
+                </EuiSmallButton>
               </EuiFlexItem>
             </EuiFlexGroup>
           </>

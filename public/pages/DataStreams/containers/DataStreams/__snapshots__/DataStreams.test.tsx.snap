@@ -7,18 +7,24 @@ exports[`<DataStreams /> spec renders the component 1`] = `
 >
   <div
     class="euiFlexGroup euiFlexGroup--gutterLarge euiFlexGroup--alignItemsFlexStart euiFlexGroup--justifyContentSpaceBetween euiFlexGroup--directionRow euiFlexGroup--responsive"
-    style="padding: 0px 10px;"
+    style="padding: 0px 16px;"
   >
     <div
       class="euiFlexItem"
     >
-      <span
-        class="euiTitle euiTitle--medium"
-      >
-        Data streams
-      </span>
       <div
-        class="euiFormRow euiFormRow--fullWidth"
+        class="euiText euiText--medium"
+      >
+        <h1
+          class="euiTitle euiTitle--small"
+        >
+          <span>
+            Data streams
+          </span>
+        </h1>
+      </div>
+      <div
+        class="euiFormRow euiFormRow--fullWidth euiFormRow--compressed"
         id="some_html_id-row"
       >
         <div
@@ -65,7 +71,7 @@ exports[`<DataStreams /> spec renders the component 1`] = `
                   class="euiPopover__anchor"
                 >
                   <button
-                    class="euiButton euiButton--primary"
+                    class="euiButton euiButton--primary euiButton--small"
                     type="button"
                   >
                     <span
@@ -86,13 +92,14 @@ exports[`<DataStreams /> spec renders the component 1`] = `
               class="euiFlexItem euiFlexItem--flexGrowZero"
             >
               <button
-                class="euiButton euiButton--primary euiButton--fill"
+                class="euiButton euiButton--primary euiButton--small euiButton--fill"
                 data-test-subj="Create data streamButton"
                 type="button"
               >
                 <span
                   class="euiButtonContent euiButton__content"
                 >
+                  EuiIconMock
                   <span
                     class="euiButton__text"
                   >
@@ -113,20 +120,19 @@ exports[`<DataStreams /> spec renders the component 1`] = `
     style="padding: initial;"
   >
     <div
-      class="euiFlexGroup euiFlexGroup--gutterLarge euiFlexGroup--alignItemsCenter euiFlexGroup--directionRow euiFlexGroup--responsive"
-      style="padding: 0px 5px;"
+      class="euiFlexGroup euiFlexGroup--gutterSmall euiFlexGroup--alignItemsCenter euiFlexGroup--directionRow euiFlexGroup--responsive"
     >
       <div
         class="euiFlexItem"
       >
         <div
-          class="euiFormControlLayout euiFormControlLayout--fullWidth"
+          class="euiFormControlLayout euiFormControlLayout--fullWidth euiFormControlLayout--compressed"
         >
           <div
             class="euiFormControlLayout__childrenWrapper"
           >
             <input
-              class="euiFieldSearch euiFieldSearch--fullWidth"
+              class="euiFieldSearch euiFieldSearch--fullWidth euiFieldSearch--compressed"
               placeholder="Search..."
               type="search"
               value=""
@@ -401,7 +407,7 @@ exports[`<DataStreams /> spec renders the component 1`] = `
                           class="euiText euiText--medium"
                         >
                           <div
-                            class="euiText euiText--medium"
+                            class="euiText euiText--small"
                           >
                             <p>
                               You have no data streams.
@@ -419,12 +425,13 @@ exports[`<DataStreams /> spec renders the component 1`] = `
                           class="euiFlexItem euiFlexItem--flexGrowZero"
                         >
                           <button
-                            class="euiButton euiButton--primary euiButton--fill"
+                            class="euiButton euiButton--primary euiButton--small euiButton--fill"
                             type="button"
                           >
                             <span
                               class="euiButtonContent euiButton__content"
                             >
+                              EuiIconMock
                               <span
                                 class="euiButton__text"
                               >

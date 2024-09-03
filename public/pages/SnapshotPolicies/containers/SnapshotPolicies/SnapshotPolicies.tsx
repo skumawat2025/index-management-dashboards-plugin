@@ -12,7 +12,7 @@ import {
   Criteria,
   Direction,
   EuiBasicTable,
-  EuiButton,
+  EuiSmallButton,
   EuiContextMenuItem,
   EuiContextMenuPanel,
   EuiEmptyPrompt,
@@ -31,6 +31,8 @@ import {
   EuiFlexGroup,
   EuiButtonIcon,
   EuiCompressedFieldSearch,
+  EuiPanel,
+  EuiSpacer,
 } from "@elastic/eui";
 import { BREADCRUMBS, PLUGIN_NAME, ROUTES, SNAPSHOT_MANAGEMENT_DOCUMENTATION_URL } from "../../../../utils/constants";
 import { getMessagePrompt, getSMPoliciesQueryParamsFromURL, renderTimestampMillis } from "../../helpers";
@@ -48,6 +50,7 @@ import MDSEnabledComponent from "../../../../components/MDSEnabledComponent";
 import { useUpdateUrlWithDataSourceProperties } from "../../../../components/MDSEnabledComponent";
 import { getApplication, getNavigationUI, getUISettings } from "../../../../services/Services";
 import { ExternalLink } from "../../../utils/display-utils";
+import { TopNavControlData, TopNavControlDescriptionData, TopNavControlLinkData } from "src/plugins/navigation/public";
 
 interface SnapshotPoliciesProps extends RouteComponentProps, DataSourceMenuProperties {
   snapshotManagementService: SnapshotManagementService;
@@ -387,7 +390,6 @@ export class SnapshotPolicies extends MDSEnabledComponent<SnapshotPoliciesProps,
     const popoverActionItems = [
       <EuiContextMenuItem
         key="Edit"
-        icon="empty"
         disabled={selectedItems.length != 1}
         data-test-subj="editButton"
         onClick={() => {
@@ -399,7 +401,6 @@ export class SnapshotPolicies extends MDSEnabledComponent<SnapshotPoliciesProps,
       </EuiContextMenuItem>,
       <EuiContextMenuItem
         key="Delete"
-        icon="empty"
         disabled={!selectedItems.length}
         data-test-subj="deleteButton"
         onClick={() => {
@@ -407,7 +408,7 @@ export class SnapshotPolicies extends MDSEnabledComponent<SnapshotPoliciesProps,
           this.showDeleteModal();
         }}
       >
-        <EuiTextColor color="danger">Delete</EuiTextColor>
+        <EuiTextColor>Delete</EuiTextColor>
       </EuiContextMenuItem>,
     ];
 
@@ -450,45 +451,44 @@ export class SnapshotPolicies extends MDSEnabledComponent<SnapshotPoliciesProps,
           this.showDeleteModal();
         }}
       >
-        <EuiTextColor color="danger">Delete</EuiTextColor>
+        <EuiTextColor>Delete</EuiTextColor>
       </EuiContextMenuItem>,
     ];
     const actionsButton = (
-      <EuiButton
+      <EuiSmallButton
         iconType="arrowDown"
         iconSide="right"
         disabled={!selectedItems.length}
         onClick={this.onActionButtonClick}
         data-test-subj="actionButton"
-        size="s"
       >
         Actions
-      </EuiButton>
+      </EuiSmallButton>
     );
     const actions = [
-      <EuiButton iconType="refresh" onClick={this.getPolicies} data-test-subj="refreshButton">
+      <EuiSmallButton iconType="refresh" onClick={this.getPolicies} data-test-subj="refreshButton">
         Refresh
-      </EuiButton>,
-      <EuiButton disabled={!selectedItems.length} onClick={this.onClickStop}>
+      </EuiSmallButton>,
+      <EuiSmallButton disabled={!selectedItems.length} onClick={this.onClickStop}>
         Disable
-      </EuiButton>,
-      <EuiButton disabled={!selectedItems.length} onClick={this.onClickStart}>
+      </EuiSmallButton>,
+      <EuiSmallButton disabled={!selectedItems.length} onClick={this.onClickStart}>
         Enable
-      </EuiButton>,
+      </EuiSmallButton>,
       <EuiPopover
         id="action"
         button={actionsButton}
         isOpen={isPopoverOpen}
         closePopover={this.closePopover}
-        panelPaddingSize="none"
+        panelPaddingSize="s"
         anchorPosition="downLeft"
         data-test-subj="actionPopover"
       >
-        <EuiContextMenuPanel items={popoverActionItems} />
+        <EuiContextMenuPanel items={popoverActionItems} size="s" />
       </EuiPopover>,
-      <EuiButton onClick={this.onClickCreate} fill={true}>
+      <EuiSmallButton onClick={this.onClickCreate} fill={true} iconType="plus">
         Create policy
-      </EuiButton>,
+      </EuiSmallButton>,
     ];
 
     const subTitleText = (
@@ -506,14 +506,14 @@ export class SnapshotPolicies extends MDSEnabledComponent<SnapshotPoliciesProps,
       <EuiEmptyPrompt
         style={{ maxWidth: "45em" }}
         body={
-          <EuiText>
+          <EuiText size="s">
             <p>{getMessagePrompt(loadingPolicies)}</p>
           </EuiText>
         }
         actions={
-          <EuiButton onClick={this.onClickCreate} fill={true}>
+          <EuiSmallButton onClick={this.onClickCreate} fill={true} iconType="plus">
             Create policy
-          </EuiButton>
+          </EuiSmallButton>
         }
       />
     );
@@ -523,13 +523,17 @@ export class SnapshotPolicies extends MDSEnabledComponent<SnapshotPoliciesProps,
 
     const descriptionData = [
       {
-        renderComponent: (
-          <EuiText size="s" color="subdued">
-            Define an automated snapshot schedule and retention period with a snapshot policy.{" "}
-            <ExternalLink href={SNAPSHOT_MANAGEMENT_DOCUMENTATION_URL} />
-          </EuiText>
-        ),
-      },
+        description: "Define an automated snapshot schedule and retention period with a snapshot policy.",
+        links: {
+          label: "Learn more",
+          href: SNAPSHOT_MANAGEMENT_DOCUMENTATION_URL,
+          iconType: "popout",
+          iconSide: "right",
+          controlType: "link",
+          target: "_blank",
+          flush: "both",
+        } as TopNavControlLinkData,
+      } as TopNavControlDescriptionData,
     ];
 
     const controlControlsData = [
@@ -541,7 +545,7 @@ export class SnapshotPolicies extends MDSEnabledComponent<SnapshotPoliciesProps,
         href: `${PLUGIN_NAME}#${ROUTES.CREATE_SNAPSHOT_POLICY}`,
         testId: "createButton",
         controlType: "button",
-      },
+      } as TopNavControlData,
     ];
 
     const CommonTable = () => {
@@ -570,14 +574,16 @@ export class SnapshotPolicies extends MDSEnabledComponent<SnapshotPoliciesProps,
 
     return !this.state.useNewUx ? (
       <>
-        <ContentPanel title="Snapshot policies" actions={actions} subTitleText={subTitleText}>
-          <EuiSearchBar
-            box={{
-              placeholder: "Search snapshot policies",
-              incremental: false,
-            }}
-            onChange={this.onSearchChange}
-          />
+        <ContentPanel 
+          title={
+            <EuiText size="s">
+              <h1>Snapshot policies</h1>
+            </EuiText>
+          }  
+          actions={actions} 
+          subTitleText={subTitleText}
+        >
+          <EuiCompressedFieldSearch placeholder="Search snapshot policies" incremental={false} fullWidth onChange={this.onSearchChange} />
           {CommonTable()}
         </ContentPanel>
         {CommonModal()}
@@ -586,7 +592,7 @@ export class SnapshotPolicies extends MDSEnabledComponent<SnapshotPoliciesProps,
       <>
         <HeaderControl setMountPoint={setAppRightControls} controls={controlControlsData} />
         <HeaderControl setMountPoint={setAppDescriptionControls} controls={descriptionData} />
-        <ContentPanel>
+        <EuiPanel>
           <EuiFlexGroup gutterSize="s" alignItems="center">
             <EuiFlexItem grow={true}>
               <EuiCompressedFieldSearch
@@ -608,13 +614,15 @@ export class SnapshotPolicies extends MDSEnabledComponent<SnapshotPoliciesProps,
                 isOpen={isPopoverOpen}
                 closePopover={this.closePopover}
                 anchorPosition="downRight"
+                panelPaddingSize="s"
               >
-                <EuiContextMenuPanel items={popoverActionItemsNew} />
+                <EuiContextMenuPanel items={popoverActionItemsNew} size="s" />
               </EuiPopover>
             </EuiFlexItem>
           </EuiFlexGroup>
+          <EuiSpacer size="m" />
           {CommonTable()}
-        </ContentPanel>
+        </EuiPanel>
         {CommonModal()}
       </>
     );

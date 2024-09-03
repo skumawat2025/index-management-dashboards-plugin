@@ -3,10 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { EuiButton, EuiFlexGroup, EuiFlexItem, EuiButtonEmpty, EuiButtonProps, EuiButtonEmptyProps } from "@elastic/eui";
+import { EuiButton, EuiFlexGroup, EuiFlexItem, EuiSmallButtonEmpty, EuiButtonProps, EuiButtonEmptyProps } from "@elastic/eui";
 import classNames from "classnames";
 import BottomBar from "../BottomBar";
 import "./index.scss";
+import { createPortal } from "react-dom";
 
 export type CustomFormRowProps = {
   unsavedCount: number;
@@ -50,7 +51,7 @@ export default function UnsavedChangesBottomBar(props: CustomFormRowProps) {
   const renderCancel = useCallback(
     () => (
       <EuiFlexItem grow={false}>
-        <EuiButtonEmpty onClick={onClickCancel} color="ghost" iconType="cross" children="Cancel" {...props.cancelButtonprops} />
+        <EuiSmallButtonEmpty onClick={onClickCancel} color="ghost" iconType="cross" children="Cancel" {...props.cancelButtonprops} />
       </EuiFlexItem>
     ),
     [onClickCancel]
@@ -67,7 +68,7 @@ export default function UnsavedChangesBottomBar(props: CustomFormRowProps) {
           iconType="check"
           color="primary"
           fill
-          size="m"
+          size="s"
           children="Save"
           {...props.confirmButtonProps}
         />
@@ -116,9 +117,9 @@ export default function UnsavedChangesBottomBar(props: CustomFormRowProps) {
       </>
     ));
 
-  return (
+  const bottomBar = (
     <BottomBar>
-      <EuiFlexGroup alignItems="center">
+      <EuiFlexGroup alignItems="center" gutterSize="s" justifyContent="spaceBetween">
         {renderProps({
           renderCancel,
           renderConfirm,
@@ -128,4 +129,6 @@ export default function UnsavedChangesBottomBar(props: CustomFormRowProps) {
       </EuiFlexGroup>
     </BottomBar>
   );
+
+  return createPortal(bottomBar, document.getElementById("app-wrapper")!);
 }

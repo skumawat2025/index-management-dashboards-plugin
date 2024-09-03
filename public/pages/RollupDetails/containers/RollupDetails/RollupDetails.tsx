@@ -9,9 +9,9 @@ import {
   EuiTitle,
   EuiFlexGroup,
   EuiFlexItem,
-  EuiButton,
+  EuiSmallButton,
   EuiOverlayMask,
-  EuiButtonEmpty,
+  EuiSmallButtonEmpty,
   EuiModalFooter,
   EuiModal,
   EuiModalHeader,
@@ -412,9 +412,11 @@ export class RollupDetails extends Component<RollupDetailsProps, RollupDetailsSt
           <>
             <EuiFlexGroup style={{ padding: "0px 10px" }} justifyContent="spaceBetween" alignItems="center">
               <EuiFlexItem grow={false}>
-                <EuiTitle size="m">
-                  <h2>{rollupId}</h2>
-                </EuiTitle>
+                <EuiText size="s">
+                  <EuiTitle size="m">
+                    <h1>{rollupId}</h1>
+                  </EuiTitle>
+                </EuiText>
               </EuiFlexItem>
               <EuiFlexItem>
                 {enabled ? (
@@ -427,22 +429,22 @@ export class RollupDetails extends Component<RollupDetailsProps, RollupDetailsSt
               <EuiFlexItem grow={false}>
                 <EuiFlexGroup alignItems="center" gutterSize="s">
                   <EuiFlexItem grow={false}>
-                    <EuiButton disabled={!enabled} onClick={this.onDisable} data-test-subj="disableButton">
+                    <EuiSmallButton disabled={!enabled} onClick={this.onDisable} data-test-subj="disableButton">
                       Disable
-                    </EuiButton>
+                    </EuiSmallButton>
                   </EuiFlexItem>
                   <EuiFlexItem grow={false}>
-                    <EuiButton disabled={enabled} onClick={this.onEnable} data-test-subj="enableButton">
+                    <EuiSmallButton disabled={enabled} onClick={this.onEnable} data-test-subj="enableButton">
                       Enable
-                    </EuiButton>
+                    </EuiSmallButton>
                   </EuiFlexItem>
                   <EuiFlexItem grow={false}>
-                    <EuiButton onClick={this.showModal}>View JSON</EuiButton>
+                    <EuiSmallButton onClick={this.showModal}>View JSON</EuiSmallButton>
                   </EuiFlexItem>
                   <EuiFlexItem grow={false}>
-                    <EuiButton onClick={this.showDeleteModal} color="danger" data-test-subj="deleteButton">
+                    <EuiSmallButton onClick={this.showDeleteModal} color="danger" data-test-subj="deleteButton">
                       Delete
-                    </EuiButton>
+                    </EuiSmallButton>
                   </EuiFlexItem>
                 </EuiFlexGroup>
               </EuiFlexItem>
@@ -480,9 +482,14 @@ export class RollupDetails extends Component<RollupDetailsProps, RollupDetailsSt
 
         {isModalOpen && (
           <EuiOverlayMask>
-            <EuiModal onClose={this.closeModal} style={{ padding: "5px 30px" }}>
+            <EuiModal onClose={this.closeModal}>
               <EuiModalHeader>
-                <EuiModalHeaderTitle>{"View JSON of " + rollupId} </EuiModalHeaderTitle>
+                <EuiModalHeaderTitle>
+                  {" "}
+                  <EuiText size="s">
+                    <h2>{"View JSON of " + rollupId}</h2>
+                  </EuiText>{" "}
+                </EuiModalHeaderTitle>
               </EuiModalHeader>
 
               <EuiModalBody>
@@ -492,7 +499,7 @@ export class RollupDetails extends Component<RollupDetailsProps, RollupDetailsSt
               </EuiModalBody>
 
               <EuiModalFooter>
-                <EuiButtonEmpty onClick={this.closeModal}>Close</EuiButtonEmpty>
+                <EuiSmallButtonEmpty onClick={this.closeModal}>Close</EuiSmallButtonEmpty>
               </EuiModalFooter>
             </EuiModal>
           </EuiOverlayMask>

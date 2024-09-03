@@ -8,13 +8,15 @@ exports[`<DataStreamDetail /> spec render component 1`] = `
     <div
       class="euiFlexItem"
     >
-      <h1
-        class="euiTitle euiTitle--large"
-      >
-        Create data stream
-      </h1>
       <div
-        class="euiFormRow euiFormRow--fullWidth"
+        class="euiText euiText--small euiTitle euiTitle--large"
+      >
+        <h1>
+          Create data stream
+        </h1>
+      </div>
+      <div
+        class="euiFormRow euiFormRow--fullWidth euiFormRow--compressed"
         id="some_html_id-row"
       >
         <div
@@ -66,7 +68,7 @@ exports[`<DataStreamDetail /> spec render component 1`] = `
         />
         <div>
           <button
-            class="euiButton euiButton--primary"
+            class="euiButton euiButton--primary euiButton--small"
             type="button"
           >
             <span
@@ -88,39 +90,24 @@ exports[`<DataStreamDetail /> spec render component 1`] = `
   />
   <div
     class="euiPanel euiPanel--paddingMedium euiPanel--borderRadiusMedium euiPanel--plain euiPanel--hasShadow"
-    style="padding-left: 0px; padding-right: 0px;"
   >
     <div
-      class="euiFlexGroup euiFlexGroup--gutterLarge euiFlexGroup--alignItemsFlexStart euiFlexGroup--justifyContentSpaceBetween euiFlexGroup--directionRow euiFlexGroup--responsive"
-      style="padding: 0px 10px;"
+      class="euiFlexGroup euiFlexGroup--gutterExtraSmall euiFlexGroup--alignItemsCenter euiFlexGroup--directionRow euiFlexGroup--responsive"
     >
       <div
-        class="euiFlexItem"
+        class="euiText euiText--small"
       >
-        <h3
-          class="euiTitle euiTitle--small"
-        >
+        <h2>
           Define data stream
-          <span
-            class="panel-header-count"
-          >
-             
-             
-          </span>
-        </h3>
+        </h2>
       </div>
     </div>
     <hr
       class="euiHorizontalRule euiHorizontalRule--full euiHorizontalRule--marginXSmall"
     />
-    <div
-      style="padding: 0px 10px;"
-    >
+    <div>
       <div
-        class="euiSpacer euiSpacer--s"
-      />
-      <div
-        class="euiFormRow euiFormRow--fullWidth"
+        class="euiFormRow euiFormRow--fullWidth euiFormRow--compressed"
         data-test-subj="form-row-name"
         id="some_html_id-row"
       >
@@ -132,7 +119,13 @@ exports[`<DataStreamDetail /> spec render component 1`] = `
             class="euiFormLabel euiFormRow__label"
             for="some_html_id"
           >
-            Data stream name
+            <div
+              class="euiText euiText--small"
+            >
+              <h3>
+                Data stream name
+              </h3>
+            </div>
           </label>
         </div>
         <div
@@ -165,17 +158,17 @@ exports[`<DataStreamDetail /> spec render component 1`] = `
             <div
               aria-expanded="false"
               aria-haspopup="listbox"
-              class="euiComboBox"
+              class="euiComboBox euiComboBox--compressed"
               role="combobox"
             >
               <div
-                class="euiFormControlLayout"
+                class="euiFormControlLayout euiFormControlLayout--compressed"
               >
                 <div
                   class="euiFormControlLayout__childrenWrapper"
                 >
                   <div
-                    class="euiComboBox__inputWrap euiComboBox__inputWrap--noWrap euiComboBox__inputWrap-isClearable"
+                    class="euiComboBox__inputWrap euiComboBox__inputWrap--compressed euiComboBox__inputWrap--noWrap euiComboBox__inputWrap-isClearable"
                     data-test-subj="comboBoxInput"
                     tabindex="-1"
                   >
@@ -222,7 +215,7 @@ exports[`<DataStreamDetail /> spec render component 1`] = `
         class="euiSpacer euiSpacer--l"
       />
       <div
-        class="euiFormRow"
+        class="euiFormRow euiFormRow--compressed"
         id="some_html_id-row"
       >
         <div
@@ -232,13 +225,25 @@ exports[`<DataStreamDetail /> spec render component 1`] = `
             class="euiFormLabel euiFormRow__label"
             for="some_html_id"
           >
-            Matching template
+            <div
+              class="euiText euiText--small"
+            >
+              <h3>
+                Matching template
+              </h3>
+            </div>
           </label>
         </div>
         <div
           class="euiFormRow__fieldWrapper"
         >
-          No index template matched
+          <div
+            class="euiText euiText--small"
+          >
+            <p>
+              No index template matched
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -247,16 +252,13 @@ exports[`<DataStreamDetail /> spec render component 1`] = `
     class="euiSpacer euiSpacer--l"
   />
   <div
-    class="euiSpacer euiSpacer--l"
-  />
-  <div
-    class="euiFlexGroup euiFlexGroup--gutterLarge euiFlexGroup--alignItemsCenter euiFlexGroup--justifyContentFlexEnd euiFlexGroup--directionRow euiFlexGroup--responsive"
+    class="euiFlexGroup euiFlexGroup--gutterSmall euiFlexGroup--alignItemsCenter euiFlexGroup--justifyContentFlexEnd euiFlexGroup--directionRow euiFlexGroup--responsive"
   >
     <div
       class="euiFlexItem euiFlexItem--flexGrowZero"
     >
       <button
-        class="euiButtonEmpty euiButtonEmpty--primary"
+        class="euiButtonEmpty euiButtonEmpty--primary euiButtonEmpty--small"
         data-test-subj="CreateDataStreamCancelButton"
         type="button"
       >
@@ -275,7 +277,7 @@ exports[`<DataStreamDetail /> spec render component 1`] = `
       class="euiFlexItem euiFlexItem--flexGrowZero"
     >
       <button
-        class="euiButton euiButton--primary euiButton--fill"
+        class="euiButton euiButton--primary euiButton--small euiButton--fill"
         data-test-subj="CreateDataStreamCreateButton"
         type="button"
       >

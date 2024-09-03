@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 import React, { Component, useContext } from "react";
-import { EuiCallOut, EuiSpacer, EuiTitle, EuiButton, EuiLink, EuiFormRow } from "@elastic/eui";
+import { EuiCallOut, EuiSpacer, EuiTitle, EuiSmallButton, EuiLink, EuiCompressedFormRow, EuiText } from "@elastic/eui";
 import { get } from "lodash";
 
 import { CatIndex } from "../../../../../server/models/interfaces";
@@ -29,10 +29,13 @@ import { BREADCRUMBS, ROUTES } from "../../../../utils/constants";
 import { EVENT_MAP, destroyListener, listenEvent } from "../../../../JobHandler";
 import { ServerResponse } from "../../../../../server/models/types";
 import { useUpdateUrlWithDataSourceProperties } from "../../../../components/MDSEnabledComponent";
+import { getApplication, getNavigationUI, getUISettings } from "../../../../services/Services";
+import { TopNavControlDescriptionData, TopNavControlLinkData } from "src/plugins/navigation/public/top_nav_menu/top_nav_control_data";
 
 interface SplitIndexProps extends RouteComponentProps {
   commonService: CommonService;
   coreService: CoreStart;
+  useUpdatedUX: boolean;
 }
 
 export class SplitIndex extends Component<SplitIndexProps> {
@@ -46,11 +49,14 @@ export class SplitIndex extends Component<SplitIndexProps> {
   };
 
   async componentDidMount() {
-    this.context.chrome.setBreadcrumbs([
-      BREADCRUMBS.INDEX_MANAGEMENT,
-      BREADCRUMBS.INDICES,
-      { ...BREADCRUMBS.SPLIT_INDEX, href: `#${ROUTES.SPLIT_INDEX}${this.props.location.search}` },
-    ]);
+    const breadCrumbs = this.props.useUpdatedUX
+      ? [BREADCRUMBS.INDICES, { ...BREADCRUMBS.SPLIT_INDEX, href: `#${ROUTES.SPLIT_INDEX}${this.props.location.search}` }]
+      : [
+          BREADCRUMBS.INDEX_MANAGEMENT,
+          BREADCRUMBS.INDICES,
+          { ...BREADCRUMBS.SPLIT_INDEX, href: `#${ROUTES.SPLIT_INDEX}${this.props.location.search}` },
+        ];
+    this.context.chrome.setBreadcrumbs(breadCrumbs);
     await this.isSourceIndexReady();
     this.calculateShardsOption();
     this.setState({
@@ -124,7 +130,7 @@ export class SplitIndex extends Component<SplitIndexProps> {
               complete. The index will be in the Red state while the index is opening.
             </p>
             <p>
-              <EuiButton
+              <EuiSmallButton
                 fill
                 isLoading={this.state.loading}
                 isDisabled={this.state.loading}
@@ -144,7 +150,7 @@ export class SplitIndex extends Component<SplitIndexProps> {
                 data-test-subj={"open-index-button"}
               >
                 Open index
-              </EuiButton>
+              </EuiSmallButton>
             </p>
           </EuiCallOut>
           <EuiSpacer />
@@ -159,7 +165,7 @@ export class SplitIndex extends Component<SplitIndexProps> {
         <>
           <EuiCallOut color="danger" iconType="alert" title="The source index must block write operations before splitting.">
             <p>In order to split an existing index, you must first set the index to block write operations.</p>
-            <EuiButton
+            <EuiSmallButton
               fill
               onClick={async () => {
                 try {
@@ -178,7 +184,7 @@ export class SplitIndex extends Component<SplitIndexProps> {
               data-test-subj={"set-indexsetting-button"}
             >
               Block write operations
-            </EuiButton>
+            </EuiSmallButton>
           </EuiCallOut>
           <EuiSpacer />
         </>
@@ -219,13 +225,59 @@ export class SplitIndex extends Component<SplitIndexProps> {
 
   render() {
     const { sourceIndex, splitIndexFlyoutVisible, reasons, shardsSelectOptions } = this.state;
-    return (
-      <div style={{ padding: "0px 50px" }}>
-        <EuiTitle>
-          <h1>Split index</h1>
-        </EuiTitle>
 
-        <EuiFormRow
+    const { HeaderControl } = getNavigationUI();
+    const { setAppDescriptionControls } = getApplication();
+
+    const descriptionData = [
+      {
+        description: "Split an existing read-only index into a new index with more primary shards.",
+        links: {
+          label: "Learn more",
+          href: "https://opensearch.org/docs/latest/api-reference/index-apis/split/",
+          iconType: "popout",
+          iconSide: "right",
+          controlType: "link",
+        } as TopNavControlLinkData,
+      } as TopNavControlDescriptionData,
+    ];
+
+    const Common = () => {
+      return (
+        <>
+          {splitIndexFlyoutVisible && (
+            <SplitIndexForm
+              sourceIndex={sourceIndex.index}
+              onSplitIndex={this.onSplitIndex}
+              shardsSelectOptions={shardsSelectOptions}
+              reasons={reasons}
+              onCancel={this.onCancel}
+              sourceShards={sourceIndex.pri}
+              loading={this.state.loading}
+              getAlias={(aliasName) =>
+                getAlias({
+                  aliasName,
+                  commonService: this.props.commonService,
+                })
+              }
+            />
+          )}
+        </>
+      );
+    };
+
+    return this.props.useUpdatedUX ? (
+      <div style={{ padding: "0px" }}>
+        <HeaderControl controls={descriptionData} setMountPoint={setAppDescriptionControls} />
+        {Common()}
+      </div>
+    ) : (
+      <div style={{ padding: "0px 50px" }}>
+        <EuiText size="s">
+          <h1>Split index</h1>
+        </EuiText>
+
+        <EuiCompressedFormRow
           fullWidth
           helpText={
             <div>
@@ -241,27 +293,11 @@ export class SplitIndex extends Component<SplitIndexProps> {
           }
         >
           <></>
-        </EuiFormRow>
+        </EuiCompressedFormRow>
 
         <EuiSpacer />
 
-        {splitIndexFlyoutVisible && (
-          <SplitIndexForm
-            sourceIndex={sourceIndex.index}
-            onSplitIndex={this.onSplitIndex}
-            shardsSelectOptions={shardsSelectOptions}
-            reasons={reasons}
-            onCancel={this.onCancel}
-            sourceShards={sourceIndex.pri}
-            loading={this.state.loading}
-            getAlias={(aliasName) =>
-              getAlias({
-                aliasName,
-                commonService: this.props.commonService,
-              })
-            }
-          />
-        )}
+        {Common()}
       </div>
     );
   }
@@ -272,5 +308,7 @@ export default function SplitIndexWrapper(props: Omit<SplitIndexProps, "commonSe
   const coreService = useContext(CoreServicesContext) as CoreStart;
   // in split-index page, user can't change the data source i.e., its in read-only
   useUpdateUrlWithDataSourceProperties();
-  return <SplitIndex {...props} commonService={services.commonService} coreService={coreService} />;
+  const uiSettings = getUISettings();
+  const useUpdatedUX = uiSettings.get("home:useNewHomePage");
+  return <SplitIndex {...props} commonService={services.commonService} coreService={coreService} useUpdatedUX={useUpdatedUX} />;
 }
