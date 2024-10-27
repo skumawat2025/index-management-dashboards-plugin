@@ -170,7 +170,7 @@ exports[`<ManagedIndices /> spec renders the component 1`] = `
           class="euiFlexItem"
         >
           <div
-            class="euiFlexGroup euiFlexGroup--gutterMedium euiFlexGroup--alignItemsCenter euiFlexGroup--directionRow euiFlexGroup--responsive euiFlexGroup--wrap"
+            class="euiFlexGroup euiFlexGroup--gutterSmall euiFlexGroup--alignItemsCenter euiFlexGroup--directionRow euiFlexGroup--responsive euiFlexGroup--wrap"
           >
             <div
               class="euiFlexItem euiSearchBar__searchHolder"
@@ -348,7 +348,6 @@ exports[`<ManagedIndices /> spec renders the component 1`] = `
                   data-test-subj="tableHeaderCell_index_0"
                   role="columnheader"
                   scope="col"
-                  style="width: 150px;"
                 >
                   <button
                     class="euiTableHeaderButton euiTableHeaderButton-isSorted"
@@ -375,7 +374,6 @@ exports[`<ManagedIndices /> spec renders the component 1`] = `
                   data-test-subj="tableHeaderCell_policyId_1"
                   role="columnheader"
                   scope="col"
-                  style="width: 140px;"
                 >
                   <button
                     class="euiTableHeaderButton"
@@ -399,7 +397,6 @@ exports[`<ManagedIndices /> spec renders the component 1`] = `
                   data-test-subj="tableHeaderCell_managedIndexMetaData.state.name_2"
                   role="columnheader"
                   scope="col"
-                  style="width: 150px;"
                 >
                   <span
                     class="euiTableCellContent"
@@ -417,7 +414,6 @@ exports[`<ManagedIndices /> spec renders the component 1`] = `
                   data-test-subj="tableHeaderCell_managedIndexMetaData.action.name_3"
                   role="columnheader"
                   scope="col"
-                  style="width: 150px;"
                 >
                   <span
                     class="euiTableCellContent"
@@ -435,7 +431,6 @@ exports[`<ManagedIndices /> spec renders the component 1`] = `
                   data-test-subj="tableHeaderCell_managedIndexMetaData.info_4"
                   role="columnheader"
                   scope="col"
-                  style="width: 150px;"
                 >
                   <span
                     class="euiTableCellContent"
@@ -453,7 +448,6 @@ exports[`<ManagedIndices /> spec renders the component 1`] = `
                   data-test-subj="tableHeaderCell_index_5"
                   role="columnheader"
                   scope="col"
-                  style="width: 150px;"
                 >
                   <span
                     class="euiTableCellContent"

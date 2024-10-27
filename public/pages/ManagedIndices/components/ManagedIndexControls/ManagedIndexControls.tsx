@@ -9,21 +9,15 @@ import {
   ArgsWithError,
   EuiFlexGroup,
   EuiFlexItem,
-  EuiPagination,
   EuiSearchBar,
   EuiCompressedSwitch,
-  EuiButton,
-  EuiPopover,
-  EuiContextMenuPanel,
   EuiButtonIcon,
   EuiButtonEmpty,
   EuiSpacer,
+  EuiToolTip,
 } from "@elastic/eui";
 import { DataStream } from "../../../../../server/models/interfaces";
-import { ManagedIndices } from "../../containers/ManagedIndices/ManagedIndices";
-import { ManagedIndexItem } from "plugins/index-management-dashboards-plugin/models/interfaces";
 import { getUISettings } from "../../../../services/Services";
-import { size } from "lodash";
 
 interface ManagedIndexControlsProps {
   search: string;
@@ -50,7 +44,7 @@ export default class ManagedIndexControls extends Component<ManagedIndexControls
   };
 
   render() {
-    const { search, onSearchChange, showDataStreams, toggleShowDataStreams, Actions } = this.props;
+    const { search, onSearchChange, showDataStreams, toggleShowDataStreams, Actions, onRefresh } = this.props;
 
     const schema = {
       strict: true,
@@ -101,7 +95,9 @@ export default class ManagedIndexControls extends Component<ManagedIndexControls
             />
           </EuiFlexItem>
           <EuiFlexItem grow={false}>
-            <EuiButtonIcon iconType="refresh" data-test-subj="refreshButton" display="base" size="s" />
+            <EuiToolTip content="Refresh">
+              <EuiButtonIcon iconType="refresh" data-test-subj="refreshButton" display="base" size="s" onClick={onRefresh} />
+            </EuiToolTip>
           </EuiFlexItem>
           <EuiFlexItem grow={false}>{Actions}</EuiFlexItem>
           <EuiFlexItem grow={false}>

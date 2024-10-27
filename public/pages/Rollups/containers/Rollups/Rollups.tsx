@@ -36,6 +36,7 @@ import {
   EuiButtonIcon,
   EuiSpacer,
   EuiText,
+  EuiToolTip,
 } from "@elastic/eui";
 import { RollupService } from "../../../../services";
 import RollupEmptyPrompt from "../../components/RollupEmptyPrompt";
@@ -100,10 +101,19 @@ export class Rollups extends MDSEnabledComponent<RollupsProps, RollupsState> {
     this.getRollups = _.debounce(this.getRollups, 500, { leading: true });
   }
 
+  async updateBreadCrumbs() {
+    if (this.state.useNewUX) {
+      this.context.chrome.setBreadcrumbs([
+        { text: BREADCRUMBS.ROLLUPS.text.concat(` (${this.state.rollups.length})`), href: BREADCRUMBS.ROLLUPS.href },
+      ]);
+    }
+  }
+
   async componentDidMount() {
     const breadCrumbs = this.state.useNewUX ? [BREADCRUMBS.ROLLUPS] : [BREADCRUMBS.INDEX_MANAGEMENT, BREADCRUMBS.ROLLUPS];
     this.context.chrome.setBreadcrumbs(breadCrumbs);
     await this.getRollups();
+    this.updateBreadCrumbs();
   }
 
   async componentDidUpdate(prevProps: RollupsProps, prevState: RollupsState) {
@@ -112,6 +122,7 @@ export class Rollups extends MDSEnabledComponent<RollupsProps, RollupsState> {
     if (!_.isEqual(prevQuery, currQuery)) {
       await this.getRollups();
     }
+    this.updateBreadCrumbs();
   }
 
   static getQueryObjectFromState({
@@ -496,14 +507,16 @@ export class Rollups extends MDSEnabledComponent<RollupsProps, RollupsState> {
               />
             </EuiFlexItem>
             <EuiFlexItem grow={false}>
-              <EuiButtonIcon
-                iconType="refresh"
-                onClick={this.getRollups}
-                aria-label="refresh"
-                size="s"
-                display="base"
-                data-test-subj="refreshButton"
-              />
+              <EuiToolTip content="Refresh">
+                <EuiButtonIcon
+                  iconType="refresh"
+                  onClick={this.getRollups}
+                  aria-label="refresh"
+                  size="s"
+                  display="base"
+                  data-test-subj="refreshButton"
+                />
+              </EuiToolTip>
             </EuiFlexItem>
             <EuiFlexItem grow={false}>
               <EuiPopover

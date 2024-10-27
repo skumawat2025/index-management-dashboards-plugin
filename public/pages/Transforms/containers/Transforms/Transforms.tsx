@@ -27,6 +27,8 @@ import {
   EuiTableSelectionType,
   EuiTableSortingType,
   EuiSpacer,
+  EuiToolTip,
+  EuiButtonIcon,
 } from "@elastic/eui";
 import queryString from "query-string";
 import { RouteComponentProps } from "react-router-dom";
@@ -100,10 +102,19 @@ export class Transforms extends MDSEnabledComponent<TransformProps, TransformSta
     this.getTransforms = _.debounce(this.getTransforms, 500, { leading: true });
   }
 
+  async updateBreadCrumbs() {
+    if (this.state.useUpdatedUX) {
+      this.context.chrome.setBreadcrumbs([
+        { text: BREADCRUMBS.TRANSFORMS.text.concat(` (${this.state.transforms.length})`), href: BREADCRUMBS.TRANSFORMS.href },
+      ]);
+    }
+  }
+
   async componentDidMount() {
     const breadCrumbs = this.state.useUpdatedUX ? [BREADCRUMBS.TRANSFORMS] : [BREADCRUMBS.INDEX_MANAGEMENT, BREADCRUMBS.TRANSFORMS];
     this.context.chrome.setBreadcrumbs(breadCrumbs);
     await this.getTransforms();
+    this.updateBreadCrumbs();
   }
 
   async componentDidUpdate(prevProps: TransformProps, prevState: TransformState) {
@@ -112,6 +123,7 @@ export class Transforms extends MDSEnabledComponent<TransformProps, TransformSta
     if (!_.isEqual(prevQuery, currQuery)) {
       await this.getTransforms();
     }
+    this.updateBreadCrumbs();
   }
 
   render() {
@@ -288,12 +300,24 @@ export class Transforms extends MDSEnabledComponent<TransformProps, TransformSta
                 </EuiFlexItem>
               )}
               <EuiFlexItem grow={false}>
+                <EuiToolTip content="Refresh">
+                  <EuiButtonIcon
+                    iconType="refresh"
+                    onClick={this.getTransforms}
+                    aria-label="refresh"
+                    size="s"
+                    display="base"
+                    data-test-subj="refreshButton"
+                  />
+                </EuiToolTip>
+              </EuiFlexItem>
+              <EuiFlexItem grow={false}>
                 <EuiPopover
                   id="action"
                   button={actionButton}
                   isOpen={isPopOverOpen}
                   closePopover={this.closePopover}
-                  panelPaddingSize="none"
+                  panelPaddingSize="s"
                   anchorPosition="downLeft"
                   data-test-subj="actionPopover"
                 >
@@ -364,7 +388,7 @@ export class Transforms extends MDSEnabledComponent<TransformProps, TransformSta
                   button={actionButton}
                   isOpen={isPopOverOpen}
                   closePopover={this.closePopover}
-                  panelPaddingSize="none"
+                  panelPaddingSize="s"
                   anchorPosition="downLeft"
                   data-test-subj="actionPopover"
                 >

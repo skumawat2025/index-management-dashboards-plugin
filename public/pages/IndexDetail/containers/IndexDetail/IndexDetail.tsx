@@ -150,11 +150,11 @@ export default function IndexDetail(props: IndexDetailModalProps) {
         mode: IndicesUpdateMode.settings,
         content: (
           <>
-            <EuiSpacer />
+            <EuiSpacer size="m" />
             <EuiPanel>
-              <EuiText size="s">
+              <EuiTitle size="s">
                 <h2>Index settings</h2>
-              </EuiText>
+              </EuiTitle>
               <EuiHorizontalRule margin="xs" />
               <EuiSpacer size="s" />
               <IndexFormWrapper {...indexFormReadonlyCommonProps} key={IndicesUpdateMode.settings} mode={IndicesUpdateMode.settings} />
@@ -168,11 +168,11 @@ export default function IndexDetail(props: IndexDetailModalProps) {
         mode: IndicesUpdateMode.mappings,
         content: (
           <>
-            <EuiSpacer />
+            <EuiSpacer size="m" />
             <EuiPanel>
-              <EuiText size="s">
+              <EuiTitle size="s">
                 <h2>Index mappings</h2>
-              </EuiText>
+              </EuiTitle>
               <EuiCompressedFormRow
                 fullWidth
                 helpText={
@@ -206,11 +206,11 @@ export default function IndexDetail(props: IndexDetailModalProps) {
         mode: IndicesUpdateMode.alias,
         content: (
           <>
-            <EuiSpacer />
+            <EuiSpacer size="m" />
             <EuiPanel>
-              <EuiText size="s">
+              <EuiTitle size="s">
                 <h2>Index alias</h2>
-              </EuiText>
+              </EuiTitle>
               <EuiHorizontalRule margin="xs" />
               <IndexFormWrapper {...indexFormReadonlyCommonProps} key={IndicesUpdateMode.alias} mode={IndicesUpdateMode.alias} />
             </EuiPanel>
@@ -264,9 +264,9 @@ export default function IndexDetail(props: IndexDetailModalProps) {
     return (
       <>
         <EuiPanel>
-          <EuiText size="s">
+          <EuiTitle size="s">
             <h2>Overview</h2>
-          </EuiText>
+          </EuiTitle>
           <EuiHorizontalRule margin="xs" />
           <EuiDescriptionList compressed>
             <EuiSpacer size="s" />
