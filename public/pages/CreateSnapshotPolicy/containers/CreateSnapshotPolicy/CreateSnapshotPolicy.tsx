@@ -89,6 +89,7 @@ interface CreateSMPolicyState extends DataSourceMenuProperties {
   creationScheduleFrequencyType: string;
   deletionScheduleFrequencyType: string;
 
+  deletionOnlyPolicy: boolean; // edit-only: the loaded policy has no creation workflow
   deleteConditionEnabled: boolean;
   deletionScheduleEnabled: boolean; // whether to use the same schedule as creation
 
@@ -135,6 +136,7 @@ export class CreateSnapshotPolicy extends MDSEnabledComponent<CreateSMPolicyProp
       creationScheduleFrequencyType: "daily",
       deletionScheduleFrequencyType: "daily",
 
+      deletionOnlyPolicy: false,
       deleteConditionEnabled: false,
       deletionScheduleEnabled: false,
 
@@ -207,6 +209,7 @@ export class CreateSnapshotPolicy extends MDSEnabledComponent<CreateSMPolicyProp
       creationScheduleFrequencyType: "daily",
       deletionScheduleFrequencyType: "daily",
 
+      deletionOnlyPolicy: false,
       deleteConditionEnabled: false,
       deletionScheduleEnabled: false,
 
@@ -256,6 +259,10 @@ export class CreateSnapshotPolicy extends MDSEnabledComponent<CreateSMPolicyProp
           if (creationScheduleExpression !== deletionScheduleExpression) deletionScheduleEnabled = true;
         }
 
+        // A deletion-only policy has no creation workflow. Track it so the form does not require
+        // a creation schedule and does not silently re-add one when editing other fields.
+        const deletionOnlyPolicy = _.get(policy, "creation") == null;
+
         const maxAge = policy.deletion?.condition?.max_age;
         let maxAgeNum = 1;
         let maxAgeUnit = "d";
@@ -273,6 +280,7 @@ export class CreateSnapshotPolicy extends MDSEnabledComponent<CreateSMPolicyProp
           selectedRepoValue,
           creationScheduleFrequencyType,
           deletionScheduleFrequencyType,
+          deletionOnlyPolicy,
           deleteConditionEnabled,
           deletionScheduleEnabled,
           maxAgeNum,
@@ -399,14 +407,14 @@ export class CreateSnapshotPolicy extends MDSEnabledComponent<CreateSMPolicyProp
   onClickSubmit = async () => {
     this.setState({ isSubmitting: true });
     const { isEdit } = this.props;
-    const { policyId, policy } = this.state;
+    const { policyId, policy, deletionOnlyPolicy } = this.state;
 
     try {
       if (!policyId.trim()) {
         this.setState({ policyIdError: ERROR_PROMPT.NAME });
       } else if (!_.get(policy, "snapshot_config.repository")) {
         this.setState({ repoError: ERROR_PROMPT.REPO });
-      } else if (!_.get(policy, "creation.schedule.cron.timezone")) {
+      } else if (!deletionOnlyPolicy && !_.get(policy, "creation.schedule.cron.timezone")) {
         this.setState({ timezoneError: ERROR_PROMPT.TIMEZONE });
       } else {
         const policyFromState = this.buildPolicyFromState(policy);
@@ -423,7 +431,13 @@ export class CreateSnapshotPolicy extends MDSEnabledComponent<CreateSMPolicyProp
   };
 
   buildPolicyFromState = (policy: SMPolicy): SMPolicy => {
-    const { deletionScheduleEnabled, maxAgeNum, maxAgeUnit, deleteConditionEnabled } = this.state;
+    const { deletionScheduleEnabled, maxAgeNum, maxAgeUnit, deleteConditionEnabled, deletionOnlyPolicy } = this.state;
+
+    // Deletion-only policies have no creation workflow. Drop any creation block so that editing
+    // other fields never converts the policy into a creation + deletion policy.
+    if (deletionOnlyPolicy) {
+      delete policy.creation;
+    }
 
     if (deleteConditionEnabled) {
       _.set(policy, "deletion.condition.max_age", maxAgeNum + maxAgeUnit);
@@ -432,7 +446,11 @@ export class CreateSnapshotPolicy extends MDSEnabledComponent<CreateSMPolicyProp
     }
 
     if (deletionScheduleEnabled) {
-      _.set(policy, "deletion.schedule.cron.timezone", _.get(policy, "creation.schedule.cron.timezone"));
+      // For a deletion-only policy there is no creation schedule to inherit the time zone from,
+      // so preserve the existing deletion schedule time zone instead of overwriting it.
+      if (!deletionOnlyPolicy) {
+        _.set(policy, "deletion.schedule.cron.timezone", _.get(policy, "creation.schedule.cron.timezone"));
+      }
     } else {
       delete policy.deletion?.schedule;
     }
@@ -442,6 +460,22 @@ export class CreateSnapshotPolicy extends MDSEnabledComponent<CreateSMPolicyProp
     }
 
     return policy;
+  };
+
+  onChangeDeletionOnly = (checked: boolean) => {
+    const policy = _.cloneDeep(this.state.policy);
+    if (checked) {
+      // Mark as deletion-only and remove the creation workflow.
+      delete policy.creation;
+      this.setState({ deletionOnlyPolicy: true, policy, timezoneError: "" });
+    } else {
+      // User explicitly opted back into snapshot creation. Seed default creation values so the
+      // now-enabled schedule controls have something to edit.
+      if (_.get(policy, "creation") == null) {
+        policy.creation = getDefaultSMPolicy().creation;
+      }
+      this.setState({ deletionOnlyPolicy: false, policy });
+    }
   };
 
   onIndicesSelectionChange = (selectedOptions: EuiComboBoxOptionOption<IndexItem>[]) => {
@@ -519,6 +553,7 @@ export class CreateSnapshotPolicy extends MDSEnabledComponent<CreateSMPolicyProp
       maxAgeUnit,
       creationScheduleFrequencyType,
       deletionScheduleFrequencyType,
+      deletionOnlyPolicy,
       deleteConditionEnabled,
       deletionScheduleEnabled,
       advancedSettingsOpen,
@@ -658,6 +693,17 @@ export class CreateSnapshotPolicy extends MDSEnabledComponent<CreateSMPolicyProp
             </EuiTitle>
           </EuiFlexGroup>
           <EuiHorizontalRule margin={"xs"} />
+          {isEdit ? (
+            <>
+              <EuiCompressedCheckbox
+                id="deletion_only_policy_checkbox"
+                label="Deletion-only snapshot policy"
+                checked={deletionOnlyPolicy}
+                onChange={(e) => this.onChangeDeletionOnly(e.target.checked)}
+              />
+              <EuiSpacer size="m" />
+            </>
+          ) : null}
           <CronSchedule
             frequencyTitle="Snapshot frequency"
             frequencyType={creationScheduleFrequencyType}
@@ -679,6 +725,7 @@ export class CreateSnapshotPolicy extends MDSEnabledComponent<CreateSMPolicyProp
             onCronExpressionChange={(expression: string) => {
               this.setState({ policy: this.setPolicyHelper("creation.schedule.cron.expression", expression) });
             }}
+            disabled={deletionOnlyPolicy}
           />
         </EuiPanel>
 
